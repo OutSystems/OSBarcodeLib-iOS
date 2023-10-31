@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7507FC1B27FC2AAE003809F6 /* LibTemplatePlaceholder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7507FC1227FC2AAE003809F6 /* LibTemplatePlaceholder.framework */; };
-		7507FC2027FC2AAE003809F6 /* LibTemplatePlaceholderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7507FC1F27FC2AAE003809F6 /* LibTemplatePlaceholderTests.swift */; };
-		7507FC2127FC2AAE003809F6 /* LibTemplatePlaceholder.h in Headers */ = {isa = PBXBuildFile; fileRef = 7507FC1527FC2AAE003809F6 /* LibTemplatePlaceholder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7507FC1B27FC2AAE003809F6 /* OSBarcodeLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7507FC1227FC2AAE003809F6 /* OSBarcodeLib.framework */; };
+		7507FC2027FC2AAE003809F6 /* OSBarcodeLibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7507FC1F27FC2AAE003809F6 /* OSBarcodeLibTests.swift */; };
+		7507FC2127FC2AAE003809F6 /* OSBarcodeLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 7507FC1527FC2AAE003809F6 /* OSBarcodeLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -18,15 +18,15 @@
 			containerPortal = 7507FC0927FC2AAE003809F6 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 7507FC1127FC2AAE003809F6;
-			remoteInfo = LibTemplatePlaceholder;
+			remoteInfo = OSBarcodeLib;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7507FC1227FC2AAE003809F6 /* LibTemplatePlaceholder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LibTemplatePlaceholder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7507FC1527FC2AAE003809F6 /* LibTemplatePlaceholder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LibTemplatePlaceholder.h; sourceTree = "<group>"; };
-		7507FC1A27FC2AAE003809F6 /* LibTemplatePlaceholderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LibTemplatePlaceholderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7507FC1F27FC2AAE003809F6 /* LibTemplatePlaceholderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibTemplatePlaceholderTests.swift; sourceTree = "<group>"; };
+		7507FC1227FC2AAE003809F6 /* OSBarcodeLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OSBarcodeLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7507FC1527FC2AAE003809F6 /* OSBarcodeLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSBarcodeLib.h; sourceTree = "<group>"; };
+		7507FC1A27FC2AAE003809F6 /* OSBarcodeLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OSBarcodeLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7507FC1F27FC2AAE003809F6 /* OSBarcodeLibTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBarcodeLibTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7507FC1B27FC2AAE003809F6 /* LibTemplatePlaceholder.framework in Frameworks */,
+				7507FC1B27FC2AAE003809F6 /* OSBarcodeLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +51,8 @@
 		7507FC0827FC2AAE003809F6 = {
 			isa = PBXGroup;
 			children = (
-				7507FC1427FC2AAE003809F6 /* LibTemplatePlaceholder */,
-				7507FC1E27FC2AAE003809F6 /* LibTemplatePlaceholderTests */,
+				7507FC1427FC2AAE003809F6 /* OSBarcodeLib */,
+				7507FC1E27FC2AAE003809F6 /* OSBarcodeLibTests */,
 				7507FC1327FC2AAE003809F6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,26 +60,26 @@
 		7507FC1327FC2AAE003809F6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7507FC1227FC2AAE003809F6 /* LibTemplatePlaceholder.framework */,
-				7507FC1A27FC2AAE003809F6 /* LibTemplatePlaceholderTests.xctest */,
+				7507FC1227FC2AAE003809F6 /* OSBarcodeLib.framework */,
+				7507FC1A27FC2AAE003809F6 /* OSBarcodeLibTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7507FC1427FC2AAE003809F6 /* LibTemplatePlaceholder */ = {
+		7507FC1427FC2AAE003809F6 /* OSBarcodeLib */ = {
 			isa = PBXGroup;
 			children = (
-				7507FC1527FC2AAE003809F6 /* LibTemplatePlaceholder.h */,
+				7507FC1527FC2AAE003809F6 /* OSBarcodeLib.h */,
 			);
-			path = LibTemplatePlaceholder;
+			path = OSBarcodeLib;
 			sourceTree = "<group>";
 		};
-		7507FC1E27FC2AAE003809F6 /* LibTemplatePlaceholderTests */ = {
+		7507FC1E27FC2AAE003809F6 /* OSBarcodeLibTests */ = {
 			isa = PBXGroup;
 			children = (
-				7507FC1F27FC2AAE003809F6 /* LibTemplatePlaceholderTests.swift */,
+				7507FC1F27FC2AAE003809F6 /* OSBarcodeLibTests.swift */,
 			);
-			path = LibTemplatePlaceholderTests;
+			path = OSBarcodeLibTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -89,16 +89,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7507FC2127FC2AAE003809F6 /* LibTemplatePlaceholder.h in Headers */,
+				7507FC2127FC2AAE003809F6 /* OSBarcodeLib.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		7507FC1127FC2AAE003809F6 /* LibTemplatePlaceholder */ = {
+		7507FC1127FC2AAE003809F6 /* OSBarcodeLib */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7507FC2427FC2AAE003809F6 /* Build configuration list for PBXNativeTarget "LibTemplatePlaceholder" */;
+			buildConfigurationList = 7507FC2427FC2AAE003809F6 /* Build configuration list for PBXNativeTarget "OSBarcodeLib" */;
 			buildPhases = (
 				7507FC0D27FC2AAE003809F6 /* Headers */,
 				7507FC0E27FC2AAE003809F6 /* Sources */,
@@ -109,14 +109,14 @@
 			);
 			dependencies = (
 			);
-			name = LibTemplatePlaceholder;
-			productName = LibTemplatePlaceholder;
-			productReference = 7507FC1227FC2AAE003809F6 /* LibTemplatePlaceholder.framework */;
+			name = OSBarcodeLib;
+			productName = OSBarcodeLib;
+			productReference = 7507FC1227FC2AAE003809F6 /* OSBarcodeLib.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		7507FC1927FC2AAE003809F6 /* LibTemplatePlaceholderTests */ = {
+		7507FC1927FC2AAE003809F6 /* OSBarcodeLibTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7507FC2727FC2AAE003809F6 /* Build configuration list for PBXNativeTarget "LibTemplatePlaceholderTests" */;
+			buildConfigurationList = 7507FC2727FC2AAE003809F6 /* Build configuration list for PBXNativeTarget "OSBarcodeLibTests" */;
 			buildPhases = (
 				7507FC1627FC2AAE003809F6 /* Sources */,
 				7507FC1727FC2AAE003809F6 /* Frameworks */,
@@ -127,9 +127,9 @@
 			dependencies = (
 				7507FC1D27FC2AAE003809F6 /* PBXTargetDependency */,
 			);
-			name = LibTemplatePlaceholderTests;
-			productName = LibTemplatePlaceholderTests;
-			productReference = 7507FC1A27FC2AAE003809F6 /* LibTemplatePlaceholderTests.xctest */;
+			name = OSBarcodeLibTests;
+			productName = OSBarcodeLibTests;
+			productReference = 7507FC1A27FC2AAE003809F6 /* OSBarcodeLibTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -150,7 +150,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7507FC0C27FC2AAE003809F6 /* Build configuration list for PBXProject "LibTemplatePlaceholder" */;
+			buildConfigurationList = 7507FC0C27FC2AAE003809F6 /* Build configuration list for PBXProject "OSBarcodeLib" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -163,8 +163,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7507FC1127FC2AAE003809F6 /* LibTemplatePlaceholder */,
-				7507FC1927FC2AAE003809F6 /* LibTemplatePlaceholderTests */,
+				7507FC1127FC2AAE003809F6 /* OSBarcodeLib */,
+				7507FC1927FC2AAE003809F6 /* OSBarcodeLibTests */,
 			);
 		};
 /* End PBXProject section */
@@ -198,7 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7507FC2027FC2AAE003809F6 /* LibTemplatePlaceholderTests.swift in Sources */,
+				7507FC2027FC2AAE003809F6 /* OSBarcodeLibTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,7 +207,7 @@
 /* Begin PBXTargetDependency section */
 		7507FC1D27FC2AAE003809F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7507FC1127FC2AAE003809F6 /* LibTemplatePlaceholder */;
+			target = 7507FC1127FC2AAE003809F6 /* OSBarcodeLib */;
 			targetProxy = 7507FC1C27FC2AAE003809F6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -354,7 +354,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = organizationIDPlaceholder.LibTemplatePlaceholder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.outsystems.rd.barcode.OSBarcodeLib;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -384,7 +384,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = organizationIDPlaceholder.LibTemplatePlaceholder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.outsystems.rd.barcode.OSBarcodeLib;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -401,7 +401,7 @@
 				DEVELOPMENT_TEAM = EVSWK8BA55;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = organizationIDPlaceholder.LibTemplatePlaceholderTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.outsystems.rd.barcode.OSBarcodeLibTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -417,7 +417,7 @@
 				DEVELOPMENT_TEAM = EVSWK8BA55;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = organizationIDPlaceholder.LibTemplatePlaceholderTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.outsystems.rd.barcode.OSBarcodeLibTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -428,7 +428,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7507FC0C27FC2AAE003809F6 /* Build configuration list for PBXProject "LibTemplatePlaceholder" */ = {
+		7507FC0C27FC2AAE003809F6 /* Build configuration list for PBXProject "OSBarcodeLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7507FC2227FC2AAE003809F6 /* Debug */,
@@ -437,7 +437,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7507FC2427FC2AAE003809F6 /* Build configuration list for PBXNativeTarget "LibTemplatePlaceholder" */ = {
+		7507FC2427FC2AAE003809F6 /* Build configuration list for PBXNativeTarget "OSBarcodeLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7507FC2527FC2AAE003809F6 /* Debug */,
@@ -446,7 +446,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7507FC2727FC2AAE003809F6 /* Build configuration list for PBXNativeTarget "LibTemplatePlaceholderTests" */ = {
+		7507FC2727FC2AAE003809F6 /* Build configuration list for PBXNativeTarget "OSBarcodeLibTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7507FC2827FC2AAE003809F6 /* Debug */,

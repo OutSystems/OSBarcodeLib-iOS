@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7507FC1127FC2AAE003809F6"
-               BuildableName = "LibTemplatePlaceholder.framework"
-               BlueprintName = "LibTemplatePlaceholder"
-               ReferencedContainer = "container:LibTemplatePlaceholder.xcodeproj">
+               BuildableName = "OSBarcodeLib.framework"
+               BlueprintName = "OSBarcodeLib"
+               ReferencedContainer = "container:OSBarcodeLib.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,9 +34,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7507FC1927FC2AAE003809F6"
-               BuildableName = "LibTemplatePlaceholderTests.xctest"
-               BlueprintName = "LibTemplatePlaceholderTests"
-               ReferencedContainer = "container:LibTemplatePlaceholder.xcodeproj">
+               BuildableName = "OSBarcodeLibTests.xctest"
+               BlueprintName = "OSBarcodeLibTests"
+               ReferencedContainer = "container:OSBarcodeLib.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7507FC1127FC2AAE003809F6"
-            BuildableName = "LibTemplatePlaceholder.framework"
-            BlueprintName = "LibTemplatePlaceholder"
-            ReferencedContainer = "container:LibTemplatePlaceholder.xcodeproj">
+            BuildableName = "OSBarcodeLib.framework"
+            BlueprintName = "OSBarcodeLib"
+            ReferencedContainer = "container:OSBarcodeLib.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

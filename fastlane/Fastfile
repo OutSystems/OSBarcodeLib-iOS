@@ -18,15 +18,15 @@ default_platform(:ios)
 platform :ios do
   desc "Lane to run the unit tests"
   lane :unit_tests do
-    run_tests(device: "iPhone 8", scheme: "LibTemplatePlaceholder",
+    run_tests(device: "iPhone 8", scheme: "OSBarcodeLib",
       slack_url: ENV['SLACK_WEBHOOK'])
   end
 
   desc "Code coverage"
   lane :coverage do
     slather(
-      scheme: "LibTemplatePlaceholder",
-      proj: "LibTemplatePlaceholder.xcodeproj",
+      scheme: "OSBarcodeLib",
+      proj: "OSBarcodeLib.xcodeproj",
       output_directory: "sonar-reports", 
       sonarqube_xml: "true"
     )
@@ -34,7 +34,7 @@ platform :ios do
 
   lane :lint do
     swiftlint(
-      output_file: "sonar-reports/LibTemplatePlaceholder-swiftlint.txt",
+      output_file: "sonar-reports/OSBarcodeLib-swiftlint.txt",
       ignore_exit_status: true
     )
   end
