@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7507FC1B27FC2AAE003809F6 /* OSBarcodeLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7507FC1227FC2AAE003809F6 /* OSBarcodeLib.framework */; };
+		7554D70B2AFA3A0E00D4261C /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7554D70A2AFA3A0E00D4261C /* ToggleButton.swift */; };
+		75A1FC632AFA40D200AA775F /* OSBARCScannerView.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75A1FC622AFA40D200AA775F /* OSBARCScannerView.xcassets */; };
 		75C20B692AF4FD1900CCB5B1 /* OSBARCTestValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C20B682AF4FD1900CCB5B1 /* OSBARCTestValues.swift */; };
 		75C20B6B2AF4FE0700CCB5B1 /* OSBARCManagerFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C20B6A2AF4FE0700CCB5B1 /* OSBARCManagerFactoryTests.swift */; };
 		75D20FDC2AF16AC9009AD84D /* OSBARCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D20FDB2AF16AC9009AD84D /* OSBARCManager.swift */; };
@@ -43,6 +45,8 @@
 /* Begin PBXFileReference section */
 		7507FC1227FC2AAE003809F6 /* OSBarcodeLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OSBarcodeLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7507FC1A27FC2AAE003809F6 /* OSBarcodeLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OSBarcodeLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7554D70A2AFA3A0E00D4261C /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
+		75A1FC622AFA40D200AA775F /* OSBARCScannerView.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OSBARCScannerView.xcassets; sourceTree = "<group>"; };
 		75C20B682AF4FD1900CCB5B1 /* OSBARCTestValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCTestValues.swift; sourceTree = "<group>"; };
 		75C20B6A2AF4FE0700CCB5B1 /* OSBARCManagerFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCManagerFactoryTests.swift; sourceTree = "<group>"; };
 		75D20FDB2AF16AC9009AD84D /* OSBARCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCManager.swift; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 		75E2B1C32AF3A97400DB689E /* Scanner */ = {
 			isa = PBXGroup;
 			children = (
+				75A1FC622AFA40D200AA775F /* OSBARCScannerView.xcassets */,
 				75E2B1CC2AF3AC5500DB689E /* OSBARCScannerBehaviour.swift */,
 				75E2B1CE2AF3ACE900DB689E /* OSBARCScannerProtocol.swift */,
 				75E2B1C62AF3A99A00DB689E /* OSBARCScannerView.swift */,
@@ -179,6 +184,7 @@
 		75E2B20D2AF41B3F00DB689E /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
+				7554D70A2AFA3A0E00D4261C /* ToggleButton.swift */,
 				75E2B20E2AF41B5000DB689E /* View+StyleForColour.swift */,
 			);
 			path = ViewModifiers;
@@ -277,6 +283,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75A1FC632AFA40D200AA775F /* OSBARCScannerView.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +333,7 @@
 				75D20FDC2AF16AC9009AD84D /* OSBARCManager.swift in Sources */,
 				75E2B1D42AF3C80C00DB689E /* OSBARCScannerViewController.swift in Sources */,
 				75E2B1D62AF3C93200DB689E /* OSBARCScannerViewControllerRepresentable.swift in Sources */,
+				7554D70B2AFA3A0E00D4261C /* ToggleButton.swift in Sources */,
 				75E2B20F2AF41B5000DB689E /* View+StyleForColour.swift in Sources */,
 				75E2B1D22AF3AE1200DB689E /* OSBARCCoordinatable.swift in Sources */,
 				75E2B1D82AF3C95800DB689E /* OSBARCScannerViewControllerCoordinator.swift in Sources */,
