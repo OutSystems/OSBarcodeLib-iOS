@@ -34,8 +34,6 @@ final class OSBARCScannerViewController: UIViewController {
         captureSession.addInput(videoInput)
         
         let deviceOutput = AVCaptureVideoDataOutput()
-//        deviceOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
-                
         // Set the quality of the video
         deviceOutput.setSampleBufferDelegate(delegate, queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default))
         
