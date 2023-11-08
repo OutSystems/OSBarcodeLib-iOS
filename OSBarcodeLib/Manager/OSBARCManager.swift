@@ -33,19 +33,21 @@ struct OSBARCManager {
 
 /// Implementation of the `OSBARCManagerProtocol` methods.
 extension OSBARCManager: OSBARCManagerProtocol {
-    func scanBarcode() async throws -> String {
+    func scanBarcode(with instructionsText: String) async throws -> String {
         // validates if the user has access to the device's camera.
         let hasCameraAccess = await self.permissionsBehaviour.hasCameraAccess()
         if !hasCameraAccess { throw OSBARCManagerError.cameraAccessDenied }
         // requests the scanner to start, treating its result value.
-        return try await withCheckedThrowingContinuation { self.startScanning(continuation: $0) }
+        return try await withCheckedThrowingContinuation { self.startScanning(with: instructionsText, continuation: $0) }
     }
     
     /// Triggers the scanner view.
-    /// - Parameter continuation: Object responsible for returning the method's result to its caller.`
-    private func startScanning(continuation: CheckedContinuation<String, any Error>) {
+    /// - Parameters:
+    ///   - instructionsText: Text to be displayed on the scanner view.
+    ///   - continuation: Object responsible for returning the method's result to its caller.
+    private func startScanning(with instructionsText: String, continuation: CheckedContinuation<String, any Error>) {
         DispatchQueue.main.async {
-            self.scannerBehaviour.startScanning { scannedCode in
+            self.scannerBehaviour.startScanning(with: instructionsText) { scannedCode in
                 if !scannedCode.isEmpty {
                     continuation.resume(returning: scannedCode)
                 } else {

@@ -3,39 +3,50 @@ import SwiftUI
 
 /// The library's main view.
 struct OSBARCScannerView: View {
+    /// The camera used to capture video for barcode scanning.
+    let captureDevice: AVCaptureDevice?
+    
     /// The object containing the scanned value.
     @Binding var scanResult: String
     /// Indicates if the camera selected for scanning has a torch.
     let cameraHasTorch: Bool
-    /// The camera used to capture video for barcode scanning.
-    let captureDevice: AVCaptureDevice?
     /// Indicates current torch value.
     @State var isTorchButtonOn: Bool = false
+    /// Helper text to display.
+    let instructionsText: String
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
             // Camera Stream
             OSBARCScannerViewControllerRepresentable(result: $scanResult, captureDevice: captureDevice)
             
-            HStack {
-                // Torch Button
-                ToggleButton(imageName: "flash", isOn: isTorchButtonOn, frame: .init(width: 48.0, height: 48.0)) {
-                    isTorchButtonOn.toggle()
+            VStack {
+                HStack {
+                    Spacer()
                     
-                    changeTorchMode()
+                    // Cancel Button
+                    Button {
+                        scanResult = "" // cancelling translates in scanResult being empty.
+                    } label: {
+                        Image(systemName: "xmark")  // SF Symbols value.
+                            .imageScale(.large)
+                            .foregroundStyle(forColour: .white)
+                    }
                 }
-                .opacity(!cameraHasTorch ? 0.0 : 1.0)
-                .disabled(!cameraHasTorch)
+                
+                Text(instructionsText)
+                    .padding(.vertical)
                 
                 Spacer()
-                
-                // Cancel Button
-                Button {
-                    scanResult = "" // cancelling translates in scanResult being empty.
-                } label: {
-                    Image(systemName: "xmark")  // SF Symbols value.
-                        .imageScale(.large)
-                        .foregroundStyle(forColour: .white)
+                HStack {
+                    Spacer()
+                    // Torch Button
+                    ToggleButton(imageName: "flash", isOn: isTorchButtonOn, frame: .init(width: 48.0, height: 48.0)) {
+                        isTorchButtonOn.toggle()
+                        changeTorchMode()
+                    }
+                    .opacity(!cameraHasTorch ? 0.0 : 1.0)
+                    .disabled(!cameraHasTorch)
                 }
             }
             .padding(32)

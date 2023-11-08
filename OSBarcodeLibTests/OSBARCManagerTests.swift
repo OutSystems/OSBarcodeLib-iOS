@@ -23,7 +23,7 @@ final class OSBARCManagerTests: XCTestCase {
         self.permissionsBehaviour.error = .anError
         
         do {
-            _ = try await self.manager.scanBarcode()
+            _ = try await self.manager.scanBarcode(with: OSBARCScannerStubValues.instructionText)
             XCTFail(OSBARCCommonValues.failMessage)
         } catch {
             XCTAssertTrue(true)
@@ -34,7 +34,7 @@ final class OSBARCManagerTests: XCTestCase {
         self.scannerBehaviour.scanCancelled = true
         
         do {
-            _ = try await self.manager.scanBarcode()
+            _ = try await self.manager.scanBarcode(with: OSBARCScannerStubValues.instructionText)
             XCTFail(OSBARCCommonValues.failMessage)
         } catch {
             XCTAssertTrue(true)
@@ -43,7 +43,7 @@ final class OSBARCManagerTests: XCTestCase {
     
     func testGivenAccessToCameraAndSuccessfulScanShouldReturnABarcode() async {
         do {
-            let result = try await self.manager.scanBarcode()
+            let result = try await self.manager.scanBarcode(with: OSBARCScannerStubValues.instructionText)
             XCTAssertEqual(result, OSBARCScannerStubValues.scannedCode)
         } catch {
             XCTFail(OSBARCCommonValues.failMessage)
