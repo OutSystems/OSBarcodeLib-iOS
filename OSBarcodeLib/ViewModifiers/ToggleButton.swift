@@ -16,15 +16,22 @@ struct ToggleButton: View {
             if isOn {
                 Image("\(imageName)-selected", bundle: .init(for: OSBARCScannerBehaviour.self))    // xcassets item.
                     .frame(width: frame.width, height: frame.height)
-                    .background(Color.white)
-                    .clipShape(Circle())
+                    .background(
+                        Circle()
+                            .foregroundStyle(forColour: OSBARCScannerViewConfigurationValues.mainColour)
+                    )
             } else {
                 Image(imageName, bundle: .init(for: OSBARCScannerBehaviour.self))
                     .frame(width: frame.width, height: frame.height)
+                    .background(
+                        Circle()
+                            .foregroundStyle(forColour: OSBARCScannerViewConfigurationValues.secondaryColour)
+                    )
                     .overlay(
                         Circle()
-                            .stroke(.white, lineWidth: 1.0)
+                            .stroke(OSBARCScannerViewConfigurationValues.tertiaryColour, lineWidth: 1.0)
                     )
+                    
             }
         }
     }

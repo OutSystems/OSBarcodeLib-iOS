@@ -1,6 +1,5 @@
 struct OSBARCScannerStubValues {
     static let scannedCode = "Scanned Code"
-    static let instructionText = "Instruction Text"
 }
 
 struct OSBARCCommonValues {
