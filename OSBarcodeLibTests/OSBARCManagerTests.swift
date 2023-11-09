@@ -1,6 +1,13 @@
 import XCTest
 @testable import OSBarcodeLib
 
+private extension OSBARCManager {
+    func scanBarcode() async throws -> String {
+        // `instructionText` and `buttonText` are UI-related so are irrelevant for the unit tests.
+        try await self.scanBarcode(with: "Instruction Text", and: "Scan Button")
+    }
+}
+
 final class OSBARCManagerTests: XCTestCase {
     private var permissionsBehaviour: OSBARCPermissionsStub!
     private var scannerBehaviour: OSBARCScannerStub!

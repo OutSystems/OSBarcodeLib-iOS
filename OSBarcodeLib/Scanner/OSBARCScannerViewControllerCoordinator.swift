@@ -6,14 +6,34 @@ import Vision
 final class OSBARCScannerViewControllerCoordinator: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     /// The object containing the value to return.
     @Binding private var scanResult: String
+    /// Indicates if scanning should be done only  after a button click or automatically.
+    private var scanThroughButton: Bool
+    /// Indicates if scanning is enabled (when there's a Scan Button).
+    @Binding private var scanButtonEnabled: Bool
+    
+    /// List of barcode types the scanner is looking for.
+    lazy private var barcodeTypes: [VNBarcodeSymbology] = {
+        var result: [VNBarcodeSymbology] = [.upce, .ean8, .ean13, .code39, .code93, .code128, .itf14, .qr, .dataMatrix, .pdf417, .aztec, .i2of5]
+        if #available(iOS 15.0, *) {    // these types are only available from iOS 15 onwards.
+            result += [.codabar, .gs1DataBar, .gs1DataBarExpanded, .microPDF417, .microQR]
+        }
+        return result
+    }()
     
     /// Constructor.
-    /// - Parameter scanResult: Binding object with the value to return.
-    init(_ scanResult: Binding<String>) {
+    /// - Parameters:
+    ///   - scanResult: Binding object with the value to return.
+    ///   - scanThroughButton: Boolean indicating if scanning should be performed automatically or after clicking the Scan Button.
+    ///   - scanButtonEnabled: Indicates if scanning has already been set on.
+    init(_ scanResult: Binding<String>, _ scanThroughButton: Bool, _ scanButtonEnabled: Binding<Bool>) {
         self._scanResult = scanResult
+        self.scanThroughButton = scanThroughButton
+        self._scanButtonEnabled = scanButtonEnabled
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        // Output should only be processed when scanning is automatically or it has been enabled through the Scan Button.
+        guard !self.scanThroughButton || scanButtonEnabled else { return }
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         
         var requestOptions: [VNImageOption: Any] = [:]
@@ -44,14 +64,5 @@ final class OSBARCScannerViewControllerCoordinator: NSObject, AVCaptureVideoData
                 self.scanResult = payload
             }
         }
-    }
-    
-    /// List of barcode types the scanner is looking for.
-    private var barcodeTypes: [VNBarcodeSymbology] {
-        var result: [VNBarcodeSymbology] = [.upce, .ean8, .ean13, .code39, .code93, .code128, .itf14, .qr, .dataMatrix, .pdf417, .aztec, .i2of5]
-        if #available(iOS 15.0, *) {    // these types are only available from iOS 15 onwards.
-            result += [.codabar, .gs1DataBar, .gs1DataBarExpanded, .microPDF417, .microQR]
-        }
-        return result
     }
 }

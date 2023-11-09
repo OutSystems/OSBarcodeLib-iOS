@@ -1,4 +1,5 @@
 import AVFoundation
+import SwiftUI
 import UIKit
 
 /// Class responsible for displaying the camera stream that performs the scanning.
@@ -10,12 +11,14 @@ final class OSBARCScannerViewController: UIViewController {
     
     /// Object that manages the reception of sample buffers from a video data output.
     var delegate: AVCaptureVideoDataOutputSampleBufferDelegate?
+    /// The camera used to capture video for barcode scanning.
+    var captureDevice: AVCaptureDevice?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Get the back-facing camera for capturing videos
-        guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
+        // Get the property camera for capturing videos
+        guard let captureDevice else {
             print("Failed to get the camera device")
             return
         }

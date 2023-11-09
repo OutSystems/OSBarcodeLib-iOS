@@ -1,3 +1,4 @@
+import AVFoundation
 import Combine
 import SwiftUI
 
@@ -5,10 +6,11 @@ import SwiftUI
 final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
     /// A publisher value responsible for the resulting scanned value.
     @Published private var scanResult: String = ""
+    
     /// The publisher's cancellable instance collector.
     private var cancellables: Set<AnyCancellable> = []
     
-    func startScanning(_ completion: @escaping (String) -> Void) {
+    func startScanning(with instructionsText: String, and buttonText: String?, _ completion: @escaping (String) -> Void) {
         $scanResult
             .dropFirst()    // drops the first value - the empty string
             .first()        // only publishes the first barcode value found
@@ -26,7 +28,20 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
                 self.scanResult = $0
             }
         )
-        let scannerView = OSBARCScannerView(scanResult: scanResultBinding)
+
+        // Get the default camera for capturing videos. This object will allows us to fetch the `hasTorch` method.
+        let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        let cameraHasTorch = captureDevice?.hasTorch ?? false
+        
+        let buttonText = buttonText ?? ""   // not having the button enabled is translated into having an empty text.
+        let scannerView = OSBARCScannerView(
+            captureDevice: captureDevice,
+            scanResult: scanResultBinding,
+            cameraHasTorch: cameraHasTorch,
+            instructionsText: instructionsText,
+            buttonText: buttonText,
+            shouldShowButton: !buttonText.isEmpty   // if empty text is passed, the button is not enabled on the scanner view.
+        )
         let hostingController = UIHostingController(rootView: scannerView)
         
         self.coordinator.present(hostingController)
