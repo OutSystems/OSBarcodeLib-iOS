@@ -6,7 +6,7 @@ import Vision
 final class OSBARCScannerViewControllerCoordinator: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     /// The object containing the value to return.
     @Binding private var scanResult: String
-    /// Indicates if scanning should be done only  after a button click of automatically.
+    /// Indicates if scanning should be done only  after a button click or automatically.
     private var scanThroughButton: Bool
     /// Indicates if scanning is enabled (when there's a Scan Button).
     @Binding private var scanButtonEnabled: Bool
