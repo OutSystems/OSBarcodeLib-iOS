@@ -33,12 +33,14 @@ struct OSBARCManager {
 
 /// Implementation of the `OSBARCManagerProtocol` methods.
 extension OSBARCManager: OSBARCManagerProtocol {
-    func scanBarcode(with instructionsText: String, and buttonText: String?) async throws -> String {
+    func scanBarcode(with instructionsText: String, _ buttonText: String?, and cameraModel: OSBARCCameraModel) async throws -> String {
         // validates if the user has access to the device's camera.
         let hasCameraAccess = await self.permissionsBehaviour.hasCameraAccess()
         if !hasCameraAccess { throw OSBARCManagerError.cameraAccessDenied }
         // requests the scanner to start, treating its result value.
-        return try await withCheckedThrowingContinuation { self.startScanning(with: instructionsText, and: buttonText, continuation: $0) }
+        return try await withCheckedThrowingContinuation {
+            self.startScanning(with: instructionsText, buttonText, and: cameraModel, continuation: $0)
+        }
     }
     
     /// Triggers the scanner view.
@@ -46,9 +48,10 @@ extension OSBARCManager: OSBARCManagerProtocol {
     ///   - instructionsText: Text to be displayed on the scanner view.
     ///   - buttonText: Text to be displayed for the scan button, if this is configured. `Nil` value means that the button will not be shown.
     ///   - continuation: Object responsible for returning the method's result to its caller.
-    private func startScanning(with instructionsText: String, and buttonText: String?, continuation: CheckedContinuation<String, any Error>) {
+    ///   - cameraModel: Camera to use for input gathering.
+    private func startScanning(with instructionsText: String, _ buttonText: String?, and cameraModel: OSBARCCameraModel, continuation: CheckedContinuation<String, any Error>) {
         DispatchQueue.main.async {
-            self.scannerBehaviour.startScanning(with: instructionsText, and: buttonText) { scannedCode in
+            self.scannerBehaviour.startScanning(with: instructionsText, buttonText, and: cameraModel) { scannedCode in
                 if !scannedCode.isEmpty {
                     continuation.resume(returning: scannedCode)
                 } else {

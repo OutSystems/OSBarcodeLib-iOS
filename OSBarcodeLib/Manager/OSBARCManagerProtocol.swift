@@ -7,6 +7,7 @@ public protocol OSBARCManagerProtocol {
     /// - Parameters:
     ///   - instructionsText: Text to be displayed on the scanner view.
     ///   - buttonText: Text to be displayed for the scan button, if this is configured. `Nil` value means that the button will not be shown.
+    ///   - cameraModel: Camera to use for input gathering.
     /// - Returns: When successful, it returns the text associated with the scanned barcode.
-    func scanBarcode(with instructionsText: String, and buttonText: String?) async throws -> String
+    func scanBarcode(with instructionsText: String, _ buttonText: String?, and cameraModel: OSBARCCameraModel) async throws -> String
 }

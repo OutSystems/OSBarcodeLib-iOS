@@ -3,8 +3,8 @@ import XCTest
 
 private extension OSBARCManager {
     func scanBarcode() async throws -> String {
-        // `instructionText` and `buttonText` are UI-related so are irrelevant for the unit tests.
-        try await self.scanBarcode(with: "Instruction Text", and: "Scan Button")
+        // `instructionText`, `buttonText` and `cameraModel` are UI-related so are irrelevant for the unit tests.
+        try await self.scanBarcode(with: "Instruction Text", "Scan Button", and: .back)
     }
 }
 
