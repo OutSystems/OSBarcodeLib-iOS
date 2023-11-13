@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+- Add Camera Selection feature (https://outsystemsrd.atlassian.net/browse/RMET-2754).
 - Add Scan Button feature (https://outsystemsrd.atlassian.net/browse/RMET-2752).
 - Add Scan Instruction text feature (https://outsystemsrd.atlassian.net/browse/RMET-2751).
 - Add Torch Button feature (https://outsystemsrd.atlassian.net/browse/RMET-2749).
