@@ -10,9 +10,29 @@ final class OSBARCScannerViewController: UIViewController {
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     
     /// Object that manages the reception of sample buffers from a video data output.
-    var delegate: AVCaptureVideoDataOutputSampleBufferDelegate?
+    private var delegate: AVCaptureVideoDataOutputSampleBufferDelegate?
     /// The camera used to capture video for barcode scanning.
-    var captureDevice: AVCaptureDevice?
+    private var captureDevice: AVCaptureDevice?
+    
+    /// Orientation the screen should adapt to.
+    private var orientationModel: OSBARCOrientationModel
+    
+    /// Constructor method
+    /// - Parameters:
+    ///   - delegate: Object that manages the reception of sample buffers from a video data output.
+    ///   - captureDevice: The camera used to capture video for barcode scanning.
+    ///   - orientationModel: Orientation the screen should adapt to.
+    init(delegate: AVCaptureVideoDataOutputSampleBufferDelegate?, captureDevice: AVCaptureDevice?, orientationModel: OSBARCOrientationModel) {
+        self.delegate = delegate
+        self.captureDevice = captureDevice
+        self.orientationModel = orientationModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    /// Required method. This is not used.
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +69,35 @@ final class OSBARCScannerViewController: UIViewController {
         videoPreviewLayer?.frame = view.layer.bounds
         view.layer.addSublayer(videoPreviewLayer!)
         
+        DispatchQueue.main.async {
+            /*
+             Why are we dispatching this to the main queue?
+             Because `AVCaptureVideoPreviewLayer` is the backing layer for `PreviewView` and `UIView`
+             can only be manipulated on the main thread.
+             Note: As an exception to the above rule, it is not necessary to serialize video orientation changes
+             on the `AVCaptureVideoPreviewLayer`’s connection with other session manipulation.
+             
+             Calculate the initial video orientation based on the device and the selection screen orientation.
+             Subsequent orientation changes are handled by `viewWillTransition(to:with:)`.
+             */
+            let deviceOrientation = UIDevice.current.orientation
+            var initialVideoOrientation = AVCaptureVideoOrientation(deviceOrientation: deviceOrientation)
+            
+            /*
+             If the orientation has to be portrait but the device is not on that mode, orientation is set to `portrait`.
+             If the orientation has to be landscape but the device is not on that mode, orientation is set to `landscapeRight`.
+             
+             If the device is set to `flat` orientation, then `portrait` is used for the video orientation.
+             */
+            if self.orientationModel == .portrait, !deviceOrientation.isPortrait {
+                initialVideoOrientation = .portrait
+            } else if self.orientationModel == .landscape, !deviceOrientation.isLandscape {
+                initialVideoOrientation = .landscapeRight
+            }
+            
+            self.videoPreviewLayer?.connection?.videoOrientation = initialVideoOrientation ?? .portrait
+        }
+        
         // Start video capture.
         DispatchQueue.global(qos: .background).async {
             self.captureSession.startRunning()
@@ -56,13 +105,27 @@ final class OSBARCScannerViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
         // Start video capture.
         DispatchQueue.global(qos: .background).async {
             if self.captureSession.isRunning {
                 self.captureSession.stopRunning()
             }
         }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         
-        super.viewWillDisappear(animated)
+        videoPreviewLayer?.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        
+        if let videoPreviewLayerConnection = videoPreviewLayer?.connection {
+            let deviceOrientation = UIDevice.current.orientation
+            guard let newVideoOrientation = AVCaptureVideoOrientation(deviceOrientation: deviceOrientation)
+            else { return }
+            
+            videoPreviewLayerConnection.videoOrientation = newVideoOrientation
+        }
     }
 }
