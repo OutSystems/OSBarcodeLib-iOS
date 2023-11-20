@@ -4,7 +4,8 @@ protocol OSBARCScannerProtocol {
     /// - Parameters:
     ///   - instructionsText: Text to be displayed on the scanner view.
     ///   - buttonText: Text to be displayed for the scan button, if this is configured. `Nil` value means that the button will not be shown.
-    ///   - completion: The value returned or empty string in case the view is closed with no code scanned.
     ///   - cameraModel: Camera to use for input gathering.
-    func startScanning(with instructionsText: String, _ buttonText: String?, and cameraModel: OSBARCCameraModel, _ completion: @escaping (String) -> Void)
+    ///   - orientationModel: Scanner view's orientation.
+    ///   - completion: The value returned or empty string in case the view is closed with no code scanned.
+    func startScanning(with instructionsText: String, _ buttonText: String?, _ cameraModel: OSBARCCameraModel, and orientationModel: OSBARCOrientationModel, _ completion: @escaping (String) -> Void)
 }

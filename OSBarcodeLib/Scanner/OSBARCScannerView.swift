@@ -24,10 +24,13 @@ struct OSBARCScannerView: View {
     /// Indicates if scanning is enabled. It's only applied when there's a Scan Button visible (otherwise, scanning is automatically).
     @State var buttonScanEnabled: Bool = false
     
+    /// Orientation the screen should adapt to.
+    let orientationModel: OSBARCOrientationModel
+    
     var body: some View {
         ZStack(alignment: .topTrailing) {
             // Camera Stream
-            OSBARCScannerViewControllerRepresentable(captureDevice, $scanResult, shouldShowButton, $buttonScanEnabled)
+            OSBARCScannerViewControllerRepresentable(captureDevice, $scanResult, shouldShowButton, $buttonScanEnabled, orientationModel)
             
             VStack {
                 HStack {

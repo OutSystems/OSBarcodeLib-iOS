@@ -10,7 +10,7 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
     /// The publisher's cancellable instance collector.
     private var cancellables: Set<AnyCancellable> = []
     
-    func startScanning(with instructionsText: String, _ buttonText: String?, and cameraModel: OSBARCCameraModel, _ completion: @escaping (String) -> Void) {
+    func startScanning(with instructionsText: String, _ buttonText: String?, _ cameraModel: OSBARCCameraModel, and orientationModel: OSBARCOrientationModel, _ completion: @escaping (String) -> Void) {
         $scanResult
             .dropFirst()    // drops the first value - the empty string
             .first()        // only publishes the first barcode value found
@@ -41,9 +41,11 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
             cameraHasTorch: cameraHasTorch,
             instructionsText: instructionsText,
             buttonText: buttonText,
-            shouldShowButton: !buttonText.isEmpty   // if empty text is passed, the button is not enabled on the scanner view.
+            shouldShowButton: !buttonText.isEmpty,  // if empty text is passed, the button is not enabled on the scanner view.
+            orientationModel: orientationModel
         )
-        let hostingController = UIHostingController(rootView: scannerView)
+        let hostingController = OSBARCScannerViewHostingController(rootView: scannerView, orientationModel)
+        hostingController.modalPresentationStyle = .fullScreen
         
         self.coordinator.present(hostingController)
     }
