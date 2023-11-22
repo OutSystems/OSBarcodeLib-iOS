@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Unreleased]
 
+- Implement iPad user interface (https://outsystemsrd.atlassian.net/browse/RMET-2911).
+- Implement iPhone user interface (https://outsystemsrd.atlassian.net/browse/RMET-2771).
 - Add Scan Orientation Selection feature (https://outsystemsrd.atlassian.net/browse/RMET-2753).
 - Add Camera Selection feature (https://outsystemsrd.atlassian.net/browse/RMET-2754).
 - Add Scan Button feature (https://outsystemsrd.atlassian.net/browse/RMET-2752).

@@ -42,7 +42,8 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
             instructionsText: instructionsText,
             buttonText: buttonText,
             shouldShowButton: !buttonText.isEmpty,  // if empty text is passed, the button is not enabled on the scanner view.
-            orientationModel: orientationModel
+            orientationModel: orientationModel,
+            deviceType: UIDevice.current.userInterfaceIdiom.deviceTypeModel
         )
         let hostingController = OSBARCScannerViewHostingController(rootView: scannerView, orientationModel)
         hostingController.modalPresentationStyle = .fullScreen
