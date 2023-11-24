@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// A Button that changes interface when clicking on it (like a Toggle).
-struct OSBARCToggleButton: View {
+/// A Button that changes interface when clicking on it (like a Toggle). This is used for the torch
+struct OSBARCTorchButton: View {
     /// The action performed when clicking the button.
     let action: () -> Void
     /// Indicates if the feature is enabled or not.

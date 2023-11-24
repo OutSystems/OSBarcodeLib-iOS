@@ -114,7 +114,7 @@ struct OSBARCScannerView: View {
     }
     
     /// Toggle button.
-    private var toggleButton: OSBARCToggleButton {
+    private var torchButton: OSBARCTorchButton {
         .init(action: {
             isTorchButtonOn.toggle()
             changeTorchMode()
@@ -178,7 +178,7 @@ struct OSBARCScannerView: View {
                             .frame(maxWidth: .infinity)
                             
                             // Torch Button
-                            toggleButton
+                            torchButton
                             .opacity(!cameraHasTorch ? 0.0 : 1.0)
                             .disabled(!cameraHasTorch)                            
                         }
@@ -220,7 +220,7 @@ struct OSBARCScannerView: View {
                                 
                                 if cameraHasTorch {
                                     // Torch Button
-                                    toggleButton
+                                    torchButton
                                 }
                                 
                                 if shouldShowButton {
