@@ -6,11 +6,17 @@ struct OSBARCScanButton: View {
     let action: () -> Void
     /// Text to be shown on the button.
     let text: String
+    /// Indicates if the feature is enabled or not.
+    let isOn: Bool
     
-    /// Colour to be set to the text.
-    private let foregroundColour: Color = OSBARCScannerViewConfigurationValues.mainColour
-    /// The colour to display outside the text.
-    private let backgroundColour: Color = OSBARCScannerViewConfigurationValues.secondaryColour
+    /// Text colour to use when the button's feature is set to `on`
+    private let selectedForegroundColour: Color = OSBARCScannerViewConfigurationValues.tertiaryColour
+    /// Text colour to use when the button's feature is set to `off`
+    private let notSelectedForegroundColour: Color = OSBARCScannerViewConfigurationValues.mainColour
+    /// Background colour to use when the button's feature is set to `on`.
+    private let selectedBackgroundColour: Color = OSBARCScannerViewConfigurationValues.mainColour
+    /// Background colour to use when the button's feature is set to `off`.
+    private let notSelectedBackgroundColour: Color = OSBARCScannerViewConfigurationValues.secondaryColour
     /// The colour of the button's outer line.
     private let overlayColour: Color = OSBARCScannerViewConfigurationValues.tertiaryColour
     /// Considering the button is displayed as a Rounded Rectangle, this is the radius of the button's vertices.
@@ -18,19 +24,26 @@ struct OSBARCScanButton: View {
     /// Width of the button's outer line.
     private let stroke: CGFloat = OSBARCScannerViewConfigurationValues.defaultLineStroke
     
+    /// Calculates the text colour to be used based on the `isOn` value.
+    private var foregroundColour: Color { isOn ? selectedForegroundColour : notSelectedForegroundColour }
+    /// Calculates the background colour to be used based on the `isOn` value.
+    private var backgroundColour: Color { isOn ? selectedBackgroundColour : notSelectedBackgroundColour }
+    
     var body: some View {
         Button(action: action) {
             Text(text)
                 .padding()
                 .foregroundStyle(forColour: foregroundColour)
-                .overlay(
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .stroke(overlayColour, style: .init(lineWidth: stroke))
-                )
                 .background(
                     RoundedRectangle(cornerRadius: cornerRadius)
                         .foregroundColor(backgroundColour)
                 )
+                .if(!isOn) {
+                    $0.overlay(
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .stroke(overlayColour, style: .init(lineWidth: stroke))
+                    )
+                }
         }
     }
 }

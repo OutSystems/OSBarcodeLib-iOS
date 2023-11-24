@@ -29,11 +29,16 @@ struct OSBARCTorchButton: View {
         Button(action: action) {
             Image(iconName, bundle: .init(for: OSBARCScannerBehaviour.self))    // xcassets item.
                 .frame(width: size, height: size)
-                .background(Circle().foregroundStyle(forColour: backgroundColour))
+                .background(
+                    Circle()
+                        .foregroundStyle(forColour: backgroundColour)
+                )
                 .if(!isOn) {
-                    $0.overlay(Circle().stroke(overlayColour, lineWidth: stroke))
+                    $0.overlay(
+                        Circle()
+                            .stroke(overlayColour, lineWidth: stroke)
+                    )
                 }
-                .foregroundStyle(forColour: .clear)
         }
     }
 }

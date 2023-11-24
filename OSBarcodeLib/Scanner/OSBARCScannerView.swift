@@ -77,8 +77,11 @@ struct OSBARCScannerView: View {
     /// Scanning Button. It needs to enabled to appear.
     private var scanButton: OSBARCScanButton {
         OSBARCScanButton(action: {
-            buttonScanEnabled = true
-        }, text: buttonText)
+            buttonScanEnabled.toggle()
+            if buttonScanEnabled {
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+            }
+        }, text: buttonText, isOn: buttonScanEnabled)
     }
     
     /// The scanning zone, containing the aim and the hole.
@@ -237,6 +240,7 @@ struct OSBARCScannerView: View {
             }
         }
         .customIgnoreSafeArea()
+        .statusBarHidden(true)
     }
 }
 

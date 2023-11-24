@@ -33,7 +33,7 @@ final class OSBARCScannerViewControllerCoordinator: NSObject, AVCaptureVideoData
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         // Output should only be processed when scanning is automatically or it has been enabled through the Scan Button.
-        guard !self.scanThroughButton || scanButtonEnabled else { return }
+        guard !self.scanThroughButton || self.scanButtonEnabled else { return }
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         
         var requestOptions: [VNImageOption: Any] = [:]
@@ -48,19 +48,21 @@ final class OSBARCScannerViewControllerCoordinator: NSObject, AVCaptureVideoData
     
     /// Vision request to perform. It gets initialised only once and when needed.
     lazy private var detectBarcodeRequest: VNDetectBarcodesRequest = {
-        .init(completionHandler: { request, error in
+        let barcodeRequest = VNDetectBarcodesRequest(completionHandler: { request, error in
             guard error == nil else { return }
             self.processClassification(for: request)
         })
+        barcodeRequest.symbologies = self.barcodeTypes
+        
+        return barcodeRequest
     }()
     
     /// Processes the Vision request to return the desired barcode value.
     /// - Parameter request: Vision request handler that performs image analysis.
     private func processClassification(for request: VNRequest) {
         DispatchQueue.main.async {
-            if let bestResult = request.results?.first as? VNBarcodeObservation,
-               let payload = bestResult.payloadStringValue,
-               self.barcodeTypes.contains(bestResult.symbology) {
+            if let bestResult = request.results?.first as? VNBarcodeObservation, let payload = bestResult.payloadStringValue {
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                 self.scanResult = payload
             }
         }
