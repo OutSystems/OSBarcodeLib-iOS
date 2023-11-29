@@ -1,4 +1,5 @@
 import AVFoundation
+import Combine
 import SwiftUI
 import Vision
 
@@ -7,9 +8,12 @@ final class OSBARCScannerViewControllerCoordinator: NSObject, AVCaptureVideoData
     /// The object containing the value to return.
     @Binding private var scanResult: String
     /// Indicates if scanning should be done only  after a button click or automatically.
-    private var scanThroughButton: Bool
+    private let scanThroughButton: Bool
     /// Indicates if scanning is enabled (when there's a Scan Button).
     @Binding private var scanButtonEnabled: Bool
+    
+    /// The publisher's cancellable instance collector.
+    private var cancellables: Set<AnyCancellable> = []
     
     /// List of barcode types the scanner is looking for.
     lazy private var barcodeTypes: [VNBarcodeSymbology] = {
@@ -29,6 +33,17 @@ final class OSBARCScannerViewControllerCoordinator: NSObject, AVCaptureVideoData
         self._scanResult = scanResult
         self.scanThroughButton = scanThroughButton
         self._scanButtonEnabled = scanButtonEnabled
+        super.init()
+        
+        NotificationCenter.default
+            .publisher(for: .scanFrameChanged)
+            .receive(on: RunLoop.main)  // receive this on the main thread
+            .sink { // performed this when `scanFrameChanged` gets triggered (on screen rotation).
+                if let imageRect = $0.object as? CGRect, let regionOfInterest = self.scanRegionOfInterest(for: imageRect) {
+                    self.detectBarcodeRequest.regionOfInterest = regionOfInterest   // update `regionOfInterest`
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -42,7 +57,9 @@ final class OSBARCScannerViewControllerCoordinator: NSObject, AVCaptureVideoData
             requestOptions = [.cameraIntrinsics: camData]
         }
         
-        let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .up, options: requestOptions)
+        let imageRequestHandler = VNImageRequestHandler(
+            cvPixelBuffer: pixelBuffer, orientation: self.deviceExifOrientation(), options: requestOptions
+        )
         try? imageRequestHandler.perform([self.detectBarcodeRequest])
     }
     
@@ -56,15 +73,47 @@ final class OSBARCScannerViewControllerCoordinator: NSObject, AVCaptureVideoData
         
         return barcodeRequest
     }()
-    
+}
+
+// MARK: - Private coordinator methods
+private extension OSBARCScannerViewControllerCoordinator {
     /// Processes the Vision request to return the desired barcode value.
     /// - Parameter request: Vision request handler that performs image analysis.
-    private func processClassification(for request: VNRequest) {
+    func processClassification(for request: VNRequest) {
         DispatchQueue.main.async {
             if let bestResult = request.results?.first as? VNBarcodeObservation, let payload = bestResult.payloadStringValue {
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                 self.scanResult = payload
             }
+        }
+    }
+    
+    /// Projects a rectangle from image coordinates into normalized coordinates.
+    /// The normalized coordinates is the format expected by Vision's Region of Interest.
+    /// More detail on https://developer.apple.com/documentation/vision/vnimagebasedrequest/2877482-regionofinterest.
+    /// - Parameter imageRect: The coordinates to convert
+    /// - Returns: The converted coordinates. If can return `nil` if not able to fetch the screens bounds to base on.
+    func scanRegionOfInterest(for imageRect: CGRect) -> CGRect? {
+        guard let screenBounds = UIApplication.firstKeyWindowForConnectedScenes?.windowScene?.screen.bounds else { return nil }
+        return VNNormalizedRectForImageRect(imageRect, Int(screenBounds.width), Int(screenBounds.height))
+    }
+    
+    /// Converts device orientation into the intended image's display orientation.
+    /// - Returns: The equivalent `CGImagePropertyOrientation` to use for the device's current orientation.
+    func deviceExifOrientation() -> CGImagePropertyOrientation {
+        switch UIDevice.current.orientation {
+        case .landscapeRight: return .upMirrored
+        case .portraitUpsideDown: return .leftMirrored
+        case .landscapeLeft: return .downMirrored
+        case .portrait: return .rightMirrored
+        default:    // unknown or flat.
+            var screenBounds: CGRect?
+            DispatchQueue.main.sync {   // This needs to be done as `UIApplication` calls need to be done on the main thread.
+                screenBounds = UIApplication.firstKeyWindowForConnectedScenes?.windowScene?.screen.bounds
+            }
+            guard let screenBounds, screenBounds.width > screenBounds.height
+            else { return .rightMirrored }  // assume portrait
+            return .downMirrored    // assume landscapeLeft
         }
     }
 }

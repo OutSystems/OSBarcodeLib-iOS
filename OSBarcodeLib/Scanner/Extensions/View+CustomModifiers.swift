@@ -1,3 +1,4 @@
+import Combine
 import SwiftUI
 
 extension View {
@@ -35,6 +36,20 @@ extension View {
             self.ignoresSafeArea()
         } else {
             self.edgesIgnoringSafeArea(.all)
+        }
+    }
+    
+    /// Adds a modifier for this view that fires an action when a specific value changes.
+    /// - Parameters:
+    ///   - value: The value to check against when determining whether to run the closure.
+    ///   - onChange: A closure to run when the value changes.
+    /// - Returns: A view that fires an action when the specified value changes.
+    @ViewBuilder
+    func valueChanged<T: Equatable>(value: T, _ onChange: @escaping (T) -> Void) -> some View {
+        if #available(iOS 14.0, *) {
+            self.onChange(of: value, perform: onChange)
+        } else {
+            self.onReceive(Just(value)) { onChange($0) }
         }
     }
 }
