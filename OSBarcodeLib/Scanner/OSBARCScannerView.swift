@@ -30,6 +30,9 @@ struct OSBARCScannerView: View {
     /// The type of device being used.
     let deviceType: OSBARCDeviceTypeModel
     
+    /// Frame of portion of the screen used for scanning.
+    @State var scanFrame: CGRect = .zero
+    
     /// The horizontal visual size available.
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     /// The vertical visual size available.
@@ -46,20 +49,9 @@ struct OSBARCScannerView: View {
     /// The spacing between the buttons (used on iPads and iPhones on Landscape mode).
     private let buttonSpacing: CGFloat = OSBARCScannerViewConfigurationValues.buttonSpacing
     
-    /// Draws the background view (black with a little transparency).
-    /// - Parameters:
-    ///   - height: The height to use, if any.
-    ///   - width: The width to use, if any.
-    /// - Returns: Returns the view to display.
-    @ViewBuilder
-    private func backgroundView(height: CGFloat? = nil, width: CGFloat? = nil) -> some View {
-        OSBARCScannerViewConfigurationValues.backgroundColour
-            .if(height != nil) {
-                $0.frame(height: height ?? 0.0) // the fallback value will never be executed
-            }
-            .if(width != nil) {
-                $0.frame(width: width ?? 0.0) // the fallback value will never be executed
-            }
+    /// View filled with the background colour
+    private var backgroundView: OSBARCBackgroundView {
+        .init(scanFrame: scanFrame)
     }
     
     /// Cancel button.
@@ -91,12 +83,22 @@ struct OSBARCScannerView: View {
     private func scanningZone(for size: CGSize) -> some View {
         let scannerSize: CGSize = calculateSize(for: size)
         
-        ZStack(alignment: .topLeading) {
-            // inner background view
-            OSBARCBackgroundView(padding: scannerPadding, size: scannerSize)
-            
-            // Scanning Zone
+        // Scanning Zone
+        GeometryReader { scanningZoneProxy in
             OSBARCScanningZone(size: scannerSize)
+                .onAppear(perform: {
+                    let scanningZoneFrame = scanningZoneProxy.frame(in: .global)
+                    scanFrame = .init(
+                        x: scanningZoneFrame.minX + scannerPadding,
+                        y: scanningZoneFrame.minY + scannerPadding,
+                        width: scanningZoneFrame.width - 2.0 * scannerPadding,
+                        height: scanningZoneFrame.height - 2.0 * scannerPadding
+                    )
+                })
+                .valueChanged(value: scanFrame) {
+                    // everytime `scanFrame` changes, the notification is triggered so that the barcode detection region gets updated.
+                    NotificationCenter.default.post(name: .scanFrameChanged, object: $0)
+                }
         }
         .frame(width: scannerSize.width, height: scannerSize.height)
     }
@@ -107,8 +109,6 @@ struct OSBARCScannerView: View {
     private var scanningZoneWithInstructions: some View {
         // Scan Instructions
         instructionsTextField
-        
-        backgroundView(height: scannerPadding)
         
         GeometryReader {
             scanningZone(for: $0.size)
@@ -126,115 +126,96 @@ struct OSBARCScannerView: View {
     
     // MARK: - Main Element
     var body: some View {
-        ZStack(alignment: .topLeading) {
+        ZStack {
             // Camera Stream
             OSBARCScannerViewControllerRepresentable(captureDevice, $scanResult, shouldShowButton, $buttonScanEnabled, orientationModel)
             
-            // Background Black View
-            GeometryReader { proxy in
-                OSBARCBackgroundView(padding: screenPadding, size: proxy.size)
-            }
+            backgroundView
             
             if isPhoneInPortrait {
-                VStack(spacing: 0.0) {
+                VStack(spacing: screenPadding) {
                     // X View
-                    ZStack {
-                        backgroundView()
+                    HStack {
+                        Spacer()
                         
-                        HStack {
-                            Spacer()
-                            
-                            // Cancel Button
-                            cancelButton
-                        }
+                        // Cancel Button
+                        cancelButton
                     }
-                    
-                    backgroundView(height: screenPadding)
                     
                     GeometryReader { scannerProxy in
-                        VStack(spacing: 0.0) {
-                            backgroundView()
-                            
+                        VStack(spacing: screenPadding) {
                             // Scan Instructions
                             instructionsTextField
-                            
-                            backgroundView(height: screenPadding)
-                            
+                            // Scanning Zone
                             scanningZone(for: scannerProxy.size)
-                            
-                            backgroundView()
                         }
+                        .frame(maxHeight: .infinity, alignment: .center)
                     }
-                    .layoutPriority(1)
-                    
-                    backgroundView(height: screenPadding)
                     
                     // Buttons View
-                    ZStack {
-                        backgroundView()
-                        
-                        ZStack(alignment: .trailing) {
-                            // Scan Button
-                            scanButton
+                    ZStack(alignment: .trailing) {
+                        // Scan Button
+                        scanButton
                             .opacity(!shouldShowButton ? 0.0 : 1.0)
                             .disabled(!shouldShowButton)
                             .frame(maxWidth: .infinity)
-                            
-                            // Torch Button
-                            torchButton
+                        
+                        // Torch Button
+                        torchButton
                             .opacity(!cameraHasTorch ? 0.0 : 1.0)
-                            .disabled(!cameraHasTorch)                            
-                        }
+                            .disabled(!cameraHasTorch)
                     }
                 }
                 .padding(screenPadding)
             } else {
                 GeometryReader { mainProxy in
-                    HStack(spacing: 0.0) {
-                        backgroundView()
+                    HStack(spacing: scannerPadding) {
+                        Color.clear
                         
-                        VStack(spacing: 0.0) {
-                            backgroundView()
+                        VStack {
+                            Spacer()
                             
                             if deviceType == .iphone {
                                 scanningZoneWithInstructions
-                            } else {
-                                VStack(spacing: 0.0) {
+                            }
+                            // Despite the similarities between the following views,
+                            // this is required so that `scanFrame` gets correctly updated
+                            else if mainProxy.size.width < mainProxy.size.height {
+                                VStack(spacing: scannerPadding) {
                                     scanningZoneWithInstructions
                                 }
-                                .frame(height: min(mainProxy.size.width, mainProxy.size.height) * 0.5)
+                                .frame(height: mainProxy.size.width * 0.5)
+                            } else {
+                                VStack(spacing: scannerPadding) {
+                                    scanningZoneWithInstructions
+                                }
+                                .frame(height: mainProxy.size.height * 0.5)
                             }
                             
-                            backgroundView()
+                            Spacer()
                         }
                         .frame(width: mainProxy.size.width * 0.5 - scannerPadding * 2.0)
                         
-                        backgroundView(width: screenPadding)
-                        
                         // Buttons View
-                        ZStack(alignment: .trailing) {
-                            backgroundView()
+                        VStack(alignment: .trailing, spacing: buttonSpacing) {
+                            // Cancel Button
+                            cancelButton
                             
-                            VStack(alignment: .trailing, spacing: buttonSpacing) {
-                                // Cancel Button
-                                cancelButton
-                                
-                                Spacer()
-                                
-                                if cameraHasTorch {
-                                    // Torch Button
-                                    torchButton
-                                }
-                                
-                                if shouldShowButton {
-                                    // Scan Button
-                                    scanButton
-                                }
-                                
-                                Spacer()
+                            Spacer()
+                            
+                            if cameraHasTorch {
+                                // Torch Button
+                                torchButton
                             }
+                            
+                            if shouldShowButton {
+                                // Scan Button
+                                scanButton
+                            }
+                            
+                            Spacer()
                         }
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
                     }
                 }.padding(screenPadding)
             }

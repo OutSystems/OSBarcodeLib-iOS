@@ -4,18 +4,18 @@ import SwiftUI
 /// Structure responsible for bridging `OSBARCScannerViewController` into SwiftUI.
 struct OSBARCScannerViewControllerRepresentable: UIViewControllerRepresentable {
     /// The camera used to capture video for barcode scanning.
-    private var captureDevice: AVCaptureDevice?
+    private let captureDevice: AVCaptureDevice?
     
     /// The object containing the value to return.
     @Binding private var scanResult: String
     
     /// Indicates if scanning should be done only after a button click or automatically.
-    private var scanThroughButton: Bool
+    private let scanThroughButton: Bool
     /// Indicates if scanning is enabled (when there's a Scan Button).
     @Binding private var scanButtonEnabled: Bool
     
     /// Orientation the screen should adapt to.
-    private var orientationModel: OSBARCOrientationModel
+    private let orientationModel: OSBARCOrientationModel
     
     /// Constructor method.
     /// - Parameters:
@@ -39,6 +39,7 @@ struct OSBARCScannerViewControllerRepresentable: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: OSBARCScannerViewController, context: Context) {
         // Required but nothing to do here.
     }
+    
     func makeCoordinator() -> OSBARCScannerViewControllerCoordinator {
         Coordinator($scanResult, scanThroughButton, $scanButtonEnabled)
     }

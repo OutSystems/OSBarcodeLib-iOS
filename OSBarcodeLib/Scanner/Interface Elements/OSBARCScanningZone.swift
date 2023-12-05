@@ -6,7 +6,7 @@ struct OSBARCScanningZone: View {
     /// The size of the scanning zone.
     let size: CGSize
     
-    /// Considering the aim outside is a Rounded Rectangle, this is the radius its vertices.
+    /// Considering the aim outside is a Rounded Rectangle, this is the radius of its vertices.
     private let radius: CGFloat = OSBARCScannerViewConfigurationValues.defaultRadius
     /// The colour of the aim's line.
     private let color: Color = OSBARCScannerViewConfigurationValues.mainColour

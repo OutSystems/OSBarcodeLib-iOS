@@ -5,17 +5,17 @@ import UIKit
 /// Class responsible for displaying the camera stream that performs the scanning.
 final class OSBARCScannerViewController: UIViewController {
     /// Object that coordinates the follow between the input device to the capture output.
-    private var captureSession = AVCaptureSession()
+    private let captureSession = AVCaptureSession()
     /// Layer that displays video from the device's camera.
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     
     /// Object that manages the reception of sample buffers from a video data output.
-    private var delegate: AVCaptureVideoDataOutputSampleBufferDelegate?
+    private let delegate: AVCaptureVideoDataOutputSampleBufferDelegate?
     /// The camera used to capture video for barcode scanning.
-    private var captureDevice: AVCaptureDevice?
+    private let captureDevice: AVCaptureDevice?
     
     /// Orientation the screen should adapt to.
-    private var orientationModel: OSBARCOrientationModel
+    private let orientationModel: OSBARCOrientationModel
     
     /// Constructor method
     /// - Parameters:
@@ -87,12 +87,14 @@ final class OSBARCScannerViewController: UIViewController {
              If the orientation has to be portrait but the device is not on that mode, orientation is set to `portrait`.
              If the orientation has to be landscape but the device is not on that mode, orientation is set to `landscapeRight`.
              
-             If the device is set to `flat` orientation, then `portrait` is used for the video orientation.
+             If the device is set to `flat` orientation, then check screen size to understand it's portrait or landscape.
              */
             if self.orientationModel == .portrait, !deviceOrientation.isPortrait {
                 initialVideoOrientation = .portrait
             } else if self.orientationModel == .landscape, !deviceOrientation.isLandscape {
                 initialVideoOrientation = .landscapeRight
+            } else if let screenBounds = self.view.window?.windowScene?.screen.bounds {
+                initialVideoOrientation = screenBounds.width > screenBounds.height ? .landscapeRight : .portrait
             }
             
             self.videoPreviewLayer?.connection?.videoOrientation = initialVideoOrientation ?? .portrait
