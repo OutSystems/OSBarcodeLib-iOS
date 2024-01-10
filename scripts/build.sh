@@ -1,6 +1,6 @@
-cd ..
-
 rm -rf build
+
+cd ..
 
 xcodebuild archive \
 -scheme OSBarcodeLib \

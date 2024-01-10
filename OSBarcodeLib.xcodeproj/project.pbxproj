@@ -8,8 +8,46 @@
 
 /* Begin PBXBuildFile section */
 		7507FC1B27FC2AAE003809F6 /* OSBarcodeLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7507FC1227FC2AAE003809F6 /* OSBarcodeLib.framework */; };
-		7507FC2027FC2AAE003809F6 /* OSBarcodeLibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7507FC1F27FC2AAE003809F6 /* OSBarcodeLibTests.swift */; };
-		7507FC2127FC2AAE003809F6 /* OSBarcodeLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 7507FC1527FC2AAE003809F6 /* OSBarcodeLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		750B35872AFA93B100F90083 /* OSBARCScannerViewConfigurationValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750B35862AFA93B100F90083 /* OSBARCScannerViewConfigurationValues.swift */; };
+		7513C4852B03E86B005E81C4 /* OSBARCDeviceTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C4802B03E86B005E81C4 /* OSBARCDeviceTypeModel.swift */; };
+		7513C4862B03E86B005E81C4 /* OSBARCOrientationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C4812B03E86B005E81C4 /* OSBARCOrientationModel.swift */; };
+		7513C4872B03E86B005E81C4 /* OSBARCDeviceTypeModelMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C4832B03E86B005E81C4 /* OSBARCDeviceTypeModelMappable.swift */; };
+		7513C4882B03E86B005E81C4 /* OSBARCModelMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C4842B03E86B005E81C4 /* OSBARCModelMappable.swift */; };
+		7513C48A2B03E8D6005E81C4 /* OSBARCScannerViewHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C4892B03E8D6005E81C4 /* OSBARCScannerViewHostingController.swift */; };
+		7513C48D2B03E8DF005E81C4 /* UIUserInterfaceIdiom+OSBARCModelMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C48B2B03E8DE005E81C4 /* UIUserInterfaceIdiom+OSBARCModelMappable.swift */; };
+		7513C48E2B03E8DF005E81C4 /* UIInterfaceOrientationMask+OSBARCModelMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C48C2B03E8DE005E81C4 /* UIInterfaceOrientationMask+OSBARCModelMappable.swift */; };
+		7513C4902B03E922005E81C4 /* AVCaptureVideoOrientation+CustomInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C48F2B03E922005E81C4 /* AVCaptureVideoOrientation+CustomInit.swift */; };
+		7554D70B2AFA3A0E00D4261C /* OSBARCTorchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7554D70A2AFA3A0E00D4261C /* OSBARCTorchButton.swift */; };
+		75562B3D2B17676D00F31AF6 /* Notification+ScanFrameChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75562B3C2B17676D00F31AF6 /* Notification+ScanFrameChanged.swift */; };
+		75562B3F2B1767C100F31AF6 /* UIApplication+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75562B3E2B1767C100F31AF6 /* UIApplication+Window.swift */; };
+		758E6C162B0238FF00FC16D9 /* OSBARCCameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758E6C152B0238FF00FC16D9 /* OSBARCCameraModel.swift */; };
+		758E6C192B0239E700FC16D9 /* AVCaptureDevice+OSBARCModelMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758E6C182B0239E700FC16D9 /* AVCaptureDevice+OSBARCModelMappable.swift */; };
+		75A1FC632AFA40D200AA775F /* OSBARCScannerView.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75A1FC622AFA40D200AA775F /* OSBARCScannerView.xcassets */; };
+		75C20B692AF4FD1900CCB5B1 /* OSBARCTestValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C20B682AF4FD1900CCB5B1 /* OSBARCTestValues.swift */; };
+		75C20B6B2AF4FE0700CCB5B1 /* OSBARCManagerFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C20B6A2AF4FE0700CCB5B1 /* OSBARCManagerFactoryTests.swift */; };
+		75D20FDC2AF16AC9009AD84D /* OSBARCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D20FDB2AF16AC9009AD84D /* OSBARCManager.swift */; };
+		75D20FDF2AF16AE4009AD84D /* OSBARCManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D20FDE2AF16AE4009AD84D /* OSBARCManagerProtocol.swift */; };
+		75D20FE22AF16B0A009AD84D /* OSBARCManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D20FE12AF16B0A009AD84D /* OSBARCManagerFactory.swift */; };
+		75D20FE52AF17A87009AD84D /* OSBARCCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D20FE42AF17A87009AD84D /* OSBARCCoordinator.swift */; };
+		75D20FE72AF17AFC009AD84D /* OSBARCCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D20FE62AF17AFC009AD84D /* OSBARCCoordinatorProtocol.swift */; };
+		75D20FE92AF17C1C009AD84D /* OSBARCPermissionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D20FE82AF17C1C009AD84D /* OSBARCPermissionsProtocol.swift */; };
+		75D20FEB2AF17C8E009AD84D /* OSBARCPermissionsBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D20FEA2AF17C8E009AD84D /* OSBARCPermissionsBehaviour.swift */; };
+		75E2B1C72AF3A99A00DB689E /* OSBARCScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B1C62AF3A99A00DB689E /* OSBARCScannerView.swift */; };
+		75E2B1CD2AF3AC5500DB689E /* OSBARCScannerBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B1CC2AF3AC5500DB689E /* OSBARCScannerBehaviour.swift */; };
+		75E2B1CF2AF3ACE900DB689E /* OSBARCScannerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B1CE2AF3ACE900DB689E /* OSBARCScannerProtocol.swift */; };
+		75E2B1D22AF3AE1200DB689E /* OSBARCCoordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B1D12AF3AE1200DB689E /* OSBARCCoordinatable.swift */; };
+		75E2B1D42AF3C80C00DB689E /* OSBARCScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B1D32AF3C80C00DB689E /* OSBARCScannerViewController.swift */; };
+		75E2B1D62AF3C93200DB689E /* OSBARCScannerViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B1D52AF3C93200DB689E /* OSBARCScannerViewControllerRepresentable.swift */; };
+		75E2B1D82AF3C95800DB689E /* OSBARCScannerViewControllerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B1D72AF3C95800DB689E /* OSBARCScannerViewControllerCoordinator.swift */; };
+		75E2B2062AF4153900DB689E /* OSBARCManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B2052AF4153900DB689E /* OSBARCManagerTests.swift */; };
+		75E2B2092AF4156F00DB689E /* OSBARCPermissionsStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B2082AF4156F00DB689E /* OSBARCPermissionsStub.swift */; };
+		75E2B20C2AF415C000DB689E /* OSBARCScannerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B20B2AF415C000DB689E /* OSBARCScannerStub.swift */; };
+		75E2B20F2AF41B5000DB689E /* View+CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B20E2AF41B5000DB689E /* View+CustomModifiers.swift */; };
+		75EF599A2B0E2F220084F144 /* OSBARCBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EF59992B0E2F220084F144 /* OSBARCBackgroundView.swift */; };
+		75EF599E2B0E31620084F144 /* OSBARCCancelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EF599D2B0E31620084F144 /* OSBARCCancelButton.swift */; };
+		75EF59A02B0E44660084F144 /* OSBARCInstructionsText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EF599F2B0E44660084F144 /* OSBARCInstructionsText.swift */; };
+		75EF59A22B0E462B0084F144 /* OSBARCScanningZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EF59A12B0E462B0084F144 /* OSBARCScanningZone.swift */; };
+		75EF59A42B0E4A410084F144 /* OSBARCScanButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EF59A32B0E4A410084F144 /* OSBARCScanButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,9 +62,47 @@
 
 /* Begin PBXFileReference section */
 		7507FC1227FC2AAE003809F6 /* OSBarcodeLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OSBarcodeLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7507FC1527FC2AAE003809F6 /* OSBarcodeLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSBarcodeLib.h; sourceTree = "<group>"; };
 		7507FC1A27FC2AAE003809F6 /* OSBarcodeLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OSBarcodeLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7507FC1F27FC2AAE003809F6 /* OSBarcodeLibTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBarcodeLibTests.swift; sourceTree = "<group>"; };
+		750B35862AFA93B100F90083 /* OSBARCScannerViewConfigurationValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerViewConfigurationValues.swift; sourceTree = "<group>"; };
+		7513C4802B03E86B005E81C4 /* OSBARCDeviceTypeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSBARCDeviceTypeModel.swift; sourceTree = "<group>"; };
+		7513C4812B03E86B005E81C4 /* OSBARCOrientationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSBARCOrientationModel.swift; sourceTree = "<group>"; };
+		7513C4832B03E86B005E81C4 /* OSBARCDeviceTypeModelMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSBARCDeviceTypeModelMappable.swift; sourceTree = "<group>"; };
+		7513C4842B03E86B005E81C4 /* OSBARCModelMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSBARCModelMappable.swift; sourceTree = "<group>"; };
+		7513C4892B03E8D6005E81C4 /* OSBARCScannerViewHostingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSBARCScannerViewHostingController.swift; sourceTree = "<group>"; };
+		7513C48B2B03E8DE005E81C4 /* UIUserInterfaceIdiom+OSBARCModelMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIUserInterfaceIdiom+OSBARCModelMappable.swift"; sourceTree = "<group>"; };
+		7513C48C2B03E8DE005E81C4 /* UIInterfaceOrientationMask+OSBARCModelMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIInterfaceOrientationMask+OSBARCModelMappable.swift"; sourceTree = "<group>"; };
+		7513C48F2B03E922005E81C4 /* AVCaptureVideoOrientation+CustomInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVCaptureVideoOrientation+CustomInit.swift"; sourceTree = "<group>"; };
+		7554D70A2AFA3A0E00D4261C /* OSBARCTorchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCTorchButton.swift; sourceTree = "<group>"; };
+		75562B3C2B17676D00F31AF6 /* Notification+ScanFrameChanged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+ScanFrameChanged.swift"; sourceTree = "<group>"; };
+		75562B3E2B1767C100F31AF6 /* UIApplication+Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Window.swift"; sourceTree = "<group>"; };
+		758E6C152B0238FF00FC16D9 /* OSBARCCameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCCameraModel.swift; sourceTree = "<group>"; };
+		758E6C182B0239E700FC16D9 /* AVCaptureDevice+OSBARCModelMappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVCaptureDevice+OSBARCModelMappable.swift"; sourceTree = "<group>"; };
+		75A1FC622AFA40D200AA775F /* OSBARCScannerView.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OSBARCScannerView.xcassets; sourceTree = "<group>"; };
+		75C20B682AF4FD1900CCB5B1 /* OSBARCTestValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCTestValues.swift; sourceTree = "<group>"; };
+		75C20B6A2AF4FE0700CCB5B1 /* OSBARCManagerFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCManagerFactoryTests.swift; sourceTree = "<group>"; };
+		75D20FDB2AF16AC9009AD84D /* OSBARCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCManager.swift; sourceTree = "<group>"; };
+		75D20FDE2AF16AE4009AD84D /* OSBARCManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCManagerProtocol.swift; sourceTree = "<group>"; };
+		75D20FE12AF16B0A009AD84D /* OSBARCManagerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCManagerFactory.swift; sourceTree = "<group>"; };
+		75D20FE42AF17A87009AD84D /* OSBARCCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCCoordinator.swift; sourceTree = "<group>"; };
+		75D20FE62AF17AFC009AD84D /* OSBARCCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCCoordinatorProtocol.swift; sourceTree = "<group>"; };
+		75D20FE82AF17C1C009AD84D /* OSBARCPermissionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCPermissionsProtocol.swift; sourceTree = "<group>"; };
+		75D20FEA2AF17C8E009AD84D /* OSBARCPermissionsBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCPermissionsBehaviour.swift; sourceTree = "<group>"; };
+		75E2B1C62AF3A99A00DB689E /* OSBARCScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerView.swift; sourceTree = "<group>"; };
+		75E2B1CC2AF3AC5500DB689E /* OSBARCScannerBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerBehaviour.swift; sourceTree = "<group>"; };
+		75E2B1CE2AF3ACE900DB689E /* OSBARCScannerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerProtocol.swift; sourceTree = "<group>"; };
+		75E2B1D12AF3AE1200DB689E /* OSBARCCoordinatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCCoordinatable.swift; sourceTree = "<group>"; };
+		75E2B1D32AF3C80C00DB689E /* OSBARCScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerViewController.swift; sourceTree = "<group>"; };
+		75E2B1D52AF3C93200DB689E /* OSBARCScannerViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerViewControllerRepresentable.swift; sourceTree = "<group>"; };
+		75E2B1D72AF3C95800DB689E /* OSBARCScannerViewControllerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerViewControllerCoordinator.swift; sourceTree = "<group>"; };
+		75E2B2052AF4153900DB689E /* OSBARCManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCManagerTests.swift; sourceTree = "<group>"; };
+		75E2B2082AF4156F00DB689E /* OSBARCPermissionsStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCPermissionsStub.swift; sourceTree = "<group>"; };
+		75E2B20B2AF415C000DB689E /* OSBARCScannerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerStub.swift; sourceTree = "<group>"; };
+		75E2B20E2AF41B5000DB689E /* View+CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CustomModifiers.swift"; sourceTree = "<group>"; };
+		75EF59992B0E2F220084F144 /* OSBARCBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSBARCBackgroundView.swift; sourceTree = "<group>"; };
+		75EF599D2B0E31620084F144 /* OSBARCCancelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCCancelButton.swift; sourceTree = "<group>"; };
+		75EF599F2B0E44660084F144 /* OSBARCInstructionsText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCInstructionsText.swift; sourceTree = "<group>"; };
+		75EF59A12B0E462B0084F144 /* OSBARCScanningZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScanningZone.swift; sourceTree = "<group>"; };
+		75EF59A32B0E4A410084F144 /* OSBARCScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScanButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +145,11 @@
 		7507FC1427FC2AAE003809F6 /* OSBarcodeLib */ = {
 			isa = PBXGroup;
 			children = (
-				7507FC1527FC2AAE003809F6 /* OSBarcodeLib.h */,
+				758E6C142B0238F100FC16D9 /* Models */,
+				75E2B1D02AF3ADE500DB689E /* Coordinator */,
+				75D20FE02AF16AF1009AD84D /* Manager */,
+				75E2B2042AF414DD00DB689E /* Permissions */,
+				75E2B1C32AF3A97400DB689E /* Scanner */,
 			);
 			path = OSBarcodeLib;
 			sourceTree = "<group>";
@@ -77,9 +157,115 @@
 		7507FC1E27FC2AAE003809F6 /* OSBarcodeLibTests */ = {
 			isa = PBXGroup;
 			children = (
-				7507FC1F27FC2AAE003809F6 /* OSBarcodeLibTests.swift */,
+				75C20B682AF4FD1900CCB5B1 /* OSBARCTestValues.swift */,
+				75E2B2072AF4155E00DB689E /* Stubs */,
+				75C20B6A2AF4FE0700CCB5B1 /* OSBARCManagerFactoryTests.swift */,
+				75E2B2052AF4153900DB689E /* OSBARCManagerTests.swift */,
 			);
 			path = OSBarcodeLibTests;
+			sourceTree = "<group>";
+		};
+		7513C4822B03E86B005E81C4 /* MappableProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				7513C4832B03E86B005E81C4 /* OSBARCDeviceTypeModelMappable.swift */,
+				7513C4842B03E86B005E81C4 /* OSBARCModelMappable.swift */,
+			);
+			path = MappableProtocol;
+			sourceTree = "<group>";
+		};
+		758E6C142B0238F100FC16D9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7513C4822B03E86B005E81C4 /* MappableProtocol */,
+				758E6C152B0238FF00FC16D9 /* OSBARCCameraModel.swift */,
+				7513C4802B03E86B005E81C4 /* OSBARCDeviceTypeModel.swift */,
+				7513C4812B03E86B005E81C4 /* OSBARCOrientationModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		758E6C172B0239C100FC16D9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				758E6C182B0239E700FC16D9 /* AVCaptureDevice+OSBARCModelMappable.swift */,
+				7513C48F2B03E922005E81C4 /* AVCaptureVideoOrientation+CustomInit.swift */,
+				75562B3C2B17676D00F31AF6 /* Notification+ScanFrameChanged.swift */,
+				75562B3E2B1767C100F31AF6 /* UIApplication+Window.swift */,
+				7513C48C2B03E8DE005E81C4 /* UIInterfaceOrientationMask+OSBARCModelMappable.swift */,
+				7513C48B2B03E8DE005E81C4 /* UIUserInterfaceIdiom+OSBARCModelMappable.swift */,
+				75E2B20E2AF41B5000DB689E /* View+CustomModifiers.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		75D20FE02AF16AF1009AD84D /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				75D20FDB2AF16AC9009AD84D /* OSBARCManager.swift */,
+				75D20FE12AF16B0A009AD84D /* OSBARCManagerFactory.swift */,
+				75D20FDE2AF16AE4009AD84D /* OSBARCManagerProtocol.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		75E2B1C32AF3A97400DB689E /* Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				75EF59982B0E2EE30084F144 /* Interface Elements */,
+				758E6C172B0239C100FC16D9 /* Extensions */,
+				75A1FC622AFA40D200AA775F /* OSBARCScannerView.xcassets */,
+				75E2B1CC2AF3AC5500DB689E /* OSBARCScannerBehaviour.swift */,
+				75E2B1CE2AF3ACE900DB689E /* OSBARCScannerProtocol.swift */,
+				75E2B1C62AF3A99A00DB689E /* OSBARCScannerView.swift */,
+				750B35862AFA93B100F90083 /* OSBARCScannerViewConfigurationValues.swift */,
+				75E2B1D32AF3C80C00DB689E /* OSBARCScannerViewController.swift */,
+				75E2B1D72AF3C95800DB689E /* OSBARCScannerViewControllerCoordinator.swift */,
+				75E2B1D52AF3C93200DB689E /* OSBARCScannerViewControllerRepresentable.swift */,
+				7513C4892B03E8D6005E81C4 /* OSBARCScannerViewHostingController.swift */,
+			);
+			path = Scanner;
+			sourceTree = "<group>";
+		};
+		75E2B1D02AF3ADE500DB689E /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				75E2B1D12AF3AE1200DB689E /* OSBARCCoordinatable.swift */,
+				75D20FE42AF17A87009AD84D /* OSBARCCoordinator.swift */,
+				75D20FE62AF17AFC009AD84D /* OSBARCCoordinatorProtocol.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		75E2B2042AF414DD00DB689E /* Permissions */ = {
+			isa = PBXGroup;
+			children = (
+				75D20FE82AF17C1C009AD84D /* OSBARCPermissionsProtocol.swift */,
+				75D20FEA2AF17C8E009AD84D /* OSBARCPermissionsBehaviour.swift */,
+			);
+			path = Permissions;
+			sourceTree = "<group>";
+		};
+		75E2B2072AF4155E00DB689E /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				75E2B2082AF4156F00DB689E /* OSBARCPermissionsStub.swift */,
+				75E2B20B2AF415C000DB689E /* OSBARCScannerStub.swift */,
+			);
+			path = Stubs;
+			sourceTree = "<group>";
+		};
+		75EF59982B0E2EE30084F144 /* Interface Elements */ = {
+			isa = PBXGroup;
+			children = (
+				75EF59992B0E2F220084F144 /* OSBARCBackgroundView.swift */,
+				75EF599D2B0E31620084F144 /* OSBARCCancelButton.swift */,
+				75EF599F2B0E44660084F144 /* OSBARCInstructionsText.swift */,
+				75EF59A32B0E4A410084F144 /* OSBARCScanButton.swift */,
+				75EF59A12B0E462B0084F144 /* OSBARCScanningZone.swift */,
+				7554D70A2AFA3A0E00D4261C /* OSBARCTorchButton.swift */,
+			);
+			path = "Interface Elements";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -89,7 +275,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7507FC2127FC2AAE003809F6 /* OSBarcodeLib.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +289,7 @@
 				7507FC0E27FC2AAE003809F6 /* Sources */,
 				7507FC0F27FC2AAE003809F6 /* Frameworks */,
 				7507FC1027FC2AAE003809F6 /* Resources */,
+				75D20FE32AF17204009AD84D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -140,10 +326,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1330;
-				LastUpgradeCheck = 1330;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					7507FC1127FC2AAE003809F6 = {
 						CreatedOnToolsVersion = 13.3;
+						LastSwiftMigration = 1500;
 					};
 					7507FC1927FC2AAE003809F6 = {
 						CreatedOnToolsVersion = 13.3;
@@ -174,6 +361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75A1FC632AFA40D200AA775F /* OSBARCScannerView.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,11 +374,66 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		75D20FE32AF17204009AD84D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: Swiftlint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7507FC0E27FC2AAE003809F6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75D20FEB2AF17C8E009AD84D /* OSBARCPermissionsBehaviour.swift in Sources */,
+				750B35872AFA93B100F90083 /* OSBARCScannerViewConfigurationValues.swift in Sources */,
+				7513C48A2B03E8D6005E81C4 /* OSBARCScannerViewHostingController.swift in Sources */,
+				7513C4902B03E922005E81C4 /* AVCaptureVideoOrientation+CustomInit.swift in Sources */,
+				75E2B1CD2AF3AC5500DB689E /* OSBARCScannerBehaviour.swift in Sources */,
+				75E2B1C72AF3A99A00DB689E /* OSBARCScannerView.swift in Sources */,
+				75E2B1CF2AF3ACE900DB689E /* OSBARCScannerProtocol.swift in Sources */,
+				758E6C192B0239E700FC16D9 /* AVCaptureDevice+OSBARCModelMappable.swift in Sources */,
+				75D20FE92AF17C1C009AD84D /* OSBARCPermissionsProtocol.swift in Sources */,
+				75D20FE52AF17A87009AD84D /* OSBARCCoordinator.swift in Sources */,
+				75562B3F2B1767C100F31AF6 /* UIApplication+Window.swift in Sources */,
+				75D20FE72AF17AFC009AD84D /* OSBARCCoordinatorProtocol.swift in Sources */,
+				75D20FE22AF16B0A009AD84D /* OSBARCManagerFactory.swift in Sources */,
+				75EF59A42B0E4A410084F144 /* OSBARCScanButton.swift in Sources */,
+				75D20FDC2AF16AC9009AD84D /* OSBARCManager.swift in Sources */,
+				75E2B1D42AF3C80C00DB689E /* OSBARCScannerViewController.swift in Sources */,
+				75E2B1D62AF3C93200DB689E /* OSBARCScannerViewControllerRepresentable.swift in Sources */,
+				7554D70B2AFA3A0E00D4261C /* OSBARCTorchButton.swift in Sources */,
+				75EF59A22B0E462B0084F144 /* OSBARCScanningZone.swift in Sources */,
+				7513C48D2B03E8DF005E81C4 /* UIUserInterfaceIdiom+OSBARCModelMappable.swift in Sources */,
+				75E2B20F2AF41B5000DB689E /* View+CustomModifiers.swift in Sources */,
+				75E2B1D22AF3AE1200DB689E /* OSBARCCoordinatable.swift in Sources */,
+				75E2B1D82AF3C95800DB689E /* OSBARCScannerViewControllerCoordinator.swift in Sources */,
+				758E6C162B0238FF00FC16D9 /* OSBARCCameraModel.swift in Sources */,
+				7513C48E2B03E8DF005E81C4 /* UIInterfaceOrientationMask+OSBARCModelMappable.swift in Sources */,
+				75D20FDF2AF16AE4009AD84D /* OSBARCManagerProtocol.swift in Sources */,
+				75EF599E2B0E31620084F144 /* OSBARCCancelButton.swift in Sources */,
+				75562B3D2B17676D00F31AF6 /* Notification+ScanFrameChanged.swift in Sources */,
+				7513C4872B03E86B005E81C4 /* OSBARCDeviceTypeModelMappable.swift in Sources */,
+				75EF59A02B0E44660084F144 /* OSBARCInstructionsText.swift in Sources */,
+				7513C4882B03E86B005E81C4 /* OSBARCModelMappable.swift in Sources */,
+				7513C4862B03E86B005E81C4 /* OSBARCOrientationModel.swift in Sources */,
+				75EF599A2B0E2F220084F144 /* OSBARCBackgroundView.swift in Sources */,
+				7513C4852B03E86B005E81C4 /* OSBARCDeviceTypeModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +441,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7507FC2027FC2AAE003809F6 /* OSBarcodeLibTests.swift in Sources */,
+				75E2B20C2AF415C000DB689E /* OSBARCScannerStub.swift in Sources */,
+				75E2B2092AF4156F00DB689E /* OSBARCPermissionsStub.swift in Sources */,
+				75E2B2062AF4153900DB689E /* OSBARCManagerTests.swift in Sources */,
+				75C20B6B2AF4FE0700CCB5B1 /* OSBARCManagerFactoryTests.swift in Sources */,
+				75C20B692AF4FD1900CCB5B1 /* OSBARCTestValues.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +497,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -264,7 +512,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -313,6 +561,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -321,7 +570,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -337,6 +586,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -344,6 +595,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -354,10 +607,13 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				PRODUCT_BUNDLE_IDENTIFIER = com.outsystems.rd.barcode.OSBarcodeLib;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -367,6 +623,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -374,6 +632,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -384,6 +644,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				PRODUCT_BUNDLE_IDENTIFIER = com.outsystems.rd.barcode.OSBarcodeLib;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -396,6 +658,7 @@
 		7507FC2827FC2AAE003809F6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = EVSWK8BA55;
@@ -412,6 +675,7 @@
 		7507FC2927FC2AAE003809F6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = EVSWK8BA55;
