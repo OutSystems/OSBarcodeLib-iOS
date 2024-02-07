@@ -5,17 +5,25 @@ struct OSBARCZoomButton: View {
     let action: () -> Void
     /// Value to apply when button is selected.
     let zoomFactor: Float
+    /// Indicates if the zoom factor is applied.
+    @Binding var isSelected: Bool
     
     /// `zoomFactor` text value to display.
-    private var text: String { zoomFactor.clean }
+    private var text: String {
+        "\(zoomFactor.clean)\(isSelected ? "x" : "")"
+    }
     /// Button size. Since it's rounded, it's equivalent to its diameter.
-    private let buttonSize: CGFloat = 28.0
+    private let buttonSize: CGFloat = 36.0
     /// Button colour to display.
-    private let backgroundColour: Color = .white.opacity(0.2)
+    private var backgroundColour: Color {
+        .black.opacity(isSelected ? 0.5 : 0.2)
+    }
     /// Size of the text font.
     private let fontSize: CGFloat = 12.0
     /// Text colour to display.
-    private let textColour: Color = OSBARCScannerViewConfigurationValues.mainColour
+    private var textColour: Color {
+        isSelected ? .init(red: 0.961, green: 0.624, blue: 0) : OSBARCScannerViewConfigurationValues.mainColour
+    }
     
     var body: some View {
         Button(action: action) {
@@ -35,9 +43,11 @@ struct OSBARCZoomButton_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             OSBARCZoomButtonTestView(zoomFactor: 1.0)
+            OSBARCZoomButtonTestView(isSelected: true, zoomFactor: 1.0)
             
             OSBARCZoomButtonTestView(zoomFactor: 0.5)
-        }.preferredColorScheme(.dark)
+            OSBARCZoomButtonTestView(isSelected: true, zoomFactor: 0.5)
+        }
     }
     
     struct OSBARCZoomButtonTestView: View {
@@ -46,12 +56,18 @@ struct OSBARCZoomButton_Previews: PreviewProvider {
             
         var body: some View {
             VStack {
-                OSBARCZoomButton(action: {
-                    isSelected.toggle()
-                }, zoomFactor: zoomFactor)
+                OSBARCZoomButton(
+                    action: {
+                        isSelected.toggle()
+                    },
+                    zoomFactor: zoomFactor,
+                    isSelected: $isSelected)
                 
                 Text("Button is \(isSelected ? "" : "not ")selected.")
+                    .foregroundStyle(forColour: .white)
             }
+            .background(OSBARCScannerViewConfigurationValues.backgroundColour)
+            .previewLayout(.sizeThatFits)
         }
     }
 }
