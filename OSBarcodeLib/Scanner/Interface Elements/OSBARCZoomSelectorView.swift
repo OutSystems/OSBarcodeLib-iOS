@@ -1,5 +1,10 @@
 import SwiftUI
 
+enum OSBARCZoomSelectorViewError: Error {
+    case noZoomFactorProvided
+    case invalidZoomFactorSelected
+}
+
 struct OSBARCZoomSelectorView: View {
     /// All possible zoom factors that can be applied.
     let zoomFactorArray: [Float]
@@ -20,6 +25,15 @@ struct OSBARCZoomSelectorView: View {
     private let borderColour: Color = OSBARCScannerViewConfigurationValues.tertiaryColour
     /// Width of the outside border line.
     private let borderStroke: CGFloat = OSBARCScannerViewConfigurationValues.defaultLineStroke
+    
+    init(zoomFactorArray: [Float], currentZoomFactor: Float, changedZoomFactor: @escaping (Float) -> Void) throws {
+        guard !zoomFactorArray.isEmpty else { throw OSBARCZoomSelectorViewError.noZoomFactorProvided }
+        guard zoomFactorArray.contains(currentZoomFactor) else { throw OSBARCZoomSelectorViewError.invalidZoomFactorSelected }
+        
+        self.zoomFactorArray = zoomFactorArray
+        self.currentZoomFactor = currentZoomFactor
+        self.changedZoomFactor = changedZoomFactor
+    }
     
     var body: some View {
         HStack(spacing: spacing) {
@@ -54,6 +68,12 @@ struct OSBARCZoomSelectorView_Previews: PreviewProvider {
             
             OSBARCZoomSelectorTestView(zoomFactorSelected: 2.0, zoomFactorArray: [0.5, 1.0, 2.0])
                 .previewLayout(.sizeThatFits)
+            
+            OSBARCZoomSelectorTestView(zoomFactorSelected: 3.0, zoomFactorArray: [0.5, 1.0, 2.0])
+                .previewLayout(.sizeThatFits)
+            
+            OSBARCZoomSelectorTestView(zoomFactorSelected: 1.0, zoomFactorArray: [])
+                .previewLayout(.sizeThatFits)
         }
         .background(OSBARCScannerViewConfigurationValues.backgroundColour)
     }
@@ -64,15 +84,23 @@ struct OSBARCZoomSelectorView_Previews: PreviewProvider {
         
         var body: some View {
             VStack {
-                OSBARCZoomSelectorView(zoomFactorArray: zoomFactorArray, currentZoomFactor: zoomFactorSelected) {
-                    zoomFactorSelected = $0
+                let zoomSelectorView = try? OSBARCZoomSelectorView(
+                    zoomFactorArray: zoomFactorArray,
+                    currentZoomFactor: zoomFactorSelected,
+                    changedZoomFactor: {
+                        zoomFactorSelected = $0
+                    })
+                if let zoomSelectorView {
+                    zoomSelectorView
+                    
+                    Text("Zoom factor currently selected: \(zoomFactorSelected.clean)x.")
+                        .foregroundStyle(forColour: .white)
+                } else {
+                    Text("Couldn't initialize Zoom Selector View.")
+                        .foregroundStyle(forColour: .white)
                 }
-                
-                Text("Zoom factor currently selected: \(zoomFactorSelected.clean)x.")
-                    .foregroundStyle(forColour: .white)
             }
             .background(OSBARCScannerViewConfigurationValues.backgroundColour)
-            .previewLayout(.sizeThatFits)
         }
     }
 }

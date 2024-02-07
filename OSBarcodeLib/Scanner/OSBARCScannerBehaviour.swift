@@ -36,7 +36,7 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
         let shouldShowZoomSelectorView: Bool
         
         var zoomFactorArray: [Float] = [1.0]
-        if let captureDevice, Float(captureDevice.minAvailableVideoZoomFactor)...Float(captureDevice.maxAvailableVideoZoomFactor) ~= 2.0  {
+        if let captureDevice, Float(captureDevice.minAvailableVideoZoomFactor)...Float(captureDevice.maxAvailableVideoZoomFactor) ~= 2.0 {
             zoomFactorArray += [2.0]
             shouldShowZoomSelectorView = true
         } else {

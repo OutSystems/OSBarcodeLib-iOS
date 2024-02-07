@@ -13,5 +13,6 @@ struct OSBARCInstructionsText: View {
             .foregroundStyle(forColour: foregroundColour)
             .fixedSize(horizontal: false, vertical: true)   // allows the text to grow vertically in case of multiline text.
             .frame(maxWidth: .infinity, alignment: .center) // allows the text to grow horizontally, centering it on the view it's inserted on.
+            .multilineTextAlignment(.center)
     }
 }

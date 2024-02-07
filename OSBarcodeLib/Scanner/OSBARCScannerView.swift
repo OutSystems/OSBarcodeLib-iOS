@@ -131,8 +131,8 @@ struct OSBARCScannerView: View {
         }, isOn: isTorchButtonOn)
     }
     
-    private var zoomSelectorView: OSBARCZoomSelectorView {
-        .init(zoomFactorArray: zoomFactorArray, currentZoomFactor: selectedZoomFactor) {
+    private var zoomSelectorView: OSBARCZoomSelectorView? {
+        try? .init(zoomFactorArray: zoomFactorArray, currentZoomFactor: selectedZoomFactor) {
             selectedZoomFactor = $0
             changeZoomFactor()
         }
