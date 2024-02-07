@@ -23,7 +23,12 @@ struct OSBARCZoomSelectorView: View {
         HStack(spacing: spacing) {
             ForEach(zoomFactorArray, id: \.self) { zoomFactor in
                 OSBARCZoomButton(
-                    action: { selectedZoomFactor = zoomFactor },
+                    action: {
+                        // only change when it's different
+                        if selectedZoomFactor != zoomFactor {
+                            selectedZoomFactor = zoomFactor
+                        }
+                    },
                     zoomFactor: zoomFactor,
                     isSelected: selectedZoomFactor == zoomFactor)
             }
