@@ -24,7 +24,11 @@ struct OSBARCScannerView: View {
     /// Indicates if scanning is enabled. It's only applied when there's a Scan Button visible (otherwise, scanning is automatically).
     @State var buttonScanEnabled: Bool = false
     
-    /// The zoom factor to apply to the scanner. Defaults to `1.0`.
+    /// Array with all the possible zoom factor values.
+    let zoomFactorArray: [Float]
+    /// Indicates if the zoom selector should be shown.
+    let shouldShowZoomSelectorView: Bool
+    /// Indicates the currently selected zoom factor value.
     @State var selectedZoomFactor: Float = 1.0
     
     /// Orientation the screen should adapt to.
@@ -127,9 +131,11 @@ struct OSBARCScannerView: View {
         }, isOn: isTorchButtonOn)
     }
     
-    /// Zoom Factor Selector View,
     private var zoomSelectorView: OSBARCZoomSelectorView {
-        .init(zoomFactorArray: [0.5, 1.0, 2.0], selectedZoomFactor: $selectedZoomFactor)
+        .init(zoomFactorArray: zoomFactorArray, currentZoomFactor: selectedZoomFactor) {
+            selectedZoomFactor = $0
+            changeZoomFactor()
+        }
     }
     
     // MARK: - Main Element
@@ -163,8 +169,10 @@ struct OSBARCScannerView: View {
                     // Buttons View
                     ZStack(alignment: .bottomTrailing) {
                         VStack(spacing: smallerPadding) {
-                            // Zoom Selector View
-                            zoomSelectorView
+                            if shouldShowZoomSelectorView {
+                                // Zoom Selector View
+                                zoomSelectorView
+                            }
                             
                             if shouldShowButton {
                                 // Scan Button
@@ -221,8 +229,10 @@ struct OSBARCScannerView: View {
                                 torchButton
                             }
                             
-                            // Zoom Selector View
-                            zoomSelectorView
+                            if shouldShowZoomSelectorView {
+                                // Zoom Selector View
+                                zoomSelectorView
+                            }
                             
                             if shouldShowButton {
                                 // Scan Button
@@ -247,6 +257,13 @@ private extension OSBARCScannerView {
     func changeTorchMode() {
         try? captureDevice?.lockForConfiguration()
         captureDevice?.torchMode = isTorchButtonOn ? .on : .off
+        captureDevice?.unlockForConfiguration()
+    }
+    
+    /// Configures `captureDevice` to assume the currently selected zoom factor value.
+    func changeZoomFactor() {
+        try? captureDevice?.lockForConfiguration()
+        captureDevice?.videoZoomFactor = CGFloat(selectedZoomFactor)
         captureDevice?.unlockForConfiguration()
     }
     

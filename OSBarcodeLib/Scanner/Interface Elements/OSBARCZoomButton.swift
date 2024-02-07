@@ -6,7 +6,7 @@ struct OSBARCZoomButton: View {
     /// Value to apply when button is selected.
     let zoomFactor: Float
     /// Indicates if the zoom factor is applied.
-    var isSelected: Bool
+    let isSelected: Bool
     
     /// `zoomFactor` text value to display.
     private var text: String {

@@ -1,10 +1,12 @@
 import SwiftUI
 
 struct OSBARCZoomSelectorView: View {
-    /// All possible zoom factors that can be applied
+    /// All possible zoom factors that can be applied.
     let zoomFactorArray: [Float]
     /// The currently selected zoom factor.
-    @Binding var selectedZoomFactor: Float
+    let currentZoomFactor: Float
+    /// Action triggered when a new zoom factor value is selected.
+    let changedZoomFactor: (Float) -> Void
     
     /// Spacing between the different buttons that compose the selector.
     private let spacing: CGFloat = 8.0
@@ -24,13 +26,12 @@ struct OSBARCZoomSelectorView: View {
             ForEach(zoomFactorArray, id: \.self) { zoomFactor in
                 OSBARCZoomButton(
                     action: {
-                        // only change when it's different
-                        if selectedZoomFactor != zoomFactor {
-                            selectedZoomFactor = zoomFactor
+                        if currentZoomFactor != zoomFactor {    // only change when it's different
+                            changedZoomFactor(zoomFactor)
                         }
                     },
                     zoomFactor: zoomFactor,
-                    isSelected: selectedZoomFactor == zoomFactor)
+                    isSelected: currentZoomFactor == zoomFactor)
             }
         }
         .padding(padding)
@@ -48,15 +49,30 @@ struct OSBARCZoomSelectorView: View {
 struct OSBARCZoomSelectorView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            OSBARCZoomSelectorView(zoomFactorArray: [1.0], selectedZoomFactor: .constant(1.0))
+            OSBARCZoomSelectorTestView(zoomFactorSelected: 1.0, zoomFactorArray: [0.5, 1.0, 2.0])
                 .previewLayout(.sizeThatFits)
-            OSBARCZoomSelectorView(zoomFactorArray: [0.5, 1.0, 2.0], selectedZoomFactor: .constant(1.0))
-                .previewLayout(.sizeThatFits)
-            OSBARCZoomSelectorView(zoomFactorArray: [0.5, 1.0, 2.0], selectedZoomFactor: .constant(0.5))
-                .previewLayout(.sizeThatFits)
-            OSBARCZoomSelectorView(zoomFactorArray: [0.5, 1.0], selectedZoomFactor: .constant(2.0))
+            
+            OSBARCZoomSelectorTestView(zoomFactorSelected: 2.0, zoomFactorArray: [0.5, 1.0, 2.0])
                 .previewLayout(.sizeThatFits)
         }
         .background(OSBARCScannerViewConfigurationValues.backgroundColour)
+    }
+    
+    struct OSBARCZoomSelectorTestView: View {
+        @State var zoomFactorSelected: Float
+        let zoomFactorArray: [Float]
+        
+        var body: some View {
+            VStack {
+                OSBARCZoomSelectorView(zoomFactorArray: zoomFactorArray, currentZoomFactor: zoomFactorSelected) {
+                    zoomFactorSelected = $0
+                }
+                
+                Text("Zoom factor currently selected: \(zoomFactorSelected.clean)x.")
+                    .foregroundStyle(forColour: .white)
+            }
+            .background(OSBARCScannerViewConfigurationValues.backgroundColour)
+            .previewLayout(.sizeThatFits)
+        }
     }
 }

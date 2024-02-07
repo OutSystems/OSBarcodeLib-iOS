@@ -33,6 +33,15 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
         let cameraToUse = AVCaptureDevice.Position.map(cameraModel)
         let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: cameraToUse)
         let cameraHasTorch = captureDevice?.hasTorch ?? false
+        let shouldShowZoomSelectorView: Bool
+        
+        var zoomFactorArray: [Float] = [1.0]
+        if let captureDevice, Float(captureDevice.minAvailableVideoZoomFactor)...Float(captureDevice.maxAvailableVideoZoomFactor) ~= 2.0  {
+            zoomFactorArray += [2.0]
+            shouldShowZoomSelectorView = true
+        } else {
+            shouldShowZoomSelectorView = false
+        }
         
         let buttonText = buttonText ?? ""   // not having the button enabled is translated into having an empty text.
         let scannerView = OSBARCScannerView(
@@ -42,6 +51,8 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
             instructionsText: instructionsText,
             buttonText: buttonText,
             shouldShowButton: !buttonText.isEmpty,  // if empty text is passed, the button is not enabled on the scanner view.
+            zoomFactorArray: zoomFactorArray,
+            shouldShowZoomSelectorView: shouldShowZoomSelectorView,
             orientationModel: orientationModel,
             deviceType: UIDevice.current.userInterfaceIdiom.deviceTypeModel
         )
