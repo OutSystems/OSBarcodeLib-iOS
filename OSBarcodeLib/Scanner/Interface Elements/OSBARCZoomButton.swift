@@ -6,7 +6,7 @@ struct OSBARCZoomButton: View {
     /// Value to apply when button is selected.
     let zoomFactor: Float
     /// Indicates if the zoom factor is applied.
-    @Binding var isSelected: Bool
+    var isSelected: Bool
     
     /// `zoomFactor` text value to display.
     private var text: String {
@@ -61,7 +61,7 @@ struct OSBARCZoomButton_Previews: PreviewProvider {
                         isSelected.toggle()
                     },
                     zoomFactor: zoomFactor,
-                    isSelected: $isSelected)
+                    isSelected: isSelected)
                 
                 Text("Button is \(isSelected ? "" : "not ")selected.")
                     .foregroundStyle(forColour: .white)
