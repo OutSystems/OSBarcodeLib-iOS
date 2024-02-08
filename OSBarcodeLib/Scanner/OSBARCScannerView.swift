@@ -24,6 +24,13 @@ struct OSBARCScannerView: View {
     /// Indicates if scanning is enabled. It's only applied when there's a Scan Button visible (otherwise, scanning is automatically).
     @State var buttonScanEnabled: Bool = false
     
+    /// Array with all the possible zoom factor values.
+    let zoomFactorArray: [Float]
+    /// Indicates if the zoom selector should be shown.
+    let shouldShowZoomSelectorView: Bool
+    /// Indicates the currently selected zoom factor value.
+    @State var selectedZoomFactor: Float = 1.0
+    
     /// Orientation the screen should adapt to.
     let orientationModel: OSBARCOrientationModel
     
@@ -44,8 +51,8 @@ struct OSBARCScannerView: View {
     // MARK: - UI Elements
     /// The padding to apply to the screen's limit sides.
     private let screenPadding: CGFloat = OSBARCScannerViewConfigurationValues.screenPadding
-    /// The padding between the scanning zone's aim and hole.
-    private let scannerPadding: CGFloat = OSBARCScannerViewConfigurationValues.scannerPadding
+    /// A smaller padding than the screen one.
+    private let smallerPadding: CGFloat = OSBARCScannerViewConfigurationValues.smallerPadding
     /// The spacing between the buttons (used on iPads and iPhones on Landscape mode).
     private let buttonSpacing: CGFloat = OSBARCScannerViewConfigurationValues.buttonSpacing
     
@@ -89,10 +96,10 @@ struct OSBARCScannerView: View {
                 .onAppear(perform: {
                     let scanningZoneFrame = scanningZoneProxy.frame(in: .global)
                     scanFrame = .init(
-                        x: scanningZoneFrame.minX + scannerPadding,
-                        y: scanningZoneFrame.minY + scannerPadding,
-                        width: scanningZoneFrame.width - 2.0 * scannerPadding,
-                        height: scanningZoneFrame.height - 2.0 * scannerPadding
+                        x: scanningZoneFrame.minX + smallerPadding,
+                        y: scanningZoneFrame.minY + smallerPadding,
+                        width: scanningZoneFrame.width - 2.0 * smallerPadding,
+                        height: scanningZoneFrame.height - 2.0 * smallerPadding
                     )
                 })
                 .valueChanged(value: scanFrame) {
@@ -124,6 +131,13 @@ struct OSBARCScannerView: View {
         }, isOn: isTorchButtonOn)
     }
     
+    private var zoomSelectorView: OSBARCZoomSelectorView? {
+        try? .init(zoomFactorArray: zoomFactorArray, currentZoomFactor: selectedZoomFactor) {
+            selectedZoomFactor = $0
+            changeZoomFactor()
+        }
+    }
+    
     // MARK: - Main Element
     var body: some View {
         ZStack {
@@ -153,12 +167,19 @@ struct OSBARCScannerView: View {
                     }
                     
                     // Buttons View
-                    ZStack(alignment: .trailing) {
-                        // Scan Button
-                        scanButton
-                            .opacity(!shouldShowButton ? 0.0 : 1.0)
-                            .disabled(!shouldShowButton)
-                            .frame(maxWidth: .infinity)
+                    ZStack(alignment: .bottomTrailing) {
+                        VStack(spacing: smallerPadding) {
+                            if shouldShowZoomSelectorView {
+                                // Zoom Selector View
+                                zoomSelectorView
+                            }
+                            
+                            if shouldShowButton {
+                                // Scan Button
+                                scanButton
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
                         
                         // Torch Button
                         torchButton
@@ -169,7 +190,7 @@ struct OSBARCScannerView: View {
                 .padding(screenPadding)
             } else {
                 GeometryReader { mainProxy in
-                    HStack(spacing: scannerPadding) {
+                    HStack(spacing: smallerPadding) {
                         Color.clear
                         
                         VStack {
@@ -181,12 +202,12 @@ struct OSBARCScannerView: View {
                             // Despite the similarities between the following views,
                             // this is required so that `scanFrame` gets correctly updated
                             else if mainProxy.size.width < mainProxy.size.height {
-                                VStack(spacing: scannerPadding) {
+                                VStack(spacing: smallerPadding) {
                                     scanningZoneWithInstructions
                                 }
                                 .frame(height: mainProxy.size.width * 0.5)
                             } else {
-                                VStack(spacing: scannerPadding) {
+                                VStack(spacing: smallerPadding) {
                                     scanningZoneWithInstructions
                                 }
                                 .frame(height: mainProxy.size.height * 0.5)
@@ -194,7 +215,7 @@ struct OSBARCScannerView: View {
                             
                             Spacer()
                         }
-                        .frame(width: mainProxy.size.width * 0.5 - scannerPadding * 2.0)
+                        .frame(width: mainProxy.size.width * 0.5 - smallerPadding * 2.0)
                         
                         // Buttons View
                         VStack(alignment: .trailing, spacing: buttonSpacing) {
@@ -206,6 +227,11 @@ struct OSBARCScannerView: View {
                             if cameraHasTorch {
                                 // Torch Button
                                 torchButton
+                            }
+                            
+                            if shouldShowZoomSelectorView {
+                                // Zoom Selector View
+                                zoomSelectorView
                             }
                             
                             if shouldShowButton {
@@ -231,6 +257,13 @@ private extension OSBARCScannerView {
     func changeTorchMode() {
         try? captureDevice?.lockForConfiguration()
         captureDevice?.torchMode = isTorchButtonOn ? .on : .off
+        captureDevice?.unlockForConfiguration()
+    }
+    
+    /// Configures `captureDevice` to assume the currently selected zoom factor value.
+    func changeZoomFactor() {
+        try? captureDevice?.lockForConfiguration()
+        captureDevice?.videoZoomFactor = CGFloat(selectedZoomFactor)
         captureDevice?.unlockForConfiguration()
     }
     
