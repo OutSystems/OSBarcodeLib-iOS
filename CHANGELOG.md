@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Features
+- Add zooming out feature (https://outsystemsrd.atlassian.net/browse/RMET-2986).
 - Add zooming in feature (https://outsystemsrd.atlassian.net/browse/RMET-2986).
 
 ## [1.0.0]

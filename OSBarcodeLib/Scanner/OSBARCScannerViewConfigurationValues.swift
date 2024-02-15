@@ -16,4 +16,6 @@ struct OSBARCScannerViewConfigurationValues {
     static let scannerLineSize: CGFloat = 50.0
     
     static let buttonSpacing: CGFloat = 24.0
+    
+    static let defaultZoom: Float = 1.0
 }
