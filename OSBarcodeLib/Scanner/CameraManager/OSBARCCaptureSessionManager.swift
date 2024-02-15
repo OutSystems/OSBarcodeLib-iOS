@@ -144,11 +144,8 @@ final class OSBARCCaptureSessionManager: OSBARCCameraManager {
             if let rotationChange = change as? OSBARCCameraRotationChange, let videoPreviewLayer = videoPreview as? AVCaptureVideoPreviewLayer {
                 videoPreviewLayer.frame = CGRect(x: 0, y: 0, width: rotationChange.value.width, height: rotationChange.value.height)
                 
-                if let videoPreviewLayerConnection = videoPreviewLayer.connection {
-                    let deviceOrientation = UIDevice.current.orientation
-                    guard let newVideoOrientation = AVCaptureVideoOrientation(deviceOrientation: deviceOrientation)
-                    else { return }
-                    
+                if let videoPreviewLayerConnection = videoPreviewLayer.connection, 
+                    let newVideoOrientation = AVCaptureVideoOrientation(deviceOrientation: UIDevice.current.orientation) {
                     videoPreviewLayerConnection.videoOrientation = newVideoOrientation
                 }
             }
