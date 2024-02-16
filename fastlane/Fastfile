@@ -42,4 +42,14 @@ platform :ios do
   lane :sonarqube do  
     sonar
   end
+
+  lane :build_xcframework do |options|
+    create_xcframework(
+        scheme: "OSBarcodeLib",
+        proj: "OSBarcodeLib.xcodeproj",
+        product_name: "OSBarcodeLib", 
+        destinations: ["iOS"],
+        xcframework_output_directory: "output"
+    )
+  end
 end

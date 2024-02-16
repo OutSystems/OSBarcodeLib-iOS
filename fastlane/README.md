@@ -23,6 +23,38 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Lane to run the unit tests
 
+### ios coverage
+
+```sh
+[bundle exec] fastlane ios coverage
+```
+
+Code coverage
+
+### ios lint
+
+```sh
+[bundle exec] fastlane ios lint
+```
+
+
+
+### ios sonarqube
+
+```sh
+[bundle exec] fastlane ios sonarqube
+```
+
+
+
+### ios build_xcframework
+
+```sh
+[bundle exec] fastlane ios build_xcframework
+```
+
+
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

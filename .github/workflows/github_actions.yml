@@ -36,3 +36,5 @@ jobs:
       env: 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONARCLOUD_KEY }}
+    - name: Create XCFramework
+      run: bundle exec fastlane build_xcframework
