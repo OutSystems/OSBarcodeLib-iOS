@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Chores
+- Update `github_actions.yml` file steps versions (https://outsystemsrd.atlassian.net/browse/RMET-2568).
+
 ### Features
 - Add zooming out feature (https://outsystemsrd.atlassian.net/browse/RMET-2986).
 - Add zooming in feature (https://outsystemsrd.atlassian.net/browse/RMET-2986).
