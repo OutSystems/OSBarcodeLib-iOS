@@ -15,7 +15,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Setup Java 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
         java-version: '17'
@@ -30,7 +30,7 @@ jobs:
     - name: Lint
       run: bundle exec fastlane lint
     - name: Setup sonarqube
-      uses: warchant/setup-sonar-scanner@v7
+      uses: warchant/setup-sonar-scanner@v8
     - name: Send to Sonarcloud
       run: bundle exec fastlane sonarqube
       env: 
