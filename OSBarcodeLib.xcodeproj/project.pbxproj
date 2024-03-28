@@ -17,9 +17,19 @@
 		7513C48D2B03E8DF005E81C4 /* UIUserInterfaceIdiom+OSBARCModelMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C48B2B03E8DE005E81C4 /* UIUserInterfaceIdiom+OSBARCModelMappable.swift */; };
 		7513C48E2B03E8DF005E81C4 /* UIInterfaceOrientationMask+OSBARCModelMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C48C2B03E8DE005E81C4 /* UIInterfaceOrientationMask+OSBARCModelMappable.swift */; };
 		7513C4902B03E922005E81C4 /* AVCaptureVideoOrientation+CustomInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C48F2B03E922005E81C4 /* AVCaptureVideoOrientation+CustomInit.swift */; };
+		75183A142B73817000AFC687 /* OSBARCZoomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75183A132B73817000AFC687 /* OSBARCZoomButton.swift */; };
+		75183A162B7389EC00AFC687 /* Float+DecimalPlacesCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75183A152B7389EC00AFC687 /* Float+DecimalPlacesCleaner.swift */; };
+		75183A182B73936500AFC687 /* OSBARCZoomSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75183A172B73936500AFC687 /* OSBARCZoomSelectorView.swift */; };
+		75508CE12B7A793A00507B09 /* OSBARCCameraChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75508CE02B7A793A00507B09 /* OSBARCCameraChange.swift */; };
 		7554D70B2AFA3A0E00D4261C /* OSBARCTorchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7554D70A2AFA3A0E00D4261C /* OSBARCTorchButton.swift */; };
-		75562B3D2B17676D00F31AF6 /* Notification+ScanFrameChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75562B3C2B17676D00F31AF6 /* Notification+ScanFrameChanged.swift */; };
+		75562B3D2B17676D00F31AF6 /* Notification+CustomEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75562B3C2B17676D00F31AF6 /* Notification+CustomEvents.swift */; };
 		75562B3F2B1767C100F31AF6 /* UIApplication+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75562B3E2B1767C100F31AF6 /* UIApplication+Window.swift */; };
+		755AB5882B768425006B6507 /* OSBARCCaptureOutputDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755AB5872B768425006B6507 /* OSBARCCaptureOutputDecoder.swift */; };
+		756E17412B754B2200D594DA /* OSBARCScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756E17402B754B2200D594DA /* OSBARCScannerViewModel.swift */; };
+		756E17452B754B6400D594DA /* OSBARCCameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756E17442B754B6400D594DA /* OSBARCCameraManager.swift */; };
+		756E17482B754C0900D594DA /* OSBARCCameraManagerEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756E17472B754C0900D594DA /* OSBARCCameraManagerEnums.swift */; };
+		756E174A2B754C4700D594DA /* OSBARCCameraType+DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756E17492B754C4700D594DA /* OSBARCCameraType+DeviceType.swift */; };
+		756E174C2B754C7600D594DA /* OSBARCCaptureSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756E174B2B754C7600D594DA /* OSBARCCaptureSessionManager.swift */; };
 		758E6C162B0238FF00FC16D9 /* OSBARCCameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758E6C152B0238FF00FC16D9 /* OSBARCCameraModel.swift */; };
 		758E6C192B0239E700FC16D9 /* AVCaptureDevice+OSBARCModelMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758E6C182B0239E700FC16D9 /* AVCaptureDevice+OSBARCModelMappable.swift */; };
 		75A1FC632AFA40D200AA775F /* OSBARCScannerView.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75A1FC622AFA40D200AA775F /* OSBARCScannerView.xcassets */; };
@@ -38,7 +48,6 @@
 		75E2B1D22AF3AE1200DB689E /* OSBARCCoordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B1D12AF3AE1200DB689E /* OSBARCCoordinatable.swift */; };
 		75E2B1D42AF3C80C00DB689E /* OSBARCScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B1D32AF3C80C00DB689E /* OSBARCScannerViewController.swift */; };
 		75E2B1D62AF3C93200DB689E /* OSBARCScannerViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B1D52AF3C93200DB689E /* OSBARCScannerViewControllerRepresentable.swift */; };
-		75E2B1D82AF3C95800DB689E /* OSBARCScannerViewControllerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B1D72AF3C95800DB689E /* OSBARCScannerViewControllerCoordinator.swift */; };
 		75E2B2062AF4153900DB689E /* OSBARCManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B2052AF4153900DB689E /* OSBARCManagerTests.swift */; };
 		75E2B2092AF4156F00DB689E /* OSBARCPermissionsStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B2082AF4156F00DB689E /* OSBARCPermissionsStub.swift */; };
 		75E2B20C2AF415C000DB689E /* OSBARCScannerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E2B20B2AF415C000DB689E /* OSBARCScannerStub.swift */; };
@@ -72,9 +81,19 @@
 		7513C48B2B03E8DE005E81C4 /* UIUserInterfaceIdiom+OSBARCModelMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIUserInterfaceIdiom+OSBARCModelMappable.swift"; sourceTree = "<group>"; };
 		7513C48C2B03E8DE005E81C4 /* UIInterfaceOrientationMask+OSBARCModelMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIInterfaceOrientationMask+OSBARCModelMappable.swift"; sourceTree = "<group>"; };
 		7513C48F2B03E922005E81C4 /* AVCaptureVideoOrientation+CustomInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVCaptureVideoOrientation+CustomInit.swift"; sourceTree = "<group>"; };
+		75183A132B73817000AFC687 /* OSBARCZoomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCZoomButton.swift; sourceTree = "<group>"; };
+		75183A152B7389EC00AFC687 /* Float+DecimalPlacesCleaner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float+DecimalPlacesCleaner.swift"; sourceTree = "<group>"; };
+		75183A172B73936500AFC687 /* OSBARCZoomSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCZoomSelectorView.swift; sourceTree = "<group>"; };
+		75508CE02B7A793A00507B09 /* OSBARCCameraChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCCameraChange.swift; sourceTree = "<group>"; };
 		7554D70A2AFA3A0E00D4261C /* OSBARCTorchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCTorchButton.swift; sourceTree = "<group>"; };
-		75562B3C2B17676D00F31AF6 /* Notification+ScanFrameChanged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+ScanFrameChanged.swift"; sourceTree = "<group>"; };
+		75562B3C2B17676D00F31AF6 /* Notification+CustomEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+CustomEvents.swift"; sourceTree = "<group>"; };
 		75562B3E2B1767C100F31AF6 /* UIApplication+Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Window.swift"; sourceTree = "<group>"; };
+		755AB5872B768425006B6507 /* OSBARCCaptureOutputDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSBARCCaptureOutputDecoder.swift; sourceTree = "<group>"; };
+		756E17402B754B2200D594DA /* OSBARCScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerViewModel.swift; sourceTree = "<group>"; };
+		756E17442B754B6400D594DA /* OSBARCCameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCCameraManager.swift; sourceTree = "<group>"; };
+		756E17472B754C0900D594DA /* OSBARCCameraManagerEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCCameraManagerEnums.swift; sourceTree = "<group>"; };
+		756E17492B754C4700D594DA /* OSBARCCameraType+DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSBARCCameraType+DeviceType.swift"; sourceTree = "<group>"; };
+		756E174B2B754C7600D594DA /* OSBARCCaptureSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCCaptureSessionManager.swift; sourceTree = "<group>"; };
 		758E6C152B0238FF00FC16D9 /* OSBARCCameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCCameraModel.swift; sourceTree = "<group>"; };
 		758E6C182B0239E700FC16D9 /* AVCaptureDevice+OSBARCModelMappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVCaptureDevice+OSBARCModelMappable.swift"; sourceTree = "<group>"; };
 		75A1FC622AFA40D200AA775F /* OSBARCScannerView.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OSBARCScannerView.xcassets; sourceTree = "<group>"; };
@@ -93,7 +112,6 @@
 		75E2B1D12AF3AE1200DB689E /* OSBARCCoordinatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCCoordinatable.swift; sourceTree = "<group>"; };
 		75E2B1D32AF3C80C00DB689E /* OSBARCScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerViewController.swift; sourceTree = "<group>"; };
 		75E2B1D52AF3C93200DB689E /* OSBARCScannerViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerViewControllerRepresentable.swift; sourceTree = "<group>"; };
-		75E2B1D72AF3C95800DB689E /* OSBARCScannerViewControllerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerViewControllerCoordinator.swift; sourceTree = "<group>"; };
 		75E2B2052AF4153900DB689E /* OSBARCManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCManagerTests.swift; sourceTree = "<group>"; };
 		75E2B2082AF4156F00DB689E /* OSBARCPermissionsStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCPermissionsStub.swift; sourceTree = "<group>"; };
 		75E2B20B2AF415C000DB689E /* OSBARCScannerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerStub.swift; sourceTree = "<group>"; };
@@ -174,6 +192,19 @@
 			path = MappableProtocol;
 			sourceTree = "<group>";
 		};
+		756E17462B754BFA00D594DA /* CameraManager */ = {
+			isa = PBXGroup;
+			children = (
+				75508CE02B7A793A00507B09 /* OSBARCCameraChange.swift */,
+				756E17442B754B6400D594DA /* OSBARCCameraManager.swift */,
+				756E17472B754C0900D594DA /* OSBARCCameraManagerEnums.swift */,
+				756E17492B754C4700D594DA /* OSBARCCameraType+DeviceType.swift */,
+				755AB5872B768425006B6507 /* OSBARCCaptureOutputDecoder.swift */,
+				756E174B2B754C7600D594DA /* OSBARCCaptureSessionManager.swift */,
+			);
+			path = CameraManager;
+			sourceTree = "<group>";
+		};
 		758E6C142B0238F100FC16D9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,7 +221,8 @@
 			children = (
 				758E6C182B0239E700FC16D9 /* AVCaptureDevice+OSBARCModelMappable.swift */,
 				7513C48F2B03E922005E81C4 /* AVCaptureVideoOrientation+CustomInit.swift */,
-				75562B3C2B17676D00F31AF6 /* Notification+ScanFrameChanged.swift */,
+				75183A152B7389EC00AFC687 /* Float+DecimalPlacesCleaner.swift */,
+				75562B3C2B17676D00F31AF6 /* Notification+CustomEvents.swift */,
 				75562B3E2B1767C100F31AF6 /* UIApplication+Window.swift */,
 				7513C48C2B03E8DE005E81C4 /* UIInterfaceOrientationMask+OSBARCModelMappable.swift */,
 				7513C48B2B03E8DE005E81C4 /* UIUserInterfaceIdiom+OSBARCModelMappable.swift */,
@@ -212,6 +244,7 @@
 		75E2B1C32AF3A97400DB689E /* Scanner */ = {
 			isa = PBXGroup;
 			children = (
+				756E17462B754BFA00D594DA /* CameraManager */,
 				75EF59982B0E2EE30084F144 /* Interface Elements */,
 				758E6C172B0239C100FC16D9 /* Extensions */,
 				75A1FC622AFA40D200AA775F /* OSBARCScannerView.xcassets */,
@@ -220,9 +253,9 @@
 				75E2B1C62AF3A99A00DB689E /* OSBARCScannerView.swift */,
 				750B35862AFA93B100F90083 /* OSBARCScannerViewConfigurationValues.swift */,
 				75E2B1D32AF3C80C00DB689E /* OSBARCScannerViewController.swift */,
-				75E2B1D72AF3C95800DB689E /* OSBARCScannerViewControllerCoordinator.swift */,
 				75E2B1D52AF3C93200DB689E /* OSBARCScannerViewControllerRepresentable.swift */,
 				7513C4892B03E8D6005E81C4 /* OSBARCScannerViewHostingController.swift */,
+				756E17402B754B2200D594DA /* OSBARCScannerViewModel.swift */,
 			);
 			path = Scanner;
 			sourceTree = "<group>";
@@ -264,6 +297,8 @@
 				75EF59A32B0E4A410084F144 /* OSBARCScanButton.swift */,
 				75EF59A12B0E462B0084F144 /* OSBARCScanningZone.swift */,
 				7554D70A2AFA3A0E00D4261C /* OSBARCTorchButton.swift */,
+				75183A132B73817000AFC687 /* OSBARCZoomButton.swift */,
+				75183A172B73936500AFC687 /* OSBARCZoomSelectorView.swift */,
 			);
 			path = "Interface Elements";
 			sourceTree = "<group>";
@@ -402,32 +437,41 @@
 			files = (
 				75D20FEB2AF17C8E009AD84D /* OSBARCPermissionsBehaviour.swift in Sources */,
 				750B35872AFA93B100F90083 /* OSBARCScannerViewConfigurationValues.swift in Sources */,
+				75183A162B7389EC00AFC687 /* Float+DecimalPlacesCleaner.swift in Sources */,
+				756E17452B754B6400D594DA /* OSBARCCameraManager.swift in Sources */,
 				7513C48A2B03E8D6005E81C4 /* OSBARCScannerViewHostingController.swift in Sources */,
 				7513C4902B03E922005E81C4 /* AVCaptureVideoOrientation+CustomInit.swift in Sources */,
+				756E17482B754C0900D594DA /* OSBARCCameraManagerEnums.swift in Sources */,
 				75E2B1CD2AF3AC5500DB689E /* OSBARCScannerBehaviour.swift in Sources */,
 				75E2B1C72AF3A99A00DB689E /* OSBARCScannerView.swift in Sources */,
 				75E2B1CF2AF3ACE900DB689E /* OSBARCScannerProtocol.swift in Sources */,
+				75183A142B73817000AFC687 /* OSBARCZoomButton.swift in Sources */,
 				758E6C192B0239E700FC16D9 /* AVCaptureDevice+OSBARCModelMappable.swift in Sources */,
+				75508CE12B7A793A00507B09 /* OSBARCCameraChange.swift in Sources */,
 				75D20FE92AF17C1C009AD84D /* OSBARCPermissionsProtocol.swift in Sources */,
 				75D20FE52AF17A87009AD84D /* OSBARCCoordinator.swift in Sources */,
 				75562B3F2B1767C100F31AF6 /* UIApplication+Window.swift in Sources */,
 				75D20FE72AF17AFC009AD84D /* OSBARCCoordinatorProtocol.swift in Sources */,
 				75D20FE22AF16B0A009AD84D /* OSBARCManagerFactory.swift in Sources */,
 				75EF59A42B0E4A410084F144 /* OSBARCScanButton.swift in Sources */,
+				75183A182B73936500AFC687 /* OSBARCZoomSelectorView.swift in Sources */,
 				75D20FDC2AF16AC9009AD84D /* OSBARCManager.swift in Sources */,
 				75E2B1D42AF3C80C00DB689E /* OSBARCScannerViewController.swift in Sources */,
+				756E174A2B754C4700D594DA /* OSBARCCameraType+DeviceType.swift in Sources */,
 				75E2B1D62AF3C93200DB689E /* OSBARCScannerViewControllerRepresentable.swift in Sources */,
 				7554D70B2AFA3A0E00D4261C /* OSBARCTorchButton.swift in Sources */,
+				756E17412B754B2200D594DA /* OSBARCScannerViewModel.swift in Sources */,
+				756E174C2B754C7600D594DA /* OSBARCCaptureSessionManager.swift in Sources */,
 				75EF59A22B0E462B0084F144 /* OSBARCScanningZone.swift in Sources */,
 				7513C48D2B03E8DF005E81C4 /* UIUserInterfaceIdiom+OSBARCModelMappable.swift in Sources */,
 				75E2B20F2AF41B5000DB689E /* View+CustomModifiers.swift in Sources */,
 				75E2B1D22AF3AE1200DB689E /* OSBARCCoordinatable.swift in Sources */,
-				75E2B1D82AF3C95800DB689E /* OSBARCScannerViewControllerCoordinator.swift in Sources */,
 				758E6C162B0238FF00FC16D9 /* OSBARCCameraModel.swift in Sources */,
 				7513C48E2B03E8DF005E81C4 /* UIInterfaceOrientationMask+OSBARCModelMappable.swift in Sources */,
 				75D20FDF2AF16AE4009AD84D /* OSBARCManagerProtocol.swift in Sources */,
 				75EF599E2B0E31620084F144 /* OSBARCCancelButton.swift in Sources */,
-				75562B3D2B17676D00F31AF6 /* Notification+ScanFrameChanged.swift in Sources */,
+				75562B3D2B17676D00F31AF6 /* Notification+CustomEvents.swift in Sources */,
+				755AB5882B768425006B6507 /* OSBARCCaptureOutputDecoder.swift in Sources */,
 				7513C4872B03E86B005E81C4 /* OSBARCDeviceTypeModelMappable.swift in Sources */,
 				75EF59A02B0E44660084F144 /* OSBARCInstructionsText.swift in Sources */,
 				7513C4882B03E86B005E81C4 /* OSBARCModelMappable.swift in Sources */,

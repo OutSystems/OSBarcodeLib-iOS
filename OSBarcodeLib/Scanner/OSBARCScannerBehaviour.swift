@@ -28,21 +28,26 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
                 self.scanResult = $0
             }
         )
-
-        // Get the default camera for capturing videos. This object will allows us to fetch the `hasTorch` method.
-        let cameraToUse = AVCaptureDevice.Position.map(cameraModel)
-        let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: cameraToUse)
-        let cameraHasTorch = captureDevice?.hasTorch ?? false
         
         let buttonText = buttonText ?? ""   // not having the button enabled is translated into having an empty text.
+        let shouldShowButton = !buttonText.isEmpty  // if empty text is passed, the button is not enabled on the scanner view
+        
+        let barcodeDecoder = OSBARCCaptureOutputDecoder(
+            scanResultBinding,
+            shouldShowButton
+        )
+        let captureSessionManager = OSBARCCaptureSessionManager(
+            cameraModel, 
+            orientationModel,
+            barcodeDecoder
+        )
+        guard let viewModel: OSBARCScannerViewModel = try? .init(cameraManager: captureSessionManager) else { return completion("") }
         let scannerView = OSBARCScannerView(
-            captureDevice: captureDevice,
+            viewModel: viewModel,
             scanResult: scanResultBinding,
-            cameraHasTorch: cameraHasTorch,
             instructionsText: instructionsText,
             buttonText: buttonText,
-            shouldShowButton: !buttonText.isEmpty,  // if empty text is passed, the button is not enabled on the scanner view.
-            orientationModel: orientationModel,
+            shouldShowButton: shouldShowButton,
             deviceType: UIDevice.current.userInterfaceIdiom.deviceTypeModel
         )
         let hostingController = OSBARCScannerViewHostingController(rootView: scannerView, orientationModel)
