@@ -12,6 +12,7 @@ on:
         - patch
         - minor
         - major
+        - none
 
 jobs:
   build-and-release:
@@ -59,6 +60,7 @@ jobs:
         run: pod trunk push ./OSBarcodeLib.podspec --allow-warnings
       
       - name: Commit changes
+        if: ${{ github.event.inputs.versionBumpLevel != 'none' }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'

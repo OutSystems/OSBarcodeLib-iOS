@@ -30,17 +30,21 @@ when "minor"
   patch = 0
 when "patch"
   patch += 1
+when "none"
+  puts "No version bump"
 else
   raise ArgumentError, "Invalid version bump level: #{level}. Must be one of: major, minor, patch."
 end
 
-# Combine the new version components
-new_version = [major, minor, patch].join('.')
+if level != "none"
+  # Combine the new version components
+  new_version = [major, minor, patch].join('.')
 
-# Replace the old version with the new version in the .podspec content
-new_podspec_content = podspec_content.gsub(/(spec.version\s*=\s*["'])\d+\.\d+\.\d+(["'])/, "\\1#{new_version}\\2")
+  # Replace the old version with the new version in the .podspec content
+  new_podspec_content = podspec_content.gsub(/(spec.version\s*=\s*["'])\d+\.\d+\.\d+(["'])/, "\\1#{new_version}\\2")
 
-# Write the new .podspec content back to the file
-File.write(podspec_path, new_podspec_content)
+  # Write the new .podspec content back to the file
+  File.write(podspec_path, new_podspec_content)
 
-puts "Version updated to #{new_version}"
+  puts "Version updated to #{new_version}"
+end

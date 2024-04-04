@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 - Update `github_actions.yml` file steps versions (https://outsystemsrd.atlassian.net/browse/RMET-2568).
+- Set up the repo to release on CocoaPods (https://outsystemsrd.atlassian.net/browse/RMET-3301).
 
 ### Features
 - Add zooming out feature (https://outsystemsrd.atlassian.net/browse/RMET-2986).

@@ -1,5 +1,4 @@
 rm -rf scripts/build
-rm -rf OSBarcodeLib.xcframework
 
 # cd ..
 
@@ -26,4 +25,4 @@ xcodebuild -create-xcframework \
 -framework './scripts/build/OSBarcodeLib.framework-iphoneos.xcarchive/Products/Library/Frameworks/OSBarcodeLib.framework' \
 -output './OSBarcodeLib.xcframework'
 
-zip -r ./scripts/build/OSBarcodeLib.zip ./OSBarcodeLib.xcframework
+zip -r ./scripts/build/OSBarcodeLib.zip ./scripts/build/OSBarcodeLib.xcframework
