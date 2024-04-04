@@ -28,8 +28,7 @@ platform :ios do
       scheme: "OSBarcodeLib",
       proj: "OSBarcodeLib.xcodeproj",
       output_directory: "sonar-reports", 
-      sonarqube_xml: "true",
-      ignore: ["Scripts/*"]
+      sonarqube_xml: "true"
     )
   end
 
