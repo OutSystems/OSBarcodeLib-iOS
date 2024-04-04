@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       versionBumpLevel:
-        description: 'Version bump level (patch, minor, major)'
+        description: 'Version bump level (patch, minor, major, none)'
         required: true
         type: choice
         default: 'patch'
