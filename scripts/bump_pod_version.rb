@@ -40,6 +40,12 @@ if level != "none"
   # Combine the new version components
   new_version = [major, minor, patch].join('.')
 
+  # Replace 'Unreleased' in the CHANGELOG.md with the new version
+  changelog_path = "./CHANGELOG.md"
+  changelog_content = File.read(changelog_path)
+  new_changelog_content = changelog_content.gsub(/Unreleased/, new_version)
+  File.write(changelog_path, new_changelog_content)
+
   # Replace the old version with the new version in the .podspec content
   new_podspec_content = podspec_content.gsub(/(spec.version\s*=\s*["'])\d+\.\d+\.\d+(["'])/, "\\1#{new_version}\\2")
 
