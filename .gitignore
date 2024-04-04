@@ -89,3 +89,6 @@ fastlane/test_output
 
 iOSInjectionProject/
 .swiftlint.yml
+
+scripts/build/
+.DS_Store
