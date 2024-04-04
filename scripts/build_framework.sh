@@ -23,6 +23,6 @@ BUILD_LIBRARIES_FOR_DISTRIBUTION=YES
 xcodebuild -create-xcframework \
 -framework './scripts/build/OSBarcodeLib.framework-iphonesimulator.xcarchive/Products/Library/Frameworks/OSBarcodeLib.framework' \
 -framework './scripts/build/OSBarcodeLib.framework-iphoneos.xcarchive/Products/Library/Frameworks/OSBarcodeLib.framework' \
--output './OSBarcodeLib.xcframework'
+-output './scripts/build/OSBarcodeLib.xcframework'
 
 zip -r ./scripts/build/OSBarcodeLib.zip ./scripts/build/OSBarcodeLib.xcframework
