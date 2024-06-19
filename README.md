@@ -37,14 +37,14 @@ The `OSBARCManagerFactory` provides a way to create the Scanner Flow Manager - t
 
 ## Motivation
 
-This library is to be used by the [Barcode Plugin](https://github.com/OutSystems/cordova-outsystems-barcode). The repository contains a `scripts/build.sh` script that allows the creation of the `OSBarcodeLib.xcframework`. This framework should then be imported into the Cordova bridge as a framework.
+This library is to be used by the [Barcode Plugin](https://github.com/OutSystems/cordova-outsystems-barcode). The repository contains a `scripts/build_framework.sh` script that allows the creation of the `OSBarcodeLib.xcframework`. This framework should then be imported into the Cordova bridge as a framework.
 
 ## Usage
 
-1. Create the `OSBarcodeLib.xcframework` using the `scripts/build.sh` script. This is achievable through the following bash script.
+1. Create the `OSBarcodeLib.xcframework` using the `scripts/build_framework.sh` script. This is achievable through the following bash script.
 
 ```console
-sh scripts/build.sh
+sh scripts/build_framework.sh
 ```
 
 2. Include the `OSBarcodeLib.xcframework` on your project. For example, to accomplish this on a Cordova plugin, the following needs to be inserted into the `plugin.xml`.
