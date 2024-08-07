@@ -29,31 +29,43 @@ final class OSBARCManagerTests: XCTestCase {
     func testNoAccessToCameraShouldThrowException() async {
         self.permissionsBehaviour.error = .anError
         
-        do {
-            _ = try await self.manager.scanBarcode()
-            XCTFail(OSBARCCommonValues.failMessage)
-        } catch {
-            XCTAssertTrue(true)
+        await self.assertThrowsAsyncError(try await self.manager.scanBarcode()) {
+            XCTAssertEqual($0 as? OSBARCManagerError, OSBARCManagerError.cameraAccessDenied)
         }
     }
     
     func testGivenAccessToCameraButCancelledScanShouldThrowException() async {
         self.scannerBehaviour.scanCancelled = true
         
-        do {
-            _ = try await self.manager.scanBarcode()
-            XCTFail(OSBARCCommonValues.failMessage)
-        } catch {
-            XCTAssertTrue(true)
+        await self.assertThrowsAsyncError(try await self.manager.scanBarcode()) {
+            XCTAssertEqual($0 as? OSBARCManagerError, OSBARCManagerError.scanningCancelled)
         }
     }
     
-    func testGivenAccessToCameraAndSuccessfulScanShouldReturnABarcode() async {
+    func testGivenAccessToCameraAndSuccessfulScanShouldReturnABarcode() async throws {
+        let result = try await self.manager.scanBarcode()
+        XCTAssertEqual(result, OSBARCScannerStubValues.scannedCode)
+    }
+}
+
+private extension OSBARCManagerTests {
+    func assertThrowsAsyncError<T>(
+        _ expression: @autoclosure () async throws -> T,
+        _ message: @autoclosure () -> String = "",
+        file: StaticString = #filePath,
+        line: UInt = #line,
+        _ errorHandler: (_ error: Error) -> Void = { _ in }
+    ) async {
         do {
-            let result = try await self.manager.scanBarcode()
-            XCTAssertEqual(result, OSBARCScannerStubValues.scannedCode)
+            _ = try await expression()
+            let customMessage = message()
+            if customMessage.isEmpty {
+                XCTFail("Asynchronous call did not throw an error.", file: file, line: line)
+            } else {
+                XCTFail(customMessage, file: file, line: line)
+            }
         } catch {
-            XCTFail(OSBARCCommonValues.failMessage)
+            errorHandler(error)
         }
     }
 }
