@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixes
+- Fix upside down video capture stream (https://outsystemsrd.atlassian.net/browse/RMET-3585).
+
+## 1.1.0
+
 ### Chores
 - Update `github_actions.yml` file steps versions (https://outsystemsrd.atlassian.net/browse/RMET-2568).
 - Set up the repo to release on CocoaPods (https://outsystemsrd.atlassian.net/browse/RMET-3301).
@@ -14,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add zooming out feature (https://outsystemsrd.atlassian.net/browse/RMET-2986).
 - Add zooming in feature (https://outsystemsrd.atlassian.net/browse/RMET-2986).
 
-## [1.0.0]
+## 1.0.0
 
 ### Features
 - Implement iPad user interface (https://outsystemsrd.atlassian.net/browse/RMET-2911).
