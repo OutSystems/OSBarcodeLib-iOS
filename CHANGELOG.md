@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixes
+- Fix pod publish pipeline (https://outsystemsrd.atlassian.net/browse/RMET-3586).
 - Fix upside down video capture stream (https://outsystemsrd.atlassian.net/browse/RMET-3585).
 
 ## 1.1.0
