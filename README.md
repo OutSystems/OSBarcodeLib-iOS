@@ -41,16 +41,29 @@ This library is to be used by the [Barcode Plugin](https://github.com/OutSystems
 
 ## Usage
 
-1. Create the `OSBarcodeLib.xcframework` using the `scripts/build_framework.sh` script. This is achievable through the following bash script.
-
-```console
-sh scripts/build_framework.sh
-```
-
-2. Include the `OSBarcodeLib.xcframework` on your project. For example, to accomplish this on a Cordova plugin, the following needs to be inserted into the `plugin.xml`.
+The library is available on CocoaPods as `OSBarcodeLib`. The following is an example of how to insert it into a Cordova plugin (through the `plugin.xml` file).
 
 ```xml
-<framework src="{path to framework}/OSBarcodeLib.xcframework" embed="true" custom="true" />
+<podspec>
+    <config>
+        <source url="https://cdn.cocoapods.org/"/>
+    </config>
+    <pods use-frameworks="true">
+        ...
+        <pod name="OSBarcodeLib" spec="${version to use}" />
+        ...
+    </pods>
+</podspec>
+```
+
+It can also be included as a dependency on other podspecs.
+
+```ruby
+Pod::Spec.new do |s|
+  ...
+  s.dependency 'OSBarcodeLib', '${version to use}'
+  ...
+end
 ```
 
 ## Methods
