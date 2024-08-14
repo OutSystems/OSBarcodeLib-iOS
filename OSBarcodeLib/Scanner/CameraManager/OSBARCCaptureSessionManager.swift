@@ -91,24 +91,22 @@ final class OSBARCCaptureSessionManager: OSBARCCameraManager {
                      Calculate the initial video orientation based on the device and the selection screen orientation.
                      Subsequent orientation changes are handled by `viewWillTransition(to:with:)`.
                      */
-                    let deviceOrientation = UIDevice.current.orientation
-                    var initialVideoOrientation = AVCaptureVideoOrientation(deviceOrientation: deviceOrientation)
-                    
-                    /*
-                     If the orientation has to be portrait but the device is not on that mode, orientation is set to `portrait`.
-                     If the orientation has to be landscape but the device is not on that mode, orientation is set to `landscapeRight`.
-                     
-                     If the device is set to `flat` orientation, then check screen size to understand it's portrait or landscape.
-                     */
-                    if self.orientationModel == .portrait, !deviceOrientation.isPortrait {
-                        initialVideoOrientation = .portrait
-                    } else if self.orientationModel == .landscape, !deviceOrientation.isLandscape {
-                        initialVideoOrientation = .landscapeRight
-                    } else if let screenBounds = UIApplication.firstKeyWindowForConnectedScenes?.windowScene?.screen.bounds {
-                        initialVideoOrientation = screenBounds.width > screenBounds.height ? .landscapeRight : .portrait
+                    if videoPreviewLayer.connection?.isVideoOrientationSupported == true,
+                       let interfaceOrientation = UIApplication.firstKeyWindowForConnectedScenes?.windowScene?.interfaceOrientation,
+                       var initialVideoOrientation = AVCaptureVideoOrientation(interfaceOrientation: interfaceOrientation) {
+                        /*
+                         If the orientation has to be portrait but the device is not on that mode, orientation is set to `portrait`.
+                         If the orientation has to be landscape but the device is not on that mode, orientation is set to `landscapeRight`.
+                         */
+                        
+                        if self.orientationModel == .portrait, !interfaceOrientation.isPortrait {
+                            initialVideoOrientation = .portrait
+                        } else if self.orientationModel == .landscape, !interfaceOrientation.isLandscape {
+                            initialVideoOrientation = .landscapeRight
+                        }
+                        
+                        videoPreviewLayer.connection?.videoOrientation = initialVideoOrientation
                     }
-                    
-                    videoPreviewLayer.connection?.videoOrientation = initialVideoOrientation ?? .portrait
                 }
             }
         }
@@ -144,9 +142,10 @@ final class OSBARCCaptureSessionManager: OSBARCCameraManager {
             if let rotationChange = change as? OSBARCCameraRotationChange, let videoPreviewLayer = videoPreview as? AVCaptureVideoPreviewLayer {
                 videoPreviewLayer.frame = CGRect(x: 0, y: 0, width: rotationChange.value.width, height: rotationChange.value.height)
                 
-                if let videoPreviewLayerConnection = videoPreviewLayer.connection, 
-                    let newVideoOrientation = AVCaptureVideoOrientation(deviceOrientation: UIDevice.current.orientation) {
-                    videoPreviewLayerConnection.videoOrientation = newVideoOrientation
+                if videoPreviewLayer.connection?.isVideoOrientationSupported == true,
+                   let interfaceOrientation = UIApplication.firstKeyWindowForConnectedScenes?.windowScene?.interfaceOrientation,
+                   let newVideoOrientation = AVCaptureVideoOrientation(interfaceOrientation: interfaceOrientation) {
+                    videoPreviewLayer.connection?.videoOrientation = newVideoOrientation
                 }
             }
         }
