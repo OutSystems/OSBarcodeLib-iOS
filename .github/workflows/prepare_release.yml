@@ -63,7 +63,7 @@ jobs:
       - name: Create pull request
         id: create_pr
         run: |
-          gh pr create -B main -H prepare-new-release-${{ env.VERSION }} --title 'Prepare `main` to Release `${{ env.VERSION }}`' --body 'Bumps version to `${{ env.VERSION }}`.<br/>Creates an updated and ready-to-be-released `OSInAppBrowserLib.zip`.'
+          gh pr create -B main -H prepare-new-release-${{ env.VERSION }} --title 'Prepare `main` to Release `${{ env.VERSION }}`' --body 'Bumps version to `${{ env.VERSION }}`.<br/>Creates an updated and ready-to-be-released `OSBarcodeLib.zip`.'
           PR_NUMBER=$(gh pr view --json number --jq '.number')
           echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
         env:
