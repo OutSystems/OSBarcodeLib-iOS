@@ -91,7 +91,7 @@ private extension OSBARCCaptureOutputDecoder {
     /// - Parameter request: Vision request handler that performs image analysis.
     func processClassification(for request: VNRequest) {
         DispatchQueue.main.async {
-            if let bestResult = request.results?.first as? VNBarcodeObservation, let payload = bestResult.payloadStringValue {
+            if let bestResult = request.results?.first as? VNBarcodeObservation, bestResult.confidence > 0.9, let payload = bestResult.payloadStringValue {
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                 self.scanResult = payload
             }
