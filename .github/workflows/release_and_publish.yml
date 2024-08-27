@@ -8,7 +8,7 @@ on:
 
 jobs:
   post-merge:
-    if: contains(github.event.pull_request.labels.*.name, 'release')
+    if: contains(github.event.pull_request.labels.*.name, 'release') && github.event.pull_request.merged == true
     runs-on: macos-latest
 
     steps:
