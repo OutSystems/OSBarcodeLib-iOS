@@ -215,16 +215,11 @@ struct OSBARCScannerView: View {
                             }
                             // Despite the similarities between the following views,
                             // this is required so that `scanFrame` gets correctly updated
-                            else if mainProxy.size.width < mainProxy.size.height {
+                            else {
                                 VStack(spacing: smallerPadding) {
                                     scanningZoneWithInstructions
                                 }
-                                .frame(height: mainProxy.size.width * 0.5)
-                            } else {
-                                VStack(spacing: smallerPadding) {
-                                    scanningZoneWithInstructions
-                                }
-                                .frame(height: mainProxy.size.height * 0.5)
+                                .frame(height: min(mainProxy.size.width, mainProxy.size.height) * 0.5)
                             }
                             
                             Spacer()
