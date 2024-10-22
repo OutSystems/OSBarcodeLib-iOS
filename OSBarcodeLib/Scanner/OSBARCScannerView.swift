@@ -122,7 +122,34 @@ struct OSBARCScannerView: View {
             viewModel.selectedZoomFactor = $0
         }
     }
-    
+
+    @ViewBuilder
+    private var landscapeButtonsView: some View {
+        VStack(alignment: .trailing, spacing: buttonSpacing) {
+            // Cancel Button
+            cancelButton
+
+            Spacer()
+
+            if viewModel.cameraHasTorch {
+                // Torch Button
+                torchButton
+            }
+
+            if viewModel.shouldShowZoomSelectorView {
+                // Zoom Selector View
+                zoomSelectorView
+            }
+
+            if shouldShowButton {
+                // Scan Button
+                scanButton
+            }
+
+            Spacer()
+        }
+    }
+
     // MARK: - Main Element
     var body: some View {
         ZStack {
@@ -176,8 +203,10 @@ struct OSBARCScannerView: View {
             } else {
                 GeometryReader { mainProxy in
                     HStack(spacing: smallerPadding) {
-                        Color.clear
-                        
+                        // behold a hack: the right view is shown on the left, but hidden.
+                        landscapeButtonsView
+                        .hidden()
+
                         VStack {
                             Spacer()
                             
@@ -186,47 +215,17 @@ struct OSBARCScannerView: View {
                             }
                             // Despite the similarities between the following views,
                             // this is required so that `scanFrame` gets correctly updated
-                            else if mainProxy.size.width < mainProxy.size.height {
+                            else {
                                 VStack(spacing: smallerPadding) {
                                     scanningZoneWithInstructions
                                 }
-                                .frame(height: mainProxy.size.width * 0.5)
-                            } else {
-                                VStack(spacing: smallerPadding) {
-                                    scanningZoneWithInstructions
-                                }
-                                .frame(height: mainProxy.size.height * 0.5)
+                                .frame(height: min(mainProxy.size.width, mainProxy.size.height) * 0.5)
                             }
                             
                             Spacer()
                         }
-                        .frame(width: mainProxy.size.width * 0.5 - smallerPadding * 2.0)
                         
-                        // Buttons View
-                        VStack(alignment: .trailing, spacing: buttonSpacing) {
-                            // Cancel Button
-                            cancelButton
-                            
-                            Spacer()
-                            
-                            if viewModel.cameraHasTorch {
-                                // Torch Button
-                                torchButton
-                            }
-                            
-                            if viewModel.shouldShowZoomSelectorView {
-                                // Zoom Selector View
-                                zoomSelectorView
-                            }
-                            
-                            if shouldShowButton {
-                                // Scan Button
-                                scanButton
-                            }
-                            
-                            Spacer()
-                        }
-                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        landscapeButtonsView
                     }
                 }.padding(screenPadding)
             }
