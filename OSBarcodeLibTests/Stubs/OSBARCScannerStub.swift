@@ -8,6 +8,7 @@ final class OSBARCScannerStub: OSBARCScannerProtocol {
         _ buttonText: String?,
         _ cameraModel: OSBARCCameraModel,
         and orientationModel: OSBARCOrientationModel,
+        andHint hint: OSBARCScannerHint?,
         _ completion: @escaping (String) -> Void
     ) {
         completion(self.scanCancelled ? "" : OSBARCScannerStubValues.scannedCode)

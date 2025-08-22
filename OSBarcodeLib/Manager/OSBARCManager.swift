@@ -33,13 +33,19 @@ struct OSBARCManager {
 
 /// Implementation of the `OSBARCManagerProtocol` methods.
 extension OSBARCManager: OSBARCManagerProtocol {
-    func scanBarcode(with instructionsText: String, _ buttonText: String?, _ cameraModel: OSBARCCameraModel, and orientationModel: OSBARCOrientationModel) async throws -> String {
+    func scanBarcode(
+        with instructionsText: String,
+        _ buttonText: String?,
+        _ cameraModel: OSBARCCameraModel,
+        and orientationModel: OSBARCOrientationModel,
+        andHint hint: OSBARCScannerHint?
+    ) async throws -> String {
         // validates if the user has access to the device's camera.
         let hasCameraAccess = await self.permissionsBehaviour.hasCameraAccess()
         if !hasCameraAccess { throw OSBARCManagerError.cameraAccessDenied }
         // requests the scanner to start, treating its result value.
         return try await withCheckedThrowingContinuation {
-            self.startScanning(with: instructionsText, buttonText, cameraModel, and: orientationModel, continuation: $0)
+            self.startScanning(with: instructionsText, buttonText, cameraModel, and: orientationModel, andHint: hint, continuation: $0)
         }
     }
     
@@ -49,16 +55,18 @@ extension OSBARCManager: OSBARCManagerProtocol {
     ///   - buttonText: Text to be displayed for the scan button, if this is configured. `Nil` value means that the button will not be shown.
     ///   - cameraModel: Camera to use for input gathering.
     ///   - orientationModel: Scanner view's orientation.
+    ///   - hint: The optional hint, to scan a specific format (e.g. only qr code). `Nil` or `unknown` value means it can scan all.
     ///   - continuation: Object responsible for returning the method's result to its caller.
     private func startScanning(
         with instructionsText: String,
         _ buttonText: String?,
         _ cameraModel: OSBARCCameraModel,
         and orientationModel: OSBARCOrientationModel,
+        andHint hint: OSBARCScannerHint?,
         continuation: CheckedContinuation<String, any Error>
     ) {
         DispatchQueue.main.async {
-            self.scannerBehaviour.startScanning(with: instructionsText, buttonText, cameraModel, and: orientationModel) { scannedCode in
+            self.scannerBehaviour.startScanning(with: instructionsText, buttonText, cameraModel, and: orientationModel, andHint: hint) { scannedCode in
                 if !scannedCode.isEmpty {
                     continuation.resume(returning: scannedCode)
                 } else {

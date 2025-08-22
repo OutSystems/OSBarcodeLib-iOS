@@ -10,7 +10,14 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
     /// The publisher's cancellable instance collector.
     private var cancellables: Set<AnyCancellable> = []
     
-    func startScanning(with instructionsText: String, _ buttonText: String?, _ cameraModel: OSBARCCameraModel, and orientationModel: OSBARCOrientationModel, _ completion: @escaping (String) -> Void) {
+    func startScanning(
+        with instructionsText: String,
+        _ buttonText: String?,
+        _ cameraModel: OSBARCCameraModel,
+        and orientationModel: OSBARCOrientationModel,
+        andHint hint: OSBARCScannerHint?,
+        _ completion: @escaping (String) -> Void
+    ) {
         $scanResult
             .dropFirst()    // drops the first value - the empty string
             .first()        // only publishes the first barcode value found
@@ -34,7 +41,8 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
         
         let barcodeDecoder = OSBARCCaptureOutputDecoder(
             scanResultBinding,
-            shouldShowButton
+            shouldShowButton,
+            andHint: hint
         )
         let captureSessionManager = OSBARCCaptureSessionManager(
             cameraModel, 
