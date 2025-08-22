@@ -4,11 +4,7 @@ final class OSBARCScannerStub: OSBARCScannerProtocol {
     var scanCancelled: Bool = false
     
     func startScanning(
-        with instructionsText: String,
-        _ buttonText: String?,
-        _ cameraModel: OSBARCCameraModel,
-        and orientationModel: OSBARCOrientationModel,
-        andHint hint: OSBARCScannerHint?,
+        with parameters: OSBARCScanParameters,
         _ completion: @escaping (String) -> Void
     ) {
         completion(self.scanCancelled ? "" : OSBARCScannerStubValues.scannedCode)
