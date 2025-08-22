@@ -6,7 +6,7 @@ import Vision
 /// Class responsible for decoding the scanning output (in this case, barcodes).
 final class OSBARCCaptureOutputDecoder: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     /// The object containing the value to return.
-    @Binding private var scanResult: String
+    @Binding private var scanResult: OSBARCScanResult
     /// Indicates if scanning should be done only  after a button click or automatically.
     private let scanThroughButton: Bool
     /// Indicates if scanning is enabled (when there's a Scan Button).
@@ -23,7 +23,7 @@ final class OSBARCCaptureOutputDecoder: NSObject, AVCaptureVideoDataOutputSample
     ///   - scanThroughButton: Boolean indicating if scanning should be performed automatically or after clicking the Scan Button.
     ///   - scanButtonEnabled: Indicates if scanning has already been set on.
     ///   - hint: The optional hint, to scan a specific format (e.g. only qr code). `Nil` or `unknown` value means it can scan all.
-    init(_ scanResult: Binding<String>, _ scanThroughButton: Bool, _ scanButtonEnabled: Bool = false, andHint hint: OSBARCScannerHint? = nil) {
+    init(_ scanResult: Binding<OSBARCScanResult>, _ scanThroughButton: Bool, _ scanButtonEnabled: Bool = false, andHint hint: OSBARCScannerHint? = nil) {
         self._scanResult = scanResult
         self.scanThroughButton = scanThroughButton
         self.scanButtonEnabled = scanButtonEnabled
@@ -88,7 +88,8 @@ private extension OSBARCCaptureOutputDecoder {
         DispatchQueue.main.async {
             if let bestResult = request.results?.first as? VNBarcodeObservation, bestResult.confidence > 0.9, let payload = bestResult.payloadStringValue {
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-                self.scanResult = payload
+                let format = OSBARCScannerHint.fromVNBarcodeSymbology(bestResult.symbology)
+                self.scanResult = OSBARCScanResult(text: payload, format: format)
             }
         }
     }

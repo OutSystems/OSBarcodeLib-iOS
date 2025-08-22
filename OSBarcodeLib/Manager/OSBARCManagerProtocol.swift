@@ -9,5 +9,5 @@ public protocol OSBARCManagerProtocol {
     /// - Returns: When successful, it returns the text associated with the scanned barcode.
     func scanBarcode(
         with parameters: OSBARCScanParameters
-    ) async throws -> String
+    ) async throws -> OSBARCScanResult
 }

@@ -10,6 +10,12 @@ extension OSBARCScannerHint {
         }
     }
     
+    static func fromVNBarcodeSymbology(_ symbology: VNBarcodeSymbology) -> OSBARCScannerHint {
+        return Self.hintMappings.first { (_, symbologies) in
+            symbologies.contains(symbology)
+        }?.key ?? .unknown
+    }
+    
     static let hintMappings: [OSBARCScannerHint: [VNBarcodeSymbology]] = {
         var result: [OSBARCScannerHint: [VNBarcodeSymbology]] = [
             .qrCode: [.qr],

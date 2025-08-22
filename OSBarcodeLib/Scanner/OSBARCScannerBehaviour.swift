@@ -5,14 +5,14 @@ import SwiftUI
 /// Class responsible for the barcode scanner view flow.
 final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
     /// A publisher value responsible for the resulting scanned value.
-    @Published private var scanResult: String = ""
+    @Published private var scanResult: OSBARCScanResult = OSBARCScanResult.empty()
     
     /// The publisher's cancellable instance collector.
     private var cancellables: Set<AnyCancellable> = []
     
     func startScanning(
         with parameters: OSBARCScanParameters,
-        _ completion: @escaping (String) -> Void
+        _ completion: @escaping (OSBARCScanResult) -> Void
     ) {
         $scanResult
             .dropFirst()    // drops the first value - the empty string
@@ -45,7 +45,7 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
             parameters.scanOrientation,
             barcodeDecoder
         )
-        guard let viewModel: OSBARCScannerViewModel = try? .init(cameraManager: captureSessionManager) else { return completion("") }
+        guard let viewModel: OSBARCScannerViewModel = try? .init(cameraManager: captureSessionManager) else { return completion(OSBARCScanResult.empty()) }
         let scannerView = OSBARCScannerView(
             viewModel: viewModel,
             scanResult: scanResultBinding,

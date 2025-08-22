@@ -10,6 +10,7 @@
 		630812572E5866D900536FE7 /* OSBARCScannerHint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630812562E5866C700536FE7 /* OSBARCScannerHint.swift */; };
 		6308125D2E58902B00536FE7 /* OSBARCScannerHint+VNBarcodeSymbology.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308125C2E58902100536FE7 /* OSBARCScannerHint+VNBarcodeSymbology.swift */; };
 		6308125F2E5891ED00536FE7 /* OSBARCScanParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308125E2E5891E700536FE7 /* OSBARCScanParameters.swift */; };
+		630812612E589F5A00536FE7 /* OSBARCScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630812602E589F5600536FE7 /* OSBARCScanResult.swift */; };
 		7507FC1B27FC2AAE003809F6 /* OSBarcodeLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7507FC1227FC2AAE003809F6 /* OSBarcodeLib.framework */; };
 		750B35872AFA93B100F90083 /* OSBARCScannerViewConfigurationValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750B35862AFA93B100F90083 /* OSBARCScannerViewConfigurationValues.swift */; };
 		7513C4852B03E86B005E81C4 /* OSBARCDeviceTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513C4802B03E86B005E81C4 /* OSBARCDeviceTypeModel.swift */; };
@@ -76,6 +77,7 @@
 		630812562E5866C700536FE7 /* OSBARCScannerHint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerHint.swift; sourceTree = "<group>"; };
 		6308125C2E58902100536FE7 /* OSBARCScannerHint+VNBarcodeSymbology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSBARCScannerHint+VNBarcodeSymbology.swift"; sourceTree = "<group>"; };
 		6308125E2E5891E700536FE7 /* OSBARCScanParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScanParameters.swift; sourceTree = "<group>"; };
+		630812602E589F5600536FE7 /* OSBARCScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScanResult.swift; sourceTree = "<group>"; };
 		7507FC1227FC2AAE003809F6 /* OSBarcodeLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OSBarcodeLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7507FC1A27FC2AAE003809F6 /* OSBarcodeLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OSBarcodeLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		750B35862AFA93B100F90083 /* OSBARCScannerViewConfigurationValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSBARCScannerViewConfigurationValues.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				7513C4802B03E86B005E81C4 /* OSBARCDeviceTypeModel.swift */,
 				7513C4812B03E86B005E81C4 /* OSBARCOrientationModel.swift */,
 				630812562E5866C700536FE7 /* OSBARCScannerHint.swift */,
+				630812602E589F5600536FE7 /* OSBARCScanResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				75562B3F2B1767C100F31AF6 /* UIApplication+Window.swift in Sources */,
 				75D20FE72AF17AFC009AD84D /* OSBARCCoordinatorProtocol.swift in Sources */,
 				75D20FE22AF16B0A009AD84D /* OSBARCManagerFactory.swift in Sources */,
+				630812612E589F5A00536FE7 /* OSBARCScanResult.swift in Sources */,
 				75EF59A42B0E4A410084F144 /* OSBARCScanButton.swift in Sources */,
 				75183A182B73936500AFC687 /* OSBARCZoomSelectorView.swift in Sources */,
 				75D20FDC2AF16AC9009AD84D /* OSBARCManager.swift in Sources */,

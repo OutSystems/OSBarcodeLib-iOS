@@ -5,8 +5,8 @@ final class OSBARCScannerStub: OSBARCScannerProtocol {
     
     func startScanning(
         with parameters: OSBARCScanParameters,
-        _ completion: @escaping (String) -> Void
+        _ completion: @escaping (OSBARCScanResult) -> Void
     ) {
-        completion(self.scanCancelled ? "" : OSBARCScannerStubValues.scannedCode)
+        completion(self.scanCancelled ? OSBARCScanResult(result: "", format: .unknown) : OSBARCScanResult(result: OSBARCScannerStubValues.scannedCode, format: .qrCode))
     }
 }

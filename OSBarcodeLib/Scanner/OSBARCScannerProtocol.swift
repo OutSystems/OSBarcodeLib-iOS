@@ -6,6 +6,6 @@ protocol OSBARCScannerProtocol {
     ///   - completion: The value returned or empty string in case the view is closed with no code scanned.
     func startScanning(
         with parameters: OSBARCScanParameters,
-        _ completion: @escaping (String) -> Void
+        _ completion: @escaping (OSBARCScanResult) -> Void
     )
 }
