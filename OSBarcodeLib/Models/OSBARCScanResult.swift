@@ -1,4 +1,4 @@
-public struct OSBARCScanResult {
+public struct OSBARCScanResult: Equatable {
     /// The actual textual data that was scanned
     public let text: String
     

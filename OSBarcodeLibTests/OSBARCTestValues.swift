@@ -1,3 +1,5 @@
+@testable import OSBarcodeLib
+
 struct OSBARCScannerStubValues {
-    static let scannedCode = "Scanned Code"
+    static let scannedCode = OSBARCScanResult(text: "Scanned Code", format: .qrCode)
 }

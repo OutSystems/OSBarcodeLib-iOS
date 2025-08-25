@@ -7,6 +7,6 @@ final class OSBARCScannerStub: OSBARCScannerProtocol {
         with parameters: OSBARCScanParameters,
         _ completion: @escaping (OSBARCScanResult) -> Void
     ) {
-        completion(self.scanCancelled ? OSBARCScanResult(result: "", format: .unknown) : OSBARCScanResult(result: OSBARCScannerStubValues.scannedCode, format: .qrCode))
+        completion(self.scanCancelled ? OSBARCScanResult(text: "", format: .unknown) : OSBARCScannerStubValues.scannedCode)
     }
 }
