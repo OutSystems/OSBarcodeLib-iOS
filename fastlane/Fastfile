@@ -18,7 +18,7 @@ default_platform(:ios)
 platform :ios do
   desc "Lane to run the unit tests"
   lane :unit_tests do
-    run_tests(scheme: "OSBarcodeLib",
+    run_tests(scheme: "OSBarcodeLib")
   end
 
   desc "Code coverage"
