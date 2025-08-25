@@ -10,10 +10,7 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
     /// The publisher's cancellable instance collector.
     private var cancellables: Set<AnyCancellable> = []
     
-    func startScanning(
-        with parameters: OSBARCScanParameters,
-        _ completion: @escaping (OSBARCScanResult) -> Void
-    ) {
+    func startScanning(with parameters: OSBARCScanParameters, _ completion: @escaping (OSBARCScanResult) -> Void) {
         $scanResult
             .dropFirst()    // drops the first value - the empty string
             .first()        // only publishes the first barcode value found

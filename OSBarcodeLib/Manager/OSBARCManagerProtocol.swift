@@ -7,7 +7,5 @@ public protocol OSBARCManagerProtocol {
     /// - Parameters:
     ///   - parameters: The full parameter list to configure the scanner
     /// - Returns: When successful, it returns the text associated with the scanned barcode.
-    func scanBarcode(
-        with parameters: OSBARCScanParameters
-    ) async throws -> OSBARCScanResult
+    func scanBarcode(with parameters: OSBARCScanParameters) async throws -> OSBARCScanResult
 }
