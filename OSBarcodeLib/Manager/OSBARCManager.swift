@@ -33,34 +33,25 @@ struct OSBARCManager {
 
 /// Implementation of the `OSBARCManagerProtocol` methods.
 extension OSBARCManager: OSBARCManagerProtocol {
-    func scanBarcode(with instructionsText: String, _ buttonText: String?, _ cameraModel: OSBARCCameraModel, and orientationModel: OSBARCOrientationModel) async throws -> String {
+    func scanBarcode(with parameters: OSBARCScanParameters) async throws -> OSBARCScanResult {
         // validates if the user has access to the device's camera.
         let hasCameraAccess = await self.permissionsBehaviour.hasCameraAccess()
         if !hasCameraAccess { throw OSBARCManagerError.cameraAccessDenied }
         // requests the scanner to start, treating its result value.
         return try await withCheckedThrowingContinuation {
-            self.startScanning(with: instructionsText, buttonText, cameraModel, and: orientationModel, continuation: $0)
+            self.startScanning(with: parameters, continuation: $0)
         }
     }
     
     /// Triggers the scanner view.
     /// - Parameters:
-    ///   - instructionsText: Text to be displayed on the scanner view.
-    ///   - buttonText: Text to be displayed for the scan button, if this is configured. `Nil` value means that the button will not be shown.
-    ///   - cameraModel: Camera to use for input gathering.
-    ///   - orientationModel: Scanner view's orientation.
+    ///   - parameters: The full parameter list to configure the scanner
     ///   - continuation: Object responsible for returning the method's result to its caller.
-    private func startScanning(
-        with instructionsText: String,
-        _ buttonText: String?,
-        _ cameraModel: OSBARCCameraModel,
-        and orientationModel: OSBARCOrientationModel,
-        continuation: CheckedContinuation<String, any Error>
-    ) {
+    private func startScanning(with parameters: OSBARCScanParameters, continuation: CheckedContinuation<OSBARCScanResult, any Error>) {
         DispatchQueue.main.async {
-            self.scannerBehaviour.startScanning(with: instructionsText, buttonText, cameraModel, and: orientationModel) { scannedCode in
-                if !scannedCode.isEmpty {
-                    continuation.resume(returning: scannedCode)
+            self.scannerBehaviour.startScanning(with: parameters) { scanResult in
+                if !scanResult.text.isEmpty {
+                    continuation.resume(returning: scanResult)
                 } else {
                     continuation.resume(throwing: OSBARCManagerError.scanningCancelled)
                 }

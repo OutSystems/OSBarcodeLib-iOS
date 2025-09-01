@@ -73,15 +73,20 @@ The library uses the following method to interact with:
 ### Scan Barcode
 
 ```swift
-func scanBarcode(with instructionsText: String, _ buttonText: String?, _ cameraModel: OSBARCCameraModel, and orientationModel: OSBARCOrientationModel) async throws -> String
+func scanBarcode(with parameters: OSBARCScanParameters) async throws -> OSBARCScanResult
 ```
 
 Triggers the barcode scanner, returning asynchronously, if successful, the scanned value. In case of error, it can throw one of the following:
 - **cameraAccessDenied**: if camera access has not been given.
 - **scanningCancelled**: If scanning has been cancelled by the end-user. 
 
-The method is composed of the following input parameters:
-- **instructionText**: The text to be displayed on the scanning reader view.
-- **buttonText**: The text to be displayed for the scan button, if configured. `Nil` value means that the button will not be shown.
-- **cameraModel**: Indicates the camera to use to gather input. It can be `back` or `front`.
-- **orientationModel**: Indicates the scanning reader view orientation. It can be locked to `portrait` or `landscape` or adapted to the device's current orientation if the value is `adaptive`.
+The method is composed of the following input parameters, contained inside `OSBARCScanParameters` structure:
+- **scanInstructions**: The text to be displayed on the scanning reader view.
+- **scanButtonText**: The text to be displayed for the scan button, if configured. `Nil` value means that the button will not be shown.
+- **cameraDirection**: Indicates the camera to use to gather input. It can be `back` or `front`.
+- **scanOrientation**: Indicates the scanning reader view orientation. It can be locked to `portrait` or `landscape` or adapted to the device's current orientation if the value is `adaptive`.
+- **hint**: Indicates scan of a specific format (e.g. only qr code). `Nil` or `unknown` value means it can scan all.
+
+The method returns a `OSBARCScanResult structure`, containing:
+- **text**: The actual textual data that was scanned.
+- **format**: The format that was scanned, or `unknown` if unable to determine.

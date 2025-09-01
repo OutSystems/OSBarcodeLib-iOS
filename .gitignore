@@ -91,4 +91,5 @@ iOSInjectionProject/
 .swiftlint.yml
 
 scripts/build/
+build/
 .DS_Store

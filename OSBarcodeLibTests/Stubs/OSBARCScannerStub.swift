@@ -3,13 +3,7 @@
 final class OSBARCScannerStub: OSBARCScannerProtocol {
     var scanCancelled: Bool = false
     
-    func startScanning(
-        with instructionsText: String,
-        _ buttonText: String?,
-        _ cameraModel: OSBARCCameraModel,
-        and orientationModel: OSBARCOrientationModel,
-        _ completion: @escaping (String) -> Void
-    ) {
-        completion(self.scanCancelled ? "" : OSBARCScannerStubValues.scannedCode)
+    func startScanning(with parameters: OSBARCScanParameters, _ completion: @escaping (OSBARCScanResult) -> Void) {
+        completion(self.scanCancelled ? OSBARCScanResult(text: "", format: .unknown) : OSBARCScannerStubValues.scannedCode)
     }
 }

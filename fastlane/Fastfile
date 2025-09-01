@@ -18,8 +18,7 @@ default_platform(:ios)
 platform :ios do
   desc "Lane to run the unit tests"
   lane :unit_tests do
-    run_tests(device: "iPhone 8", scheme: "OSBarcodeLib",
-      slack_url: ENV['SLACK_WEBHOOK'])
+    run_tests(scheme: "OSBarcodeLib")
   end
 
   desc "Code coverage"

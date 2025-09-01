@@ -7,7 +7,7 @@ struct OSBARCScannerView: View {
     @ObservedObject var viewModel: OSBARCScannerViewModel
     
     /// The object containing the scanned value.
-    @Binding var scanResult: String
+    @Binding var scanResult: OSBARCScanResult
     
     /// Helper text to display.
     let instructionsText: String
@@ -49,7 +49,7 @@ struct OSBARCScannerView: View {
     /// Cancel button.
     private var cancelButton: OSBARCCancelButton {
         .init {
-            scanResult = "" // cancelling translates in scanResult being empty.
+            scanResult = OSBARCScanResult.empty() // cancelling translates in scanResult being empty.
         }
     }
     

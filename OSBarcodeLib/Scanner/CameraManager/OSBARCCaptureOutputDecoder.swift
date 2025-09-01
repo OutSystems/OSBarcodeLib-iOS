@@ -6,33 +6,28 @@ import Vision
 /// Class responsible for decoding the scanning output (in this case, barcodes).
 final class OSBARCCaptureOutputDecoder: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     /// The object containing the value to return.
-    @Binding private var scanResult: String
+    @Binding private var scanResult: OSBARCScanResult
     /// Indicates if scanning should be done only  after a button click or automatically.
     private let scanThroughButton: Bool
     /// Indicates if scanning is enabled (when there's a Scan Button).
     private var scanButtonEnabled: Bool
+    /// A hint, to scan a specific format (e.g. only qr code). `Nil` or `unknown` value means it can scan all.
+    private var hint: OSBARCScannerHint?
     
     /// The publisher's cancellable instance collector.
     private var cancellables: Set<AnyCancellable> = []
-    
-    /// List of barcode types the scanner is looking for.
-    lazy private var barcodeTypes: [VNBarcodeSymbology] = {
-        var result: [VNBarcodeSymbology] = [.upce, .ean8, .ean13, .code39, .code93, .code128, .itf14, .qr, .dataMatrix, .pdf417, .aztec, .i2of5]
-        if #available(iOS 15.0, *) {    // these types are only available from iOS 15 onwards.
-            result += [.codabar, .gs1DataBar, .gs1DataBarExpanded, .microPDF417, .microQR]
-        }
-        return result
-    }()
     
     /// Constructor.
     /// - Parameters:
     ///   - scanResult: Binding object with the value to return.
     ///   - scanThroughButton: Boolean indicating if scanning should be performed automatically or after clicking the Scan Button.
     ///   - scanButtonEnabled: Indicates if scanning has already been set on.
-    init(_ scanResult: Binding<String>, _ scanThroughButton: Bool, _ scanButtonEnabled: Bool = false) {
+    ///   - hint: The optional hint, to scan a specific format (e.g. only qr code). `Nil` or `unknown` value means it can scan all.
+    init(_ scanResult: Binding<OSBARCScanResult>, _ scanThroughButton: Bool, _ scanButtonEnabled: Bool = false, andHint hint: OSBARCScannerHint? = nil) {
         self._scanResult = scanResult
         self.scanThroughButton = scanThroughButton
         self.scanButtonEnabled = scanButtonEnabled
+        self.hint = hint
         super.init()
         
         NotificationCenter.default
@@ -79,7 +74,7 @@ final class OSBARCCaptureOutputDecoder: NSObject, AVCaptureVideoDataOutputSample
             guard error == nil else { return }
             self.processClassification(for: request)
         })
-        barcodeRequest.symbologies = self.barcodeTypes
+        barcodeRequest.symbologies = (self.hint ?? .unknown).toVNBarcodeSymbologies()
         
         return barcodeRequest
     }()
@@ -93,7 +88,8 @@ private extension OSBARCCaptureOutputDecoder {
         DispatchQueue.main.async {
             if let bestResult = request.results?.first as? VNBarcodeObservation, bestResult.confidence > 0.9, let payload = bestResult.payloadStringValue {
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-                self.scanResult = payload
+                let format = OSBARCScannerHint.fromVNBarcodeSymbology(bestResult.symbology)
+                self.scanResult = OSBARCScanResult(text: payload, format: format)
             }
         }
     }
