@@ -10,7 +10,16 @@ extension OSBARCScannerHint {
         }
     }
     
-    static func fromVNBarcodeSymbology(_ symbology: VNBarcodeSymbology) -> OSBARCScannerHint {
+    static func fromVNBarcodeSymbology(_ symbology: VNBarcodeSymbology, withHint hint: OSBARCScannerHint? = nil) -> OSBARCScannerHint {
+        if (symbology == .ean13) {
+            // UPC-A and EAN-13 have similar format, and Apple Vision does not distinguish between the two
+            // if a specific hint was provided, return that as the format
+            switch hint {
+                case .upcA: return .upcA
+                case .ean13: return .ean13
+                default: break
+            }
+        }
         return Self.hintMappings.first { (_, symbologies) in
             symbologies.contains(symbology)
         }?.key ?? .unknown
