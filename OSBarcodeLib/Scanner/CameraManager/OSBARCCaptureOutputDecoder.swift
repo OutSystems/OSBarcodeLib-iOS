@@ -88,7 +88,7 @@ private extension OSBARCCaptureOutputDecoder {
         DispatchQueue.main.async {
             if let bestResult = request.results?.first as? VNBarcodeObservation, bestResult.confidence > 0.9, let payload = bestResult.payloadStringValue {
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-                let format = OSBARCScannerHint.fromVNBarcodeSymbology(bestResult.symbology)
+                let format = OSBARCScannerHint.fromVNBarcodeSymbology(bestResult.symbology, withHint: self.hint)
                 self.scanResult = OSBARCScanResult(text: payload, format: format)
             }
         }
