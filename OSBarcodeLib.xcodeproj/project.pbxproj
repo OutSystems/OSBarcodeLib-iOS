@@ -177,7 +177,8 @@
 				75E2B2042AF414DD00DB689E /* Permissions */,
 				75E2B1C32AF3A97400DB689E /* Scanner */,
 			);
-			path = OSBarcodeLib;
+			name = OSBarcodeLib;
+			path = Sources/OSBarcodeLib;
 			sourceTree = "<group>";
 		};
 		7507FC1E27FC2AAE003809F6 /* OSBarcodeLibTests */ = {
@@ -188,7 +189,8 @@
 				75C20B6A2AF4FE0700CCB5B1 /* OSBARCManagerFactoryTests.swift */,
 				75E2B2052AF4153900DB689E /* OSBARCManagerTests.swift */,
 			);
-			path = OSBarcodeLibTests;
+			name = OSBarcodeLibTests;
+			path = Tests/OSBarcodeLibTests;
 			sourceTree = "<group>";
 		};
 		7513C4822B03E86B005E81C4 /* MappableProtocol */ = {
