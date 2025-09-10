@@ -1,0 +1,50 @@
+name: Install Dependencies
+description: Checks for Homebrew and installs any missing CLI tools and Ruby gems
+
+inputs:
+  tools:
+    description: Space-separated list of tools to check and install via Homebrew
+    required: false
+  gems:
+    description: Space-separated list of gems to check and install via gem
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Dependencies
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        if [ -n "${{ inputs.tools }}" ]; then
+          echo "🔍 Checking for Homebrew..."
+          if ! command -v brew >/dev/null; then
+            echo "❌ Homebrew is required but not installed. Aborting."
+            exit 1
+          fi
+
+          echo "🔧 Installing missing brew tools..."
+          for tool in ${{ inputs.tools }}; do
+            if command -v "$tool" >/dev/null; then
+              echo "✅ $tool is already installed."
+            else
+              echo "📦 Installing $tool via brew..."
+              brew install "$tool"
+            fi
+          done
+        fi
+
+        if [ -n "${{ inputs.gems }}" ]; then
+          echo "🔧 Installing missing gems..."
+          for gem in ${{ inputs.gems }}; do
+            if gem list -i "$gem" >/dev/null; then
+              echo "✅ $gem gem is already installed."
+            else
+              echo "💎 Installing $gem via gem..."
+              gem install "$gem"
+            fi
+          done
+        fi
+
+        echo "✅ All dependencies are ready."

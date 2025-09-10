@@ -1,0 +1,18 @@
+name: Set Xcode Version
+description: Selects the desired Xcode version using xcode-select.
+inputs:
+  xcode-version:
+    description: The Xcode version to select (e.g., 16.4)
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        set -e
+        echo "Setting Xcode version to ${{ inputs.xcode-version }}..."
+        if ! sudo xcode-select -s /Applications/Xcode_${{ inputs.xcode-version }}.app/Contents/Developer; then
+          echo "❌ Failed to select Xcode ${{ inputs.xcode-version }}. Listing available Xcodes:"
+          ls /Applications | grep Xcode
+          exit 1
+        fi
+      shell: bash

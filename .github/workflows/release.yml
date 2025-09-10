@@ -1,0 +1,145 @@
+name: Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'main'
+
+env:
+  PROJECT_NAME: OSBarcodeLib
+  XCODE_VERSION: 16.4
+  CHANGELOG_PATH: CHANGELOG.md
+  LICENSE_PATH: LICENSE
+  PODSPEC_FILE: OSBarcodeLib.podspec
+
+jobs:
+  tag_and_release:
+    name: Release and Publish
+    runs-on: macos-15
+    if: >-
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'release')
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
+        with:
+          tools: gh
+          gems: cocoapods
+
+      - name: Get current project version
+        id: get_version
+        uses: ./.github/actions/get-project-version
+        with:
+          project_name: ${{ env.PROJECT_NAME }}
+
+      - name: Get release notes for this version
+        id: release_notes
+        env:
+          VERSION: ${{ steps.get_version.outputs.version }}
+          CHANGELOG_PATH: ${{ env.CHANGELOG_PATH }}
+        run: |
+          set -euo pipefail
+          if [ ! -f "$CHANGELOG_PATH" ]; then
+            echo "❌ Changelog file not found: $CHANGELOG_PATH"
+            exit 1
+          fi
+          echo "📜 Extracting release notes for version $VERSION..."
+          release_notes_section=$(awk "/^## \[${VERSION}\]/ {flag=1; next} flag && /^## \\[/ {exit} flag {print}" "$CHANGELOG_PATH" | sed '/^\s*$/d')
+          if [ -n "$release_notes_section" ]; then
+            echo "$release_notes_section"
+            echo 'release_notes<<EOF' >> $GITHUB_OUTPUT
+            echo "$release_notes_section" >> $GITHUB_OUTPUT
+            echo 'EOF' >> $GITHUB_OUTPUT
+          else
+            echo "⚠️ No release notes found for version $VERSION."
+            exit 0
+          fi
+
+      - name: Set Xcode version
+        uses: ./.github/actions/set-xcode-version
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
+
+      - name: Build XCFramework
+        id: build_xcframework
+        uses: ./.github/actions/build-xcframework
+        with:
+          project_name: ${{ env.PROJECT_NAME }}
+
+      - name: Package XCFramework
+        uses: ./.github/actions/package-xcframework
+        id: package
+        with:
+          package_name: ${{ env.PROJECT_NAME }}
+          xcframework_path: ${{ steps.build_xcframework.outputs.xcframework_path }}
+          license_path: ${{ env.LICENSE_PATH }}
+
+      - name: Create tag
+        id: create_tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.get_version.outputs.version }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag v$VERSION -m "Release version $VERSION"
+          git push origin v$VERSION
+          echo "Tag v$VERSION created."
+          echo "tag=v$VERSION" >> $GITHUB_OUTPUT
+          
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TITLE: ${{ steps.create_tag.outputs.tag }}
+          RELEASE_NOTES: ${{ steps.release_notes.outputs.release_notes }}
+          ASSET_PATH: ${{ steps.package.outputs.zip_name }}
+        run: |
+          set -euo pipefail
+          gh release create $TITLE \
+            --title "$TITLE" \
+            --notes "$RELEASE_NOTES" \
+            "$ASSET_PATH"
+
+      - name: Publish Pod
+        if: hashFiles('${{ env.PODSPEC_FILE }}') != ''
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${COCOAPODS_TRUNK_TOKEN:-}" ]; then
+            echo "❌ COCOAPODS_TRUNK_TOKEN secret is not set. Please set it in your repository secrets."
+            exit 1
+          fi
+          echo "🚀 Deploying podspec to CocoaPods..."
+          pod trunk push "$PODSPEC_FILE" --allow-warnings
+
+      - name: Delete source branch
+        if: github.event.pull_request.head.ref != 'main'
+        run: |
+          set +e
+          git push origin --delete ${{ github.event.pull_request.head.ref }}
+          set -e
+
+  delete_branch_if_pr_closed_without_merge:
+    name: Delete Source Branch If PR Closed Without Merge
+    runs-on: macos-15
+    if: >-
+      github.event.pull_request.merged == false &&
+      github.event.pull_request.head.ref != 'main' &&
+      contains(github.event.pull_request.labels.*.name, 'release')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Delete source branch
+        run: |
+          set +e
+          git push origin --delete ${{ github.event.pull_request.head.ref }}
+          set -e

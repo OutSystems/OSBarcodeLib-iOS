@@ -1,0 +1,45 @@
+name: Get Project Version
+description: Extracts MARKETING_VERSION from a .pbxproj file
+
+inputs:
+  project_name:
+    description: Name of the Xcode project (without .xcodeproj)
+    required: false
+  pbxproj_path:
+    description: Path to the project.pbxproj file (overrides project_name if provided)
+    required: false
+
+outputs:
+  version:
+    description: The extracted project version
+    value: ${{ steps.extract.outputs.version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Extract current project version
+      id: extract
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        # Determine the pbxproj path
+        if [[ -n "${{ inputs.pbxproj_path }}" ]]; then
+          PBXPROJ="${{ inputs.pbxproj_path }}"
+        elif [[ -n "${{ inputs.project_name }}" ]]; then
+          PBXPROJ="${{ inputs.project_name }}.xcodeproj/project.pbxproj"
+        else
+          echo "❌ Either 'project_name' or 'pbxproj_path' must be provided."
+          exit 1
+        fi
+
+        # Check if the pbxproj file exists
+        if [[ ! -f "$PBXPROJ" ]]; then
+          echo "❌ Project file not found: $PBXPROJ"
+          exit 1
+        fi
+
+        echo "📦 Extracting current MARKETING_VERSION from $PBXPROJ..."
+        VERSION=$(grep -m1 'MARKETING_VERSION =' "$PBXPROJ" | sed -E 's/.*MARKETING_VERSION = ([^;]+);/\1/' | xargs)
+        echo "🔢 Current version: $VERSION"
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
