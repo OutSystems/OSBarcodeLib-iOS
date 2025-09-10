@@ -3,79 +3,147 @@ name: Prepare Release
 on:
   workflow_dispatch:
     inputs:
-      versionBumpLevel:
-        description: 'Version bump level (patch, minor, major)'
-        required: true
+      bump:
+        description: 'Version bump type (ignored if version is set)'
+        required: false
         type: choice
-        default: 'patch'
         options:
-        - patch
-        - minor
-        - major
+          - patch
+          - minor
+          - major
+      version:
+        description: 'Set specific version (e.g., 1.2.3)'
+        required: false
+
+env:
+  PROJECT_NAME: OSBarcodeLib
+  PBXPROJ: OSBarcodeLib.xcodeproj/project.pbxproj
+  XCODE_VERSION: 16.4
+  CHANGELOG_PATH: CHANGELOG.md
+  LICENSE_PATH: LICENSE
+  PODSPEC_FILE: OSBarcodeLib.podspec
 
 jobs:
-  build-and-release:
-    if: github.ref == 'refs/heads/main'
-    runs-on: macos-14
+  prepare-release:
+    name: Prepare Release
+    runs-on: macos-15
+    if: github.ref_name == 'main'
+    
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Link SwiftLint or install it
-        run: brew link --overwrite swiftlint || brew install swiftlint
-
-      - name: Set up XCode 
-        run: sudo xcode-select --switch /Applications/Xcode_15.0.app
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3'
+          fetch-depth: 0
 
-      - name: Bump version
-        run: ruby ./scripts/bump_versions.rb ${{ github.event.inputs.versionBumpLevel }}
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
+        with:
+          tools: gh
 
-      - name: Build XCFramework
-        run: ./scripts/build_framework.sh
+      - name: Get current project version
+        id: get_version
+        uses: ./.github/actions/get-project-version
+        with:
+          project_name: ${{ env.PROJECT_NAME }}
 
-      - name: Get new version
-        id: version
-        run: echo "VERSION=$(ruby -e 'puts File.read("./OSBarcodeLib.podspec").match(/spec.version.*=.*''(\d+\.\d+\.\d+)''/)[1]')" >> $GITHUB_ENV
-
-      - name: Create new branch
+      - name: Bump project version
+        id: bump_version
+        env:
+          CURRENT_VERSION: ${{ steps.get_version.outputs.version }}
+          INPUT_BUMP: ${{ github.event.inputs.bump }}
+          INPUT_VERSION: ${{ github.event.inputs.version }}
         run: |
-          git switch --create "prepare-new-release-${{ env.VERSION }}"
-
-      - name: Move zip file to root and push changes
-        run: |
-          if [ -f OSBarcodeLib.zip ]; then
-            rm OSBarcodeLib.zip
+          set -euo pipefail
+          echo "⬆️ Bumping project version..."
+          if [ -n "$INPUT_VERSION" ]; then
+            if ! [[ "$INPUT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "❌ Version must be in format M.m.p (e.g., 1.2.3)"
+              exit 1
+            fi
+            NEW_VERSION="$INPUT_VERSION"
           else
-            echo "File does not exist."
+            IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+            PATCH="${PATCH:-0}"
+            case "$INPUT_BUMP" in
+              major)
+                MAJOR=$((MAJOR+1)); MINOR=0; PATCH=0;;
+              minor)
+                MINOR=$((MINOR+1)); PATCH=0;;
+              *)
+                PATCH=$((PATCH+1));;
+            esac
+            NEW_VERSION="$MAJOR.$MINOR.$PATCH"
           fi
-          mv build/OSBarcodeLib.zip .
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          echo "🔢 New version: $NEW_VERSION"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update project files
+        env:
+          PBXPROJ: ${{ env.PBXPROJ }}
+          PODSPEC_FILE: ${{ env.PODSPEC_FILE }}
+          CHANGELOG_PATH: ${{ env.CHANGELOG_PATH }}
+          NEW_VERSION: ${{ steps.bump_version.outputs.new_version }}
+        run: |
+          set -euo pipefail
+          
+          echo "🛠️ Updating MARKETING_VERSION..."
+          sed -i '' -E "s/MARKETING_VERSION = [0-9]+\.[0-9]+(\.[0-9]+)?;/MARKETING_VERSION = $NEW_VERSION;/g" "$PBXPROJ"
+          echo "🛠️ Updating CURRENT_PROJECT_VERSION..."
+          current_proj_version=$(grep -m1 'CURRENT_PROJECT_VERSION =' "$PBXPROJ" | sed -E 's/.*CURRENT_PROJECT_VERSION = ([0-9]+);/\1/')
+          new_proj_version=$((current_proj_version+1))
+          sed -i '' -E "s/CURRENT_PROJECT_VERSION = [0-9]+;/CURRENT_PROJECT_VERSION = $new_proj_version;/g" "$PBXPROJ"
+          echo "✅ Bumped MARKETING_VERSION to $NEW_VERSION, CURRENT_PROJECT_VERSION to $new_proj_version"
+
+          echo "🛠️ Updating version in $PODSPEC_FILE..."
+          if [ -f "$PODSPEC_FILE" ]; then
+            sed -i '' -E "s/^([[:space:]]*[^[:space:]]+\.version[[:space:]]*=[[:space:]]*['\"])[^'\"]+(['\"])/\1$NEW_VERSION\2/" "$PODSPEC_FILE"
+            echo "✅ Podspec version updated to $NEW_VERSION"
+          else
+            echo "⚠️ Podspec file not found: $PODSPEC_FILE"
+          fi
+
+          echo "📝 Updating $CHANGELOG_PATH..."
+          TODAY=$(date +%Y-%m-%d)
+          awk -v ver="$NEW_VERSION" -v today="$TODAY" '
+            BEGIN { unreleased_found=0 }
+            /^## \[Unreleased\]/ {
+              print $0; print ""; print "## [" ver "] - " today; unreleased_found=1; next
+            }
+            { print $0 }
+          ' "$CHANGELOG_PATH" > "$CHANGELOG_PATH.tmp" && mv "$CHANGELOG_PATH.tmp" "$CHANGELOG_PATH"
+          echo "✅ CHANGELOG updated for version $NEW_VERSION"
+
+      - name: Create release branch, commit and push changes
+        id: create_release_branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.bump_version.outputs.new_version }}
+        run: |
+          set -euo pipefail
+          BRANCH_NAME="release/v$VERSION"
+          git config user.name "github-actions[bot] (on behalf of ${{ github.actor }})"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH_NAME"
           git add .
-          git commit -m "chore: Bump version to ${{ env.VERSION }}"
-          git push origin HEAD:prepare-new-release-${{ env.VERSION }}
+          git commit -m "chore(release): prepare release v$VERSION"
+          git push origin "$BRANCH_NAME"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
-      - name: Create pull request
-        id: create_pr
-        run: |
-          gh pr create -B main -H prepare-new-release-${{ env.VERSION }} --title 'Prepare `main` to Release `${{ env.VERSION }}`' --body 'Bumps version to `${{ env.VERSION }}`.<br/>Creates an updated and ready-to-be-released `OSBarcodeLib.zip`.'
-          PR_NUMBER=$(gh pr view --json number --jq '.number')
-          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
+      - name: Ensure 'release' label exists
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh label create release --color FFD700 --description "Release PRs" || true
 
-      - name: Add label to the pull request
-        run: |
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/${{ github.repository }}/issues/${{ env.PR_NUMBER }}/labels \
-            -f "labels[]=release"
+      - name: Create Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.bump_version.outputs.new_version }}
+          BRANCH_NAME: ${{ steps.create_release_branch.outputs.branch_name }}
+        run: |
+          set -euo pipefail
+          gh pr create \
+            --title "Release v$VERSION" \
+            --body "Automated PR to release v$VERSION." \
+            --head $BRANCH_NAME \
+            --base main \
+            --label release

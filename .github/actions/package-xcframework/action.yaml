@@ -1,0 +1,34 @@
+name: Package XCFramework and LICENSE
+description: Zips the built XCFramework and LICENSE into a versioned release artifact
+
+inputs:
+  package_name:
+    description: The name of the package (e.g., MyLibrary-1.0.0)
+    required: true
+  xcframework_path:
+    description: The path to the built .xcframework
+    required: true
+  license_path:
+    description: The path to the LICENSE file
+    required: true
+
+outputs:
+  zip_name:
+    description: The name of the created zip file
+    value: ${{ steps.package.outputs.zip_name }}
+    
+runs:
+  using: "composite"
+  steps:
+    - id: package
+      shell: bash
+      run: |
+        set -euo pipefail
+        ZIP_NAME="${{ inputs.package_name }}.zip"
+        mkdir -p release
+        cp -R "${{ inputs.xcframework_path }}" release/
+        cp "${{ inputs.license_path }}" release/
+        cd release
+        zip -r "../$ZIP_NAME" .
+        echo "✅ Packaged XCFramework and LICENSE into $ZIP_NAME"
+        echo "zip_name=$ZIP_NAME" >> "$GITHUB_OUTPUT"

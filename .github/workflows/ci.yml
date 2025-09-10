@@ -1,0 +1,180 @@
+name: CI
+
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write  # For PR comments
+
+env:
+  PROJECT_NAME: OSBarcodeLib
+  SCHEME_NAME: OSBarcodeLib
+  XCODEPROJ_PATH: OSBarcodeLib.xcodeproj
+  XCODE_VERSION: 16.4
+  DESTINATION: 'platform=iOS Simulator,OS=latest,name=iPhone 16'
+  COVERAGE_TARGET_FILTER: OSBarcodeLib
+  BUILD_REPORTS_DIR: build/reports
+  SONAR_REPORTS_DIR: sonar-reports
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: macos-15
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
+        with:
+          tools: swiftlint xcbeautify
+
+      - name: Set Xcode version
+        uses: ./.github/actions/set-xcode-version
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
+
+      - name: Run Unit Tests
+        id: unit_tests
+        env:
+          SCHEME_NAME: ${{ env.SCHEME_NAME }}
+          XCODEPROJ_PATH: ${{ env.XCODEPROJ_PATH }}
+          IOS_SIMULATOR_DEVICE: ${{ env.IOS_SIMULATOR_DEVICE }}
+          DESTINATION: ${{ env.DESTINATION }}
+        run: |
+          set -euo pipefail
+          XCRESULT_NAME="TestResults.xcresult"
+          mkdir -p "$BUILD_REPORTS_DIR"
+          xcodebuild test \
+            -project "$XCODEPROJ_PATH" \
+            -scheme "$SCHEME_NAME" \
+            -destination "$DESTINATION" \
+            -configuration Debug \
+            -enableCodeCoverage YES \
+            -resultBundlePath "$XCRESULT_NAME" \
+            SKIP_SCRIPT_PHASES=YES \
+            CODE_SIGNING_ALLOWED=NO | xcbeautify --report junit --report-path "$BUILD_REPORTS_DIR"
+          echo "xcresult_name=$XCRESULT_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Generate Code Coverage Report for SonarQube
+        continue-on-error: true
+        env:
+          XCRESULT_NAME: ${{ steps.unit_tests.outputs.xcresult_name }}
+        run: |
+          set -euo pipefail
+          echo "🔍 Generating SonarQube coverage report..."
+          
+          if [ ! -d "$XCRESULT_NAME" ]; then
+            echo "⚠️  $XCRESULT_NAME not found. Skipping coverage report generation."
+            exit 0
+          fi
+
+          mkdir -p ${{ env.SONAR_REPORTS_DIR }}
+          
+          echo "📦 Downloading coverage converter script..."
+          curl -sSL https://raw.githubusercontent.com/SonarSource/sonar-scanning-examples/master/swift-coverage/swift-coverage-example/xccov-to-sonarqube-generic.sh -o xccov-to-sonarqube-generic.sh
+          chmod +x xccov-to-sonarqube-generic.sh
+
+          echo "📝 Running coverage converter..."
+          ./xccov-to-sonarqube-generic.sh TestResults.xcresult > ${{ env.SONAR_REPORTS_DIR }}/sonarqube-generic-coverage.xml
+          echo "✅ SonarQube coverage report generated successfully"
+
+      - name: Run SwiftLint for SonarQube
+        run: |
+          set -euo pipefail
+          echo "🔍 Running SwiftLint..."
+          mkdir -p ${{ env.SONAR_REPORTS_DIR }}
+          swiftlint --reporter checkstyle > "${{ env.SONAR_REPORTS_DIR }}/swiftlint.xml" || {
+            echo "⚠️ SwiftLint finished with issues."
+            exit 0
+          }
+          echo "✅ SwiftLint report generated successfully"
+          
+      - name: Setup SonarQube Scanner
+        uses: warchant/setup-sonar-scanner@v8
+
+      - name: Send to SonarCloud
+        id: sonarcloud
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          if [ -z "${{ secrets.SONAR_TOKEN }}" ]; then
+            echo "⚠️ SONAR_TOKEN secret is not set. Skipping SonarCloud analysis."
+            exit 0
+          fi
+          if [ -f "sonar-project.properties" ]; then
+            echo "🔍 Sending results to SonarCloud..."
+            echo "📦 Commit: ${{ github.sha }}"
+            if [ "${{ github.ref_name }}" = "main" ]; then
+              echo "🌟 Analyzing main branch"
+              sonar-scanner
+            else
+              echo "🌿 Analyzing feature branch: ${{ github.ref_name }}"
+              sonar-scanner -Dsonar.branch.name="${{ github.ref_name }}"
+            fi
+          else
+            echo "⚠️ sonar-project.properties not found, skipping SonarCloud"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: |
+            ${{ steps.unit_tests.outputs.xcresult_name }}
+            ${{ env.SONAR_REPORTS_DIR }}
+            ${{ env.BUILD_REPORTS_DIR }}
+
+      - name: Comment Test Results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          XCRESULT_NAME: ${{ steps.unit_tests.outputs.xcresult_name }}
+          COVERAGE_TARGET_FILTER: ${{ env.COVERAGE_TARGET_FILTER }}
+        with:
+          script: |
+            const { execSync } = require('child_process');
+            const fs = require('fs');
+
+            console.log('📝 Starting to comment test results...');
+            let coveragePercentage = 'N/A';
+            try {
+              const xcresultName = process.env.XCRESULT_NAME;
+              const coverageTarget = process.env.COVERAGE_TARGET_FILTER;
+              console.log(`Checking result file: ${xcresultName}`);
+              if (fs.existsSync(xcresultName)) {
+                console.log('Result file found. Calculating coverage...');
+                const output = execSync(`xcrun xccov view --report "${xcresultName}"`).toString();
+                const match = output.match(new RegExp(`${coverageTarget}.*?([0-9]+\\.[0-9]+%)`));
+                if (match && match[1]) {
+                  coveragePercentage = match[1];
+                  console.log(`Coverage found: ${coveragePercentage}`);
+                } else {
+                  console.log('Coverage not found in report.');
+                }
+              } else {
+                console.log('Result file not found.');
+              }
+            } catch (e) {
+              console.error('Error calculating coverage:', e);
+              coveragePercentage = 'N/A';
+            }
+
+            console.log('Commenting on PR with test results and coverage...');
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `✅ **Tests**: All passed\n📊 **Coverage**: ${coveragePercentage}`
+            });
+            console.log('Comment sent successfully.');
