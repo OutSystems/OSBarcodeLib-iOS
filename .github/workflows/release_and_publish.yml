@@ -9,7 +9,7 @@ on:
 jobs:
   post-merge:
     if: contains(github.event.pull_request.labels.*.name, 'release') && github.event.pull_request.merged == true
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
     - name: Checkout Repository
