@@ -1,0 +1,26 @@
+{
+  "name": "OSBarcodeLib",
+  "version": "2.1.0",
+  "description": "The OSBarcodeLib is a library built using Swift that offers you a barcode scanner for your iOS application.",
+  "author": "OutSystems Mobile Ecosystem",
+  "email": "rd.mobileecosystem.team@outsystems.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OutSystems/OSBarcodeLib-iOS.git"
+  },
+  "private": true,
+  "scripts": {
+    "semantic-release": "semantic-release"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/exec": "^7.0.0",
+    "@semantic-release/npm": "^13.0.0",
+    "@semantic-release/git": "^10.0.0",
+    "@semantic-release/github": "^12.0.0",
+    "@semantic-release/release-notes-generator": "^14.0.0",
+    "semantic-release": "^25.0.0"
+  }
+}

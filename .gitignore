@@ -93,3 +93,7 @@ iOSInjectionProject/
 scripts/build/
 build/
 .DS_Store
+
+# Node.js / npm
+node_modules/
+package-lock.json

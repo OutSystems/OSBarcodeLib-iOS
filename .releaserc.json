@@ -1,0 +1,54 @@
+{
+  "branches": ["main"],
+  "tagFormat": "${version}",
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "bash ./scripts/update_xcodeproj_version.sh ${nextRelease.version} \"OSBarcodeLib.xcodeproj/project.pbxproj\" && bash ./scripts/update_readme_version.sh ${nextRelease.version} \"OSBarcodeLib\" \"README.md\" && bash ./scripts/build_framework.sh \"OSBarcodeLib\" \"LICENSE\""
+      }
+    ],
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/npm",
+      {
+        "npmPublish": false
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md",
+          "OSBarcodeLib.xcodeproj/project.pbxproj",
+          "OSBarcodeLib.podspec",
+          "package.json",
+          "README.md"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "OSBarcodeLib.zip",
+            "label": "OSBarcodeLib XCFramework"
+          }
+        ],
+        "successComment": false,
+        "failComment": false,
+        "releasedLabels": false
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "bash ./scripts/publish_cocoapods.sh ${nextRelease.version} \"OSBarcodeLib\""
+      }
+    ]
+  ]
+}

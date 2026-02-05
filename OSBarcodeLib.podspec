@@ -1,12 +1,15 @@
-Pod::Spec.new do |spec|
-  spec.name                   = "OSBarcodeLib"
-  spec.version                = "2.1.0"
+require 'json'
+package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
 
-  spec.summary                = "The OSBarcodeLib is a library built using Swift that offers you a barcode scanner for your iOS application."
+Pod::Spec.new do |spec|
+  spec.name                   = package['name']
+  spec.version                = package['version']
+
+  spec.summary                = package['description']
 
   spec.homepage               = "https://github.com/OutSystems/OSBarcodeLib-iOS"
-  spec.license                = { :type => 'MIT', :file => 'LICENSE' }
-  spec.author                 = { 'OutSystems Mobile Ecosystem' => 'rd.mobileecosystem.team@outsystems.com' }
+  spec.license                = { :type => package['license'], :file => 'LICENSE' }
+  spec.author                 = { package['author'] => package['email'] }
 
   spec.source                 = { :http => "https://github.com/OutSystems/OSBarcodeLib-iOS/releases/download/#{spec.version}/OSBarcodeLib.zip", :type => "zip" }
   spec.vendored_frameworks    = "OSBarcodeLib.xcframework"
