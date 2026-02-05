@@ -27,7 +27,7 @@ struct OSBARCTorchButton: View {
         
     var body: some View {
         Button(action: action) {
-            Image(iconName, bundle: .init(for: OSBARCScannerBehaviour.self))    // xcassets item.
+            Image(iconName, bundle: Bundle.imageBundle)
                 .frame(width: size, height: size)
                 .background(
                     Circle()
@@ -40,5 +40,18 @@ struct OSBARCTorchButton: View {
                     )
                 }
         }
+    }
+}
+
+// MARK: - Bundle Extension
+private extension Bundle {
+    /// Returns the appropriate bundle for loading image assets.
+    /// Uses Bundle.module for SwiftPM and falls back to the class bundle for CocoaPods.
+    static var imageBundle: Bundle? {
+        #if SWIFT_PACKAGE
+        return Bundle.module
+        #else
+        return Bundle(for: OSBARCScannerBehaviour.self)
+        #endif
     }
 }

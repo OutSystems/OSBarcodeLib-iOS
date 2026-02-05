@@ -15,7 +15,10 @@ let package = Package(
     targets: [
         .target(
             name: "OSBarcodeLib",
-            path: "Sources/OSBarcodeLib"
+            path: "Sources/OSBarcodeLib",
+            resources: [
+                .process("Scanner/OSBARCScannerView.xcassets")
+            ]
         ),
         .testTarget(
             name: "OSBarcodeLibTests",
