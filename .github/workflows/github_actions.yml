@@ -7,7 +7,7 @@ on:
 jobs:    
   test:
     name: Unit-Tests
-    runs-on: macos-15
+    runs-on: macos-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -22,7 +22,7 @@ jobs:
       run: brew link --overwrite swiftlint || brew install swiftlint
 
     - name: Set up XCode 
-      run: sudo xcode-select --switch /Applications/Xcode_26.2.app
+      run: sudo xcode-select --switch /Applications/Xcode_26.2.app/Contents/Developer
 
     - name: Bundle Install
       run: bundle install
@@ -39,8 +39,11 @@ jobs:
     - name: Setup sonarqube
       uses: warchant/setup-sonar-scanner@v8
 
+    # TODO: Sonarcloud integration is failing, so continue-on-error: true was added
+    # to prevent blocking the pipeline. This should be revisited when we work on fixing this integration.
     - name: Send to Sonarcloud
       run: bundle exec fastlane sonarqube
+      continue-on-error: true
       env: 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONARCLOUD_KEY }}

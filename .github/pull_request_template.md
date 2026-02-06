@@ -12,11 +12,6 @@
 - [ ] Refactor (cosmetic changes)
 - [ ] Breaking change (change that would cause existing functionality to not work as expected)
 
-## Platforms affected
-- [ ] Android
-- [ ] iOS
-- [ ] JavaScript
-
 ## Tests
 <!--- Describe how you tested your changes in detail -->
 <!--- Include details of your test environment if relevant -->
@@ -27,6 +22,5 @@
 <!--- Go over all the following items and put an `x` in all the boxes that apply -->
 - [ ] Pull request title follows the format `RNMT-XXXX <title>`
 - [ ] Code follows code style of this project
-- [ ] CHANGELOG.md file is correctly updated
 - [ ] Changes require an update to the documentation
 	- [ ] Documentation has been updated accordingly
