@@ -1,10 +1,3 @@
-## [2.1.1](https://github.com/OutSystems/OSBarcodeLib-iOS/compare/2.1.0...2.1.1) (2026-02-06)
-
-
-### Bug Fixes
-
-* **ios:** bundle resources into Swift Package  ([#39](https://github.com/OutSystems/OSBarcodeLib-iOS/issues/39)) ([4a3d137](https://github.com/OutSystems/OSBarcodeLib-iOS/commit/4a3d137795a55b2c2b4fdfe16ad562a36dfd6081))
-
 ## 2.1.0
 
 ### Features
