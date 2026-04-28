@@ -11,23 +11,27 @@ final class OSBARCCaptureOutputDecoder: NSObject, AVCaptureVideoDataOutputSample
     private let scanThroughButton: Bool
     /// Indicates if scanning is enabled (when there's a Scan Button).
     private var scanButtonEnabled: Bool
-    /// A hint, to scan a specific format (e.g. only qr code). `Nil` or `unknown` value means it can scan all.
-    private var hint: OSBARCScannerHint?
+    /// A list of hints, to restrict scanning to a specific set of formats (e.g. only qr code and ean-13). An empty list means it can scan all.
+    private var hints: [OSBARCScannerHint]
     
     /// The publisher's cancellable instance collector.
     private var cancellables: Set<AnyCancellable> = []
+
+    convenience init(_ scanResult: Binding<OSBARCScanResult>, _ scanThroughButton: Bool, _ scanButtonEnabled: Bool = false, andHint hint: OSBARCScannerHint? = nil) {
+        self.init(scanResult, scanThroughButton, scanButtonEnabled, andHints: hint.map { [$0] } ?? [])
+    }
     
     /// Constructor.
     /// - Parameters:
     ///   - scanResult: Binding object with the value to return.
     ///   - scanThroughButton: Boolean indicating if scanning should be performed automatically or after clicking the Scan Button.
     ///   - scanButtonEnabled: Indicates if scanning has already been set on.
-    ///   - hint: The optional hint, to scan a specific format (e.g. only qr code). `Nil` or `unknown` value means it can scan all.
-    init(_ scanResult: Binding<OSBARCScanResult>, _ scanThroughButton: Bool, _ scanButtonEnabled: Bool = false, andHint hint: OSBARCScannerHint? = nil) {
+    ///   - hints: The list of hints, to restrict scanning to a specific set of formats (e.g. only qr code and ean-13). An empty list means it can scan all.
+    init(_ scanResult: Binding<OSBARCScanResult>, _ scanThroughButton: Bool, _ scanButtonEnabled: Bool = false, andHints hints: [OSBARCScannerHint]) {
         self._scanResult = scanResult
         self.scanThroughButton = scanThroughButton
         self.scanButtonEnabled = scanButtonEnabled
-        self.hint = hint
+        self.hints = hints
         super.init()
         
         NotificationCenter.default
@@ -74,7 +78,7 @@ final class OSBARCCaptureOutputDecoder: NSObject, AVCaptureVideoDataOutputSample
             guard error == nil else { return }
             self.processClassification(for: request)
         })
-        barcodeRequest.symbologies = (self.hint ?? .unknown).toVNBarcodeSymbologies()
+        barcodeRequest.symbologies = OSBARCScannerHint.toVNBarcodeSymbologies(from: self.hints)
         
         return barcodeRequest
     }()
@@ -88,7 +92,7 @@ private extension OSBARCCaptureOutputDecoder {
         DispatchQueue.main.async {
             if let bestResult = request.results?.first as? VNBarcodeObservation, bestResult.confidence > 0.9, let payload = bestResult.payloadStringValue {
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-                let format = OSBARCScannerHint.fromVNBarcodeSymbology(bestResult.symbology, withHint: self.hint)
+                let format = OSBARCScannerHint.fromVNBarcodeSymbology(bestResult.symbology, withHints: self.hints)
                 self.scanResult = OSBARCScanResult(text: payload, format: format)
             }
         }
