@@ -32,10 +32,14 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
         let buttonText = parameters.scanButtonText ?? ""   // not having the button enabled is translated into having an empty text.
         let shouldShowButton = !buttonText.isEmpty  // if empty text is passed, the button is not enabled on the scanner view
         
+        let rawHints = parameters.hints?.isEmpty == false ? parameters.hints! : [parameters.hint].compactMap { $0 }
+        // `.unknown` is the JS-side ALL sentinel; its presence forces scan-all (empty list).
+        let hints = rawHints.contains(.unknown) ? [] : rawHints
+
         let barcodeDecoder = OSBARCCaptureOutputDecoder(
             scanResultBinding,
             shouldShowButton,
-            andHint: parameters.hint
+            andHints: hints
         )
         let captureSessionManager = OSBARCCaptureSessionManager(
             parameters.cameraDirection,
