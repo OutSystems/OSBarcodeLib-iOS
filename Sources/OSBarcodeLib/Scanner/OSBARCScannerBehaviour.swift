@@ -4,9 +4,16 @@ import SwiftUI
 
 /// Class responsible for the barcode scanner view flow.
 final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
+    /// Default English accessibility labels, used when the consumer does not provide custom ones.
+    private enum AccessibilityDefaults {
+        static let cancelLabel = "Cancel scanning"
+        static let torchOnLabel = "Turn off flashlight"
+        static let torchOffLabel = "Turn on flashlight"
+    }
+
     /// A publisher value responsible for the resulting scanned value.
     @Published private var scanResult: OSBARCScanResult = OSBARCScanResult.empty()
-    
+
     /// The publisher's cancellable instance collector.
     private var cancellables: Set<AnyCancellable> = []
     
@@ -31,7 +38,12 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
         
         let buttonText = parameters.scanButtonText ?? ""   // not having the button enabled is translated into having an empty text.
         let shouldShowButton = !buttonText.isEmpty  // if empty text is passed, the button is not enabled on the scanner view
-        
+
+        // resolve the accessibility labels, falling back to the library's defaults when not provided.
+        let cancelAccessibilityLabel = parameters.cancelButtonAccessibilityLabel.flatMap { $0.isEmpty ? nil : $0 } ?? AccessibilityDefaults.cancelLabel
+        let torchOnAccessibilityLabel = parameters.torchButtonOnAccessibilityLabel.flatMap { $0.isEmpty ? nil : $0 } ?? AccessibilityDefaults.torchOnLabel
+        let torchOffAccessibilityLabel = parameters.torchButtonOffAccessibilityLabel.flatMap { $0.isEmpty ? nil : $0 } ?? AccessibilityDefaults.torchOffLabel
+
         let barcodeDecoder = OSBARCCaptureOutputDecoder(
             scanResultBinding,
             shouldShowButton,
@@ -49,7 +61,10 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
             instructionsText: parameters.scanInstructions,
             buttonText: buttonText,
             shouldShowButton: shouldShowButton,
-            deviceType: UIDevice.current.userInterfaceIdiom.deviceTypeModel
+            deviceType: UIDevice.current.userInterfaceIdiom.deviceTypeModel,
+            cancelAccessibilityLabel: cancelAccessibilityLabel,
+            torchOnAccessibilityLabel: torchOnAccessibilityLabel,
+            torchOffAccessibilityLabel: torchOffAccessibilityLabel
         )
         let hostingController = OSBARCScannerViewHostingController(rootView: scannerView, parameters.scanOrientation)
         hostingController.modalPresentationStyle = .fullScreen
