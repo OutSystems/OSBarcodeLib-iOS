@@ -5,8 +5,8 @@ import SwiftUI
 struct OSBARCCancelButton: View {
     /// The action performed when the button is clicked.
     let action: () -> Void
-    /// The accessibility label read by screen readers.
-    let accessibilityText: String
+    /// The accessibility label read by screen readers. When `nil` or empty no label is set (default behavior).
+    let accessibilityText: String?
 
     /// The icon to display..
     private let cancelIcon: String = "xmark"
@@ -33,6 +33,6 @@ struct OSBARCCancelButton: View {
             Circle()
                 .foregroundStyle(forColour: backgroundColour)
         )
-        .accessibility(label: Text(accessibilityText))
+        .accessibilityLabelIfPresent(accessibilityText)
     }
 }

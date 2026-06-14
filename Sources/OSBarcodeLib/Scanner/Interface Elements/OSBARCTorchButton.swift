@@ -6,10 +6,10 @@ struct OSBARCTorchButton: View {
     let action: () -> Void
     /// Indicates if the feature is enabled or not.
     let isOn: Bool
-    /// The accessibility label read by screen readers when the torch is on.
-    let onAccessibilityText: String
-    /// The accessibility label read by screen readers when the torch is off.
-    let offAccessibilityText: String
+    /// The accessibility label read by screen readers when the torch is on. When `nil` or empty no label is set (default behavior).
+    let onAccessibilityText: String?
+    /// The accessibility label read by screen readers when the torch is off. When `nil` or empty no label is set (default behavior).
+    let offAccessibilityText: String?
 
     /// Image name to be shown on the button.
     private let imageName: String = "flash"
@@ -29,7 +29,7 @@ struct OSBARCTorchButton: View {
     /// Calculates the background colour to be used based on the toggle value.
     private var backgroundColour: Color { isOn ? selectedBackgroundColour : notSelectedBackgroundColour }
     /// Calculates the accessibility label to be used based on the toggle value.
-    private var accessibilityText: String { isOn ? onAccessibilityText : offAccessibilityText }
+    private var accessibilityText: String? { isOn ? onAccessibilityText : offAccessibilityText }
 
     var body: some View {
         Button(action: action) {
@@ -46,7 +46,7 @@ struct OSBARCTorchButton: View {
                     )
                 }
         }
-        .accessibility(label: Text(accessibilityText))
+        .accessibilityLabelIfPresent(accessibilityText)
     }
 }
 
