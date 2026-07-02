@@ -86,6 +86,9 @@ The method is composed of the following input parameters, contained inside `OSBA
 - **cameraDirection**: Indicates the camera to use to gather input. It can be `back` or `front`.
 - **scanOrientation**: Indicates the scanning reader view orientation. It can be locked to `portrait` or `landscape` or adapted to the device's current orientation if the value is `adaptive`.
 - **hint**: Indicates scan of a specific format (e.g. only qr code). `Nil` or `unknown` value means it can scan all.
+- **cancelButtonAccessibilityLabel**: The accessibility label (alternative text) read by screen readers for the cancel button. `Nil` or empty value means no accessibility label is set.
+- **torchButtonOnAccessibilityLabel**: The accessibility label read by screen readers for the torch button when the torch is on. `Nil` or empty value means no accessibility label is set.
+- **torchButtonOffAccessibilityLabel**: The accessibility label read by screen readers for the torch button when the torch is off. `Nil` or empty value means no accessibility label is set.
 
 The method returns a `OSBARCScanResult structure`, containing:
 - **text**: The actual textual data that was scanned.
