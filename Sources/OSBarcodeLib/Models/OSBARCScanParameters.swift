@@ -14,13 +14,13 @@ public struct OSBARCScanParameters {
     // The optional hint, to scan a specific format (e.g. only qr code). `Nil` or `unknown` value means it can scan all.
     public let hint: OSBARCScannerHint?
 
-    /// Optional accessibility label for the cancel button. `Nil` or empty value uses the library's default.
+    /// Optional accessibility label for the cancel button. When `nil` or empty, no accessibility label is set.
     public let cancelButtonAccessibilityLabel: String?
 
-    /// Optional accessibility label for the torch button when the torch is on. `Nil` or empty value uses the library's default.
+    /// Optional accessibility label for the torch button when the torch is on. When `nil` or empty, no accessibility label is set.
     public let torchButtonOnAccessibilityLabel: String?
 
-    /// Optional accessibility label for the torch button when the torch is off. `Nil` or empty value uses the library's default.
+    /// Optional accessibility label for the torch button when the torch is off. When `nil` or empty, no accessibility label is set.
     public let torchButtonOffAccessibilityLabel: String?
 
     public init(scanInstructions: String,
