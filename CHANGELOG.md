@@ -1,3 +1,15 @@
+# [2.2.0](https://github.com/OutSystems/OSBarcodeLib-iOS/compare/2.1.1...2.2.0) (2026-07-03)
+
+
+### Bug Fixes
+
+* use Xcode 16 instead of 26 ([#41](https://github.com/OutSystems/OSBarcodeLib-iOS/issues/41)) ([bd584f0](https://github.com/OutSystems/OSBarcodeLib-iOS/commit/bd584f0dc3cba255ae1efe66a069bad69866df92))
+
+
+### Features
+
+* add accessibility labels to torch and cancel buttons ([#45](https://github.com/OutSystems/OSBarcodeLib-iOS/issues/45)) ([3661cfc](https://github.com/OutSystems/OSBarcodeLib-iOS/commit/3661cfcdf5840a2f797fabeda7c413a326906049)), closes [#44](https://github.com/OutSystems/OSBarcodeLib-iOS/issues/44)
+
 ## [2.1.1](https://github.com/OutSystems/OSBarcodeLib-iOS/compare/2.1.0...2.1.1) (2026-02-06)
 
 
