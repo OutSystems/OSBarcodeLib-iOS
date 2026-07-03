@@ -21,7 +21,14 @@ struct OSBARCScannerView: View {
     
     /// The type of device being used.
     let deviceType: OSBARCDeviceTypeModel
-    
+
+    /// Accessibility label for the cancel button. `Nil`/empty means no label is set (default behavior).
+    let cancelAccessibilityLabel: String?
+    /// Accessibility label for the torch button when the torch is on. `Nil`/empty means no label is set (default behavior).
+    let torchOnAccessibilityLabel: String?
+    /// Accessibility label for the torch button when the torch is off. `Nil`/empty means no label is set (default behavior).
+    let torchOffAccessibilityLabel: String?
+
     /// Frame of portion of the screen used for scanning.
     @State private var scanFrame: CGRect = .zero
     
@@ -48,9 +55,9 @@ struct OSBARCScannerView: View {
     
     /// Cancel button.
     private var cancelButton: OSBARCCancelButton {
-        .init {
+        .init(action: {
             scanResult = OSBARCScanResult.empty() // cancelling translates in scanResult being empty.
-        }
+        }, accessibilityText: cancelAccessibilityLabel)
     }
     
     /// Scanning Instructions Text Field.
@@ -114,7 +121,9 @@ struct OSBARCScannerView: View {
     private var torchButton: OSBARCTorchButton {
         .init(action: {
             viewModel.isTorchButtonOn.toggle()
-        }, isOn: viewModel.isTorchButtonOn)
+        }, isOn: viewModel.isTorchButtonOn,
+        onAccessibilityText: torchOnAccessibilityLabel,
+        offAccessibilityText: torchOffAccessibilityLabel)
     }
     
     private var zoomSelectorView: OSBARCZoomSelectorView? {

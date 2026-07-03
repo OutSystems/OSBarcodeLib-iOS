@@ -28,6 +28,19 @@ extension View {
         }
     }
     
+    /// Applies an accessibility label only when a non-empty value is provided.
+    /// When `label` is `nil` or empty the view is left untouched, preserving the default behavior (no label).
+    /// - Parameter label: The accessibility label to apply, if any.
+    /// - Returns: Either the original `View` or the `View` with the accessibility label applied.
+    @ViewBuilder
+    func accessibilityLabelIfPresent(_ label: String?) -> some View {
+        if let label = label, !label.isEmpty {
+            self.accessibility(label: Text(label))
+        } else {
+            self
+        }
+    }
+
     /// Ignores safe area for different versions of iOS.
     /// - Returns: the View ignoring all safe areas.
     @ViewBuilder

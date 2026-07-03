@@ -6,7 +6,7 @@ import SwiftUI
 final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
     /// A publisher value responsible for the resulting scanned value.
     @Published private var scanResult: OSBARCScanResult = OSBARCScanResult.empty()
-    
+
     /// The publisher's cancellable instance collector.
     private var cancellables: Set<AnyCancellable> = []
     
@@ -31,7 +31,12 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
         
         let buttonText = parameters.scanButtonText ?? ""   // not having the button enabled is translated into having an empty text.
         let shouldShowButton = !buttonText.isEmpty  // if empty text is passed, the button is not enabled on the scanner view
-        
+
+        // accessibility labels are optional; when not provided (nil/empty) no label is set, preserving the default behavior.
+        let cancelAccessibilityLabel = parameters.cancelButtonAccessibilityLabel.flatMap { $0.isEmpty ? nil : $0 }
+        let torchOnAccessibilityLabel = parameters.torchButtonOnAccessibilityLabel.flatMap { $0.isEmpty ? nil : $0 }
+        let torchOffAccessibilityLabel = parameters.torchButtonOffAccessibilityLabel.flatMap { $0.isEmpty ? nil : $0 }
+
         let barcodeDecoder = OSBARCCaptureOutputDecoder(
             scanResultBinding,
             shouldShowButton,
@@ -49,7 +54,10 @@ final class OSBARCScannerBehaviour: OSBARCCoordinatable, OSBARCScannerProtocol {
             instructionsText: parameters.scanInstructions,
             buttonText: buttonText,
             shouldShowButton: shouldShowButton,
-            deviceType: UIDevice.current.userInterfaceIdiom.deviceTypeModel
+            deviceType: UIDevice.current.userInterfaceIdiom.deviceTypeModel,
+            cancelAccessibilityLabel: cancelAccessibilityLabel,
+            torchOnAccessibilityLabel: torchOnAccessibilityLabel,
+            torchOffAccessibilityLabel: torchOffAccessibilityLabel
         )
         let hostingController = OSBARCScannerViewHostingController(rootView: scannerView, parameters.scanOrientation)
         hostingController.modalPresentationStyle = .fullScreen
