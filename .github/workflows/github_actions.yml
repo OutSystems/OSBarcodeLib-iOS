@@ -7,7 +7,7 @@ on:
 jobs:    
   test:
     name: Unit-Tests
-    runs-on: macos-latest
+    runs-on: macos-26
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -22,7 +22,7 @@ jobs:
       run: brew link --overwrite swiftlint || brew install swiftlint
 
     - name: Set up XCode 
-      run: sudo xcode-select --switch /Applications/Xcode_16.4.app/Contents/Developer
+      run: sudo xcode-select --switch /Applications/Xcode_26.6.app/Contents/Developer
 
     - name: Bundle Install
       run: bundle install
