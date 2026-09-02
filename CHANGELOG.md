@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/OutSystems/OSBarcodeLib-iOS/compare/2.2.0...2.2.1) (2026-09-02)
+
+
+### Bug Fixes
+
+* build OSBarcodeLib as a dynamic framework to prevent SwiftUICore crash on iOS 15/16 ([#46](https://github.com/OutSystems/OSBarcodeLib-iOS/issues/46)) ([15d09a5](https://github.com/OutSystems/OSBarcodeLib-iOS/commit/15d09a5408b6f49fef0f9d02826e617f803f2e07))
+
 # [2.2.0](https://github.com/OutSystems/OSBarcodeLib-iOS/compare/2.1.1...2.2.0) (2026-07-03)
 
 
