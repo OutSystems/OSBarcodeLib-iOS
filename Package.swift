@@ -9,6 +9,7 @@ let package = Package(
     products: [
         .library(
             name: "OSBarcodeLib",
+            type: .dynamic,
             targets: ["OSBarcodeLib"]
         ),
     ],
