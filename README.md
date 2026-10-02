@@ -2,11 +2,11 @@
 
 The `OSBarcodePluginLib-iOS` is a library built using `Swift` that offers you a barcode scanner for your iOS application. Supports many popular encoding types of 1D and 2D barcodes, such as:
 - 1D Barcodes
-	- Codabar (*available from iOS 15.0 onwards*)
+	- Codabar
 	- Code 39
 	- Code 93
 	- Code 128
-	- Databar (GS1)	(*available from iOS 15.0 onwards*)
+	- Databar (GS1)
 	- EAN-8
 	- EAN-13
 	- ITF
@@ -14,14 +14,14 @@ The `OSBarcodePluginLib-iOS` is a library built using `Swift` that offers you a 
 	- ISBN-10
 	- ISBN-13
 	- ISBN-13 Dual Barcode
-	- RSSExpanded (*available from iOS 15.0 onwards*)
+	- RSSExpanded
 	- UPC-A
 	- UPC-E
 - 2D Barcodes
 	- Aztec Code
 	- Data Matrix
-	- Micro PDF 417 (*available from iOS 15.0 onwards*)
-	- Micro QR (*available from iOS 15.0 onwards*)
+	- Micro PDF 417
+	- Micro QR
 	- PDF 417
 	- QR Code
 
