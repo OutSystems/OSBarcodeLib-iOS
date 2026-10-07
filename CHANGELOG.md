@@ -1,3 +1,17 @@
+# [3.0.0](https://github.com/OutSystems/OSBarcodeLib-iOS/compare/2.2.1...3.0.0) (2026-10-07)
+
+
+### Features
+
+* update deployment target to iOS 15 ([#47](https://github.com/OutSystems/OSBarcodeLib-iOS/issues/47)) ([003a57d](https://github.com/OutSystems/OSBarcodeLib-iOS/commit/003a57dbb0a1ffb06f4903181eae9e3700ed75e3))
+
+
+### BREAKING CHANGES
+
+* Any consumer on lower deployment targets than iOS 15 will need to bump their deployment target to iOS 15.
+
+* chore: update deployment target for tests
+
 ## [2.2.1](https://github.com/OutSystems/OSBarcodeLib-iOS/compare/2.2.0...2.2.1) (2026-09-02)
 
 
