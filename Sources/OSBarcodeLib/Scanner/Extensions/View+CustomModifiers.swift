@@ -7,11 +7,7 @@ extension View {
     /// - Returns: The resulting view.
     @ViewBuilder
     func foregroundStyle(forColour colour: Color) -> some View {
-        if #available(iOS 15.0, *) {
-            self.foregroundStyle(colour)
-        } else {
-            self.foregroundColor(colour)
-        }
+        self.foregroundStyle(colour)
     }
     
     /// Applies the given transform if the given condition evaluates to `true`.
@@ -45,11 +41,7 @@ extension View {
     /// - Returns: the View ignoring all safe areas.
     @ViewBuilder
     func customIgnoreSafeArea() -> some View {
-        if #available(iOS 14.0, *) {
-            self.ignoresSafeArea()
-        } else {
-            self.edgesIgnoringSafeArea(.all)
-        }
+        self.ignoresSafeArea()
     }
     
     /// Adds a modifier for this view that fires an action when a specific value changes.
@@ -59,10 +51,6 @@ extension View {
     /// - Returns: A view that fires an action when the specified value changes.
     @ViewBuilder
     func valueChanged<T: Equatable>(value: T, _ onChange: @escaping (T) -> Void) -> some View {
-        if #available(iOS 14.0, *) {
-            self.onChange(of: value, perform: onChange)
-        } else {
-            self.onReceive(Just(value)) { onChange($0) }
-        }
+        self.onChange(of: value, perform: onChange)
     }
 }

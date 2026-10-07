@@ -41,11 +41,9 @@ extension OSBARCScannerHint {
             .upcE: [.upce]
         ]
 
-        if #available(iOS 15.0, *) {
-            result[.codabar] = [.codabar]
-            result[.rss14] = [.gs1DataBar]
-            result[.rssExpanded] = [.gs1DataBarExpanded]
-        }
+        result[.codabar] = [.codabar]
+        result[.rss14] = [.gs1DataBar]
+        result[.rssExpanded] = [.gs1DataBarExpanded]
 
         return result
     }()
@@ -56,9 +54,7 @@ extension OSBARCScannerHint {
 
     private var allBarcodeTypes: [VNBarcodeSymbology] {
         var result = Self.hintMappings.values.flatMap { $0 }
-        if #available(iOS 15.0, *) {
-            result += [.microPDF417, .microQR]
-        }
+        result += [.microPDF417, .microQR]
         return result
     }
 }
