@@ -41,6 +41,16 @@ This library is to be used by the [Barcode Plugin](https://github.com/OutSystems
 
 ## Usage
 
+> Replace `${version to use}` below with the version you want to use. Check the [Releases page](https://github.com/OutSystems/OSBarcodeLib-iOS/releases) for available versions.
+
+The library is also available as a Swift Package. Add the following to your `Package.swift` file:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/OutSystems/OSBarcodeLib-iOS.git", from: "${version to use}")
+]
+```
+
 The library is available on CocoaPods as `OSBarcodeLib`. The following is an example of how to insert it into a Cordova plugin (through the `plugin.xml` file).
 
 ```xml

@@ -7,7 +7,7 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "bash ./scripts/update_xcodeproj_version.sh ${nextRelease.version} \"OSBarcodeLib.xcodeproj/project.pbxproj\" && bash ./scripts/update_readme_version.sh ${nextRelease.version} \"OSBarcodeLib\" \"README.md\" && bash ./scripts/build_framework.sh \"OSBarcodeLib\" \"LICENSE\""
+        "prepareCmd": "bash ./scripts/update_xcodeproj_version.sh ${nextRelease.version} \"OSBarcodeLib.xcodeproj/project.pbxproj\" && bash ./scripts/build_framework.sh \"OSBarcodeLib\" \"LICENSE\""
       }
     ],
     "@semantic-release/changelog",
