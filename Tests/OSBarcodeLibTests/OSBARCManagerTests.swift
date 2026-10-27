@@ -1,3 +1,4 @@
+import AVFoundation
 import XCTest
 @testable import OSBarcodeLib
 
@@ -75,5 +76,30 @@ private extension OSBARCManagerTests {
         } catch {
             errorHandler(error)
         }
+    }
+}
+
+final class OSBARCOrientationMappingTests: XCTestCase {
+    func testPreviewOrientationMapsToTheMatchingImageOrientation() {
+        XCTAssertEqual(CGImagePropertyOrientation(videoOrientation: .portrait), .rightMirrored)
+        XCTAssertEqual(CGImagePropertyOrientation(videoOrientation: .portraitUpsideDown), .leftMirrored)
+        XCTAssertEqual(CGImagePropertyOrientation(videoOrientation: .landscapeLeft), .upMirrored)
+        XCTAssertEqual(CGImagePropertyOrientation(videoOrientation: .landscapeRight), .downMirrored)
+    }
+
+    func testDeviceOrientationMapsToTheMatchingInterfaceOrientation() {
+        XCTAssertEqual(UIInterfaceOrientation(deviceOrientation: .portrait), .portrait)
+        XCTAssertEqual(UIInterfaceOrientation(deviceOrientation: .portraitUpsideDown), .portraitUpsideDown)
+        XCTAssertEqual(UIInterfaceOrientation(deviceOrientation: .landscapeLeft), .landscapeRight)
+        XCTAssertEqual(UIInterfaceOrientation(deviceOrientation: .landscapeRight), .landscapeLeft)
+        XCTAssertNil(UIInterfaceOrientation(deviceOrientation: .faceUp))
+        XCTAssertNil(UIInterfaceOrientation(deviceOrientation: .unknown))
+    }
+
+    func testInterfaceOrientationMapsToASingleOrientationMask() {
+        XCTAssertEqual(UIInterfaceOrientationMask(interfaceOrientation: .portrait), .portrait)
+        XCTAssertEqual(UIInterfaceOrientationMask(interfaceOrientation: .landscapeLeft), .landscapeLeft)
+        XCTAssertEqual(UIInterfaceOrientationMask(interfaceOrientation: .landscapeRight), .landscapeRight)
+        XCTAssertEqual(UIInterfaceOrientationMask(interfaceOrientation: .unknown), .all)
     }
 }

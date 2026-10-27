@@ -14,6 +14,12 @@ final class OSBARCCaptureOutputDecoder: NSObject, AVCaptureVideoDataOutputSample
     /// A hint, to scan a specific format (e.g. only qr code). `Nil` or `unknown` value means it can scan all.
     private var hint: OSBARCScannerHint?
     
+    /// Orientation of the camera preview.
+    /// Frames passed to Vision follow it, so that they match what's displayed on screen.
+    private var videoOrientation: AVCaptureVideoOrientation?
+    /// Last on-screen scan frame, kept to recompute the region of interest when the orientation changes.
+    private var scanFrame: CGRect?
+
     /// The publisher's cancellable instance collector.
     private var cancellables: Set<AnyCancellable> = []
     
@@ -34,8 +40,9 @@ final class OSBARCCaptureOutputDecoder: NSObject, AVCaptureVideoDataOutputSample
             .publisher(for: .scanFrameChanged)
             .receive(on: RunLoop.main)  // receive this on the main thread
             .sink { // performed this when `scanFrameChanged` gets triggered (on screen rotation).
-                if let imageRect = $0.object as? CGRect, let regionOfInterest = self.scanRegionOfInterest(for: imageRect) {
-                    self.detectBarcodeRequest.regionOfInterest = regionOfInterest   // update `regionOfInterest`
+                if let imageRect = $0.object as? CGRect {
+                    self.scanFrame = imageRect
+                    self.updateRegionOfInterest()
                 }
             }
             .store(in: &cancellables)
@@ -67,7 +74,14 @@ final class OSBARCCaptureOutputDecoder: NSObject, AVCaptureVideoDataOutputSample
         )
         try? imageRequestHandler.perform([self.detectBarcodeRequest])
     }
-    
+
+    /// Keeps the decoding aligned with the camera preview. Must be called on the main thread.
+    /// - Parameter videoOrientation: The orientation the camera preview is now displayed in.
+    func update(videoOrientation: AVCaptureVideoOrientation) {
+        self.videoOrientation = videoOrientation
+        self.updateRegionOfInterest()
+    }
+
     /// Vision request to perform. It gets initialised only once and when needed.
     lazy private var detectBarcodeRequest: VNDetectBarcodesRequest = {
         let barcodeRequest = VNDetectBarcodesRequest(completionHandler: { request, error in
@@ -100,13 +114,28 @@ private extension OSBARCCaptureOutputDecoder {
     /// - Parameter imageRect: The coordinates to convert
     /// - Returns: The converted coordinates. If can return `nil` if not able to fetch the screens bounds to base on.
     func scanRegionOfInterest(for imageRect: CGRect) -> CGRect? {
-        guard let screenBounds = UIApplication.firstKeyWindowForConnectedScenes?.windowScene?.screen.bounds else { return nil }
-        return VNNormalizedRectForImageRect(imageRect, Int(screenBounds.width), Int(screenBounds.height))
+        // The window's bounds follow the layout the scan frame comes from; the screen's lag behind a forced rotation.
+        guard let windowBounds = UIApplication.firstKeyWindowForConnectedScenes?.bounds else { return nil }
+        return VNNormalizedRectForImageRect(imageRect, Int(windowBounds.width), Int(windowBounds.height))
     }
-    
+
+    /// Updates the Vision request's region of interest from the last scan frame.
+    func updateRegionOfInterest() {
+        if let scanFrame = self.scanFrame, let regionOfInterest = self.scanRegionOfInterest(for: scanFrame) {
+            self.detectBarcodeRequest.regionOfInterest = regionOfInterest
+        }
+    }
+
     /// Converts device orientation into the intended image's display orientation.
     /// - Returns: The equivalent `CGImagePropertyOrientation` to use for the device's current orientation.
     func deviceExifOrientation() -> CGImagePropertyOrientation {
+        // The region of interest comes from the on-screen scan frame, so the image has to follow the preview's
+        // orientation, which differs from the device's when the scanner forces portrait or landscape.
+        if let videoOrientation = self.videoOrientation,
+           let orientation = CGImagePropertyOrientation(videoOrientation: videoOrientation) {
+            return orientation
+        }
+
         switch UIDevice.current.orientation {
         case .landscapeRight: return .upMirrored
         case .portraitUpsideDown: return .leftMirrored
@@ -120,6 +149,21 @@ private extension OSBARCCaptureOutputDecoder {
             guard let screenBounds, screenBounds.width > screenBounds.height
             else { return .rightMirrored }  // assume portrait
             return .downMirrored    // assume landscapeLeft
+        }
+    }
+}
+
+extension CGImagePropertyOrientation {
+    /// Maps the camera preview's orientation into the orientation of the frames passed to Vision.
+    /// - Parameter videoOrientation: Value to be converted from. Returns `nil` for unknown values.
+    init?(videoOrientation: AVCaptureVideoOrientation) {
+        switch videoOrientation {
+        case .portrait: self = .rightMirrored
+        case .portraitUpsideDown: self = .leftMirrored
+        // `AVCaptureVideoOrientation.landscapeLeft` is `UIDeviceOrientation.landscapeRight`.
+        case .landscapeLeft: self = .upMirrored
+        case .landscapeRight: self = .downMirrored
+        @unknown default: return nil
         }
     }
 }
