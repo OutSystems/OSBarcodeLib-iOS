@@ -92,7 +92,7 @@ final class OSBARCCaptureSessionManager: OSBARCCameraManager {
                      Subsequent orientation changes are handled by `viewWillTransition(to:with:)`.
                      */
                     if videoPreviewLayer.connection?.isVideoOrientationSupported == true,
-                       let interfaceOrientation = UIApplication.firstKeyWindowForConnectedScenes?.windowScene?.interfaceOrientation,
+                       let interfaceOrientation = UIApplication.currentInterfaceOrientation,
                        var initialVideoOrientation = AVCaptureVideoOrientation(interfaceOrientation: interfaceOrientation) {
                         /*
                          If the orientation has to be portrait but the device is not on that mode, orientation is set to `portrait`.
@@ -106,6 +106,7 @@ final class OSBARCCaptureSessionManager: OSBARCCameraManager {
                         }
                         
                         videoPreviewLayer.connection?.videoOrientation = initialVideoOrientation
+                        self.outputDecoder.update(videoOrientation: initialVideoOrientation)
                     }
                 }
             }
@@ -143,9 +144,10 @@ final class OSBARCCaptureSessionManager: OSBARCCameraManager {
                 videoPreviewLayer.frame = CGRect(x: 0, y: 0, width: rotationChange.value.width, height: rotationChange.value.height)
                 
                 if videoPreviewLayer.connection?.isVideoOrientationSupported == true,
-                   let interfaceOrientation = UIApplication.firstKeyWindowForConnectedScenes?.windowScene?.interfaceOrientation,
+                   let interfaceOrientation = UIApplication.currentInterfaceOrientation,
                    let newVideoOrientation = AVCaptureVideoOrientation(interfaceOrientation: interfaceOrientation) {
                     videoPreviewLayer.connection?.videoOrientation = newVideoOrientation
+                    self.outputDecoder.update(videoOrientation: newVideoOrientation)
                 }
             }
         }
