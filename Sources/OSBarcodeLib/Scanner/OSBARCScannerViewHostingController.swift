@@ -72,11 +72,9 @@ class OSBARCScannerViewHostingController<Content>: UIHostingController<Content> 
             viewController?.setNeedsUpdateOfSupportedInterfaceOrientations()
             windowScene.requestGeometryUpdate(.iOS(interfaceOrientations: mask))
         } else {
-            let orientations: [UIInterfaceOrientation] = [
-                .portrait, .landscapeRight, .landscapeLeft, .portraitUpsideDown
-            ]
-            guard let orientation = orientations.first(where: { mask.contains(.init(interfaceOrientation: $0)) })
-            else { return }
+            guard let orientation = mask.interfaceOrientationToRequest(
+                from: windowScene.currentInterfaceOrientation, deviceOrientation: UIDevice.current.orientation
+            ) else { return }
             UIDevice.current.setValue(orientation.rawValue, forKey: "orientation")
             UIViewController.attemptRotationToDeviceOrientation()
         }

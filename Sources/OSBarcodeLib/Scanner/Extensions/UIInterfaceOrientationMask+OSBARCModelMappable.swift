@@ -22,6 +22,20 @@ extension UIInterfaceOrientationMask: OSBARCModelMappable {
         default: self = .all
         }
     }
+
+    /// Orientation to rotate to so the interface fits this mask, or `nil` when the current one already does.
+    /// Prefers how the device is held, so a landscape mask doesn't flip an interface that's already landscape.
+    /// - Parameters:
+    ///   - currentOrientation: The interface's current orientation.
+    ///   - deviceOrientation: The device's physical orientation.
+    func interfaceOrientationToRequest(
+        from currentOrientation: UIInterfaceOrientation, deviceOrientation: UIDeviceOrientation
+    ) -> UIInterfaceOrientation? {
+        guard !self.contains(.init(interfaceOrientation: currentOrientation)) else { return nil }
+        let candidates = [UIInterfaceOrientation(deviceOrientation: deviceOrientation)].compactMap { $0 }
+            + [.portrait, .landscapeRight, .landscapeLeft, .portraitUpsideDown]
+        return candidates.first { self.contains(.init(interfaceOrientation: $0)) }
+    }
 }
 
 extension UIInterfaceOrientation {
