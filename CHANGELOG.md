@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/OutSystems/OSBarcodeLib-iOS/compare/3.0.0...3.0.1) (2026-11-03)
+
+
+### Bug Fixes
+
+* rotate the scanner to the forced scanOrientation in UIScene apps ([#49](https://github.com/OutSystems/OSBarcodeLib-iOS/issues/49)) ([31fbb7a](https://github.com/OutSystems/OSBarcodeLib-iOS/commit/31fbb7a8c5e1a041c83be9ec23badbfd1c8ae5aa))
+
 # [3.0.0](https://github.com/OutSystems/OSBarcodeLib-iOS/compare/2.2.1...3.0.0) (2026-10-07)
 
 
